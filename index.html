@@ -96,9 +96,6 @@
         <div data-pos="Goleiro" style="padding:12px 8px;border-radius:12px;border:2px solid #ffffff12;background:#ffffff07;cursor:pointer;text-align:center;transition:all 0.2s">
           <div style="font-size:22px">🧤</div><div style="font-family:'Bebas Neue',sans-serif;font-size:14px;color:#aaa;letter-spacing:1px">Goleiro</div>
         </div>
-        <div data-pos="Lateral" style="padding:12px 8px;border-radius:12px;border:2px solid #ffffff12;background:#ffffff07;cursor:pointer;text-align:center;transition:all 0.2s">
-          <div style="font-size:22px">🏃</div><div style="font-family:'Bebas Neue',sans-serif;font-size:14px;color:#aaa;letter-spacing:1px">Lateral</div>
-        </div>
         <div data-pos="Defesa" style="padding:12px 8px;border-radius:12px;border:2px solid #ffffff12;background:#ffffff07;cursor:pointer;text-align:center;transition:all 0.2s">
           <div style="font-size:22px">🛡️</div><div style="font-family:'Bebas Neue',sans-serif;font-size:14px;color:#aaa;letter-spacing:1px">Defesa</div>
         </div>
@@ -154,8 +151,8 @@ firebase.initializeApp({
 const db = firebase.database();
 const playersRef = db.ref("jogadores");
 
-const POSITIONS = ["Goleiro","Lateral","Defesa","Meio-campo","Atacante"];
-const POS_COLORS = {"Goleiro":{bg:"#FF6B35",glow:"#FF6B3530"},"Lateral":{bg:"#F1C40F",glow:"#F1C40F30"},"Defesa":{bg:"#00C2FF",glow:"#00C2FF30"},"Meio-campo":{bg:"#9B59B6",glow:"#9B59B630"},"Atacante":{bg:"#2ECC71",glow:"#2ECC7130"}};
+const POSITIONS = ["Goleiro","Defesa","Meio-campo","Atacante"];
+const POS_COLORS = {"Goleiro":{bg:"#FF6B35",glow:"#FF6B3530"},"Defesa":{bg:"#00C2FF",glow:"#00C2FF30"},"Meio-campo":{bg:"#9B59B6",glow:"#9B59B630"},"Atacante":{bg:"#2ECC71",glow:"#2ECC7130"}};
 const QUALITY_LABELS = {1:"Fraco",2:"Regular",3:"Bom",4:"Ótimo",5:"Elite"};
 const TEAM_THEMES = [{name:"Time A",color:"#FF4444",emoji:"🔴"},{name:"Time B",color:"#4488FF",emoji:"🔵"},{name:"Time C",color:"#44CC44",emoji:"🟢"},{name:"Time D",color:"#FFB800",emoji:"🟡"}];
 
@@ -200,7 +197,7 @@ function balancedDraw(players, n) {
   }
 
   // 1º — Distribuir Defensores em snake draft (garante igualdade)
-  const defensores = sortByQuality([...(byPos["Defesa"] || []), ...(byPos["Lateral"] || [])]);
+  const defensores = sortByQuality(byPos["Defesa"] || []);
   snakeDraft(defensores, teams, maxPerTeam);
 
   // 2º — Distribuir Goleiros em snake draft (equilibrado por nota)
@@ -382,7 +379,11 @@ function render(){
           ${t.players.map(p=>{const c=posColor(p.position);return `<div style="display:flex;align-items:center;gap:10px"><div style="width:6px;height:6px;border-radius:50%;background:${c.bg};flex-shrink:0"></div><span style="font-size:13px;font-weight:700;color:#ddd;flex:1">${p.name}</span><span style="font-size:9px;background:${c.bg}33;color:${c.bg};border-radius:4px;padding:2px 6px;font-weight:700">${p.position.substring(0,3).toUpperCase()}</span><div>${[1,2,3,4,5].map(s=>`<span style="font-size:11px;color:${s<=(p.quality||0)?'#FFD700':'#2a2a2a'}">★</span>`).join('')}</div></div>`;}).join('')}
         </div>
       </div>`;}).join('')}
-      </div><button class="reshuffle-btn" data-action="draw">🔄 RESSORTEAR</button>`;
+      </div><button class="reshuffle-btn" data-action="draw">🔄 RESSORTEAR</button>
+      <button class="whatsapp-btn" data-action="whatsapp" style="width:100%;padding:15px;border-radius:12px;border:none;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;cursor:pointer;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:10px;-webkit-appearance:none;box-shadow:0 4px 20px #25D36644">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.118.553 4.107 1.522 5.837L.057 23.882a.5.5 0 0 0 .613.613l6.044-1.465A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.802 9.802 0 0 1-5.032-1.386l-.36-.214-3.733.905.921-3.635-.235-.374A9.818 9.818 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
+        COMPARTILHAR NO WHATSAPP
+      </button>`;
     }
   }
   html+=`</div>`;
@@ -438,6 +439,24 @@ document.addEventListener("click",e=>{
     if(navigator.share){navigator.share({title:"Arena PIB ⚽",text:"Entre no baba!",url});}
     else{navigator.clipboard.writeText(url).then(()=>alert("Link copiado!\n"+url)).catch(()=>alert(url));}
   }
+  else if(action==="whatsapp"){
+    if(!state.drawn||!state.drawn.length) return;
+    const EMOJIS_POS = {"Goleiro":"🧤","Lateral":"🏃","Defesa":"🛡️","Meio-campo":"⚙️","Atacante":"🎯"};
+    let msg = "⚽ *ARENA PIB — TIMES DO BABA* ⚽\n";
+    msg += "━━━━━━━━━━━━━━━━━━━━\n\n";
+    state.drawn.forEach(t => {
+      msg += `${t.emoji} *${t.name.toUpperCase()}* (${t.total} pts)\n`;
+      t.players.forEach(p => {
+        const emoji = EMOJIS_POS[p.position] || "👤";
+        msg += `  ${emoji} ${p.name} — ${p.position}\n`;
+      });
+      msg += "\n";
+    });
+    msg += "━━━━━━━━━━━━━━━━━━━━\n";
+    msg += "🏟️ Bom baba pra todos! 💪";
+    const encoded = encodeURIComponent(msg);
+    window.open("https://wa.me/?text=" + encoded, "_blank");
+  }
   if(el.id==="modal-overlay"){state.modal=null;render();}
 });
 
@@ -466,7 +485,7 @@ document.getElementById("pos-grid-login").addEventListener("click",e=>{
     c.style.borderColor="#ffffff12";c.style.background="#ffffff07";
     c.querySelector("div:last-child").style.color="#aaa";
   });
-  const posColors={"Goleiro":"#FF6B35","Lateral":"#F1C40F","Defesa":"#00C2FF","Meio-campo":"#9B59B6","Atacante":"#2ECC71"};
+  const posColors={"Goleiro":"#FF6B35","Defesa":"#00C2FF","Meio-campo":"#9B59B6","Atacante":"#2ECC71"};
   const c=posColors[card.dataset.pos]||"#00C2FF";
   card.style.borderColor=c;card.style.background=c+"30";
   card.querySelector("div:last-child").style.color=c;
