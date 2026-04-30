@@ -99,6 +99,9 @@
         <div data-pos="Defesa" style="padding:12px 8px;border-radius:12px;border:2px solid #ffffff12;background:#ffffff07;cursor:pointer;text-align:center;transition:all 0.2s">
           <div style="font-size:22px">🛡️</div><div style="font-family:'Bebas Neue',sans-serif;font-size:14px;color:#aaa;letter-spacing:1px">Defesa</div>
         </div>
+        <div data-pos="Lateral" style="padding:12px 8px;border-radius:12px;border:2px solid #ffffff12;background:#ffffff07;cursor:pointer;text-align:center;transition:all 0.2s">
+          <div style="font-size:22px">🏃</div><div style="font-family:'Bebas Neue',sans-serif;font-size:14px;color:#aaa;letter-spacing:1px">Lateral</div>
+        </div>
         <div data-pos="Meio-campo" style="padding:12px 8px;border-radius:12px;border:2px solid #ffffff12;background:#ffffff07;cursor:pointer;text-align:center;transition:all 0.2s">
           <div style="font-size:22px">⚙️</div><div style="font-family:'Bebas Neue',sans-serif;font-size:14px;color:#aaa;letter-spacing:1px">Meio-campo</div>
         </div>
@@ -151,8 +154,15 @@ firebase.initializeApp({
 const db = firebase.database();
 const playersRef = db.ref("jogadores");
 
-const POSITIONS = ["Goleiro","Defesa","Meio-campo","Atacante"];
-const POS_COLORS = {"Goleiro":{bg:"#FF6B35",glow:"#FF6B3530"},"Defesa":{bg:"#00C2FF",glow:"#00C2FF30"},"Meio-campo":{bg:"#9B59B6",glow:"#9B59B630"},"Atacante":{bg:"#2ECC71",glow:"#2ECC7130"}};
+// ── POSIÇÕES — agora com Lateral ─────────────────────────────────────────────
+const POSITIONS = ["Goleiro","Lateral","Defesa","Meio-campo","Atacante"];
+const POS_COLORS = {
+  "Goleiro":    {bg:"#FF6B35", glow:"#FF6B3530"},
+  "Lateral":    {bg:"#00D4AA", glow:"#00D4AA30"},   // 🏃 verde-água
+  "Defesa":     {bg:"#00C2FF", glow:"#00C2FF30"},
+  "Meio-campo": {bg:"#9B59B6", glow:"#9B59B630"},
+  "Atacante":   {bg:"#2ECC71", glow:"#2ECC7130"}
+};
 const QUALITY_LABELS = {1:"Fraco",2:"Regular",3:"Bom",4:"Ótimo",5:"Elite"};
 const TEAM_THEMES = [{name:"Time A",color:"#FF4444",emoji:"🔴"},{name:"Time B",color:"#4488FF",emoji:"🔵"},{name:"Time C",color:"#44CC44",emoji:"🟢"},{name:"Time D",color:"#FFB800",emoji:"🟡"}];
 
@@ -160,7 +170,6 @@ let state = {tab:"jogadores",players:[],loading:true,modal:null,filterPos:"Todos
 
 function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
-// ── BALANCED DRAW: defensores distribuídos igualmente, depois demais posições ──
 function snakeDraft(sorted, teams, maxPerTeam) {
   let idx = 0, round = 0;
   const n = teams.length;
@@ -183,12 +192,10 @@ function balancedDraw(players, n) {
   const teams = TEAM_THEMES.slice(0, n).map(t => ({ ...t, players: [], total: 0 }));
   const maxPerTeam = n === 4 ? 7 : null;
 
-  // Separar por posição
   const byPos = {};
   POSITIONS.forEach(pos => { byPos[pos] = []; });
   players.forEach(p => { (byPos[p.position] || (byPos["Outros"] = byPos["Outros"]||[])).push(p); });
 
-  // Ordenar cada grupo por nota desc e embaralhar empates
   function sortByQuality(arr) {
     const g = {};
     arr.forEach(p => { if (!g[p.quality]) g[p.quality] = []; g[p.quality].push(p); });
@@ -196,15 +203,15 @@ function balancedDraw(players, n) {
     return [5,4,3,2,1].flatMap(q => g[q] || []);
   }
 
-  // 1º — Distribuir Defensores em snake draft (garante igualdade)
-  const defensores = sortByQuality(byPos["Defesa"] || []);
+  // 1º — Defensores em snake draft
+  const defensores = sortByQuality([...(byPos["Defesa"]||[]), ...(byPos["Lateral"]||[])]);
   snakeDraft(defensores, teams, maxPerTeam);
 
-  // 2º — Distribuir Goleiros em snake draft (equilibrado por nota)
+  // 2º — Goleiros em snake draft
   const goleiros = sortByQuality(byPos["Goleiro"] || []);
   snakeDraft(goleiros, teams, maxPerTeam);
 
-  // 3º — Restantes (Meio-campo + Atacante + outros) em snake draft
+  // 3º — Restantes
   const resto = sortByQuality([
     ...(byPos["Meio-campo"] || []),
     ...(byPos["Atacante"] || []),
@@ -417,7 +424,6 @@ document.addEventListener("click",e=>{
   else if(action==="draw"){
     let pool=state.players.filter(p=>p.presente===true&&p.quality>0);
     if(pool.length<state.numTeams)return;
-    // Quando 4 times: limitar a 7 por time (28 jogadores total), priorizando os de maior nota
     if(state.numTeams===4){
       const maxPlayers=4*7;
       if(pool.length>maxPlayers){
@@ -485,7 +491,7 @@ document.getElementById("pos-grid-login").addEventListener("click",e=>{
     c.style.borderColor="#ffffff12";c.style.background="#ffffff07";
     c.querySelector("div:last-child").style.color="#aaa";
   });
-  const posColors={"Goleiro":"#FF6B35","Defesa":"#00C2FF","Meio-campo":"#9B59B6","Atacante":"#2ECC71"};
+  const posColors={"Goleiro":"#FF6B35","Lateral":"#00D4AA","Defesa":"#00C2FF","Meio-campo":"#9B59B6","Atacante":"#2ECC71"};
   const c=posColors[card.dataset.pos]||"#00C2FF";
   card.style.borderColor=c;card.style.background=c+"30";
   card.querySelector("div:last-child").style.color=c;
@@ -545,4 +551,4 @@ playersRef.on("value", snapshot=>{
   }
 </script>
 </body>
-</html>
+  </html>
