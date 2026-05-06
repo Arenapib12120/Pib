@@ -19,6 +19,9 @@
     @keyframes trophyBounce{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-5px) rotate(3deg)}}
     @keyframes crownGlow{0%,100%{filter:drop-shadow(0 0 6px #FFD70099)}50%{filter:drop-shadow(0 0 16px #FFD700cc)}}
     @keyframes confettiFall{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(60px) rotate(720deg);opacity:0}}
+    @keyframes pulsered{0%,100%{box-shadow:0 0 0 0 #ff444444}50%{box-shadow:0 0 0 10px #ff444400}}
+    @keyframes lockShake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+    @keyframes countPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
 
     .fu {animation:fadeUp 0.5s ease forwards}
     .fu2{animation:fadeUp 0.5s 0.08s ease both}
@@ -26,227 +29,92 @@
     .fu4{animation:fadeUp 0.5s 0.24s ease both}
 
     /* ── CHAMPION BANNER ── */
-    .champ-banner{
-      width:100%;max-width:420px;
-      margin-bottom:28px;
-      border-radius:20px;overflow:hidden;
-      border:2px solid #FFD70050;
-      box-shadow:0 10px 50px #FFD70018,0 4px 20px #00000060;
-      position:relative;
-    }
-    .champ-banner-header{
-      background:linear-gradient(135deg,#1a1408,#2a1e00);
-      padding:12px 16px;
-      display:flex;align-items:center;justify-content:space-between;
-      border-bottom:1px solid #FFD70025;
-    }
-    .champ-banner-label{
-      font-size:9px;font-weight:700;color:#FFD70099;
-      letter-spacing:2.5px;text-transform:uppercase;
-    }
+    .champ-banner{width:100%;max-width:420px;margin-bottom:28px;border-radius:20px;overflow:hidden;border:2px solid #FFD70050;box-shadow:0 10px 50px #FFD70018,0 4px 20px #00000060;position:relative}
+    .champ-banner-header{background:linear-gradient(135deg,#1a1408,#2a1e00);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #FFD70025}
+    .champ-banner-label{font-size:9px;font-weight:700;color:#FFD70099;letter-spacing:2.5px;text-transform:uppercase}
     .champ-trophy{font-size:20px;animation:trophyBounce 2.5s ease-in-out infinite}
-
-    .champ-photo-wrap{
-      position:relative;width:100%;aspect-ratio:16/9;
-      background:linear-gradient(145deg,#0e0e1a,#141420);
-      overflow:hidden;
-    }
-    .champ-photo-wrap img{
-      width:100%;height:100%;object-fit:cover;display:block;
-    }
-    .champ-photo-wrap::after{
-      content:'';position:absolute;inset:0;
-      background:linear-gradient(to bottom,transparent 55%,#1a1408ee 100%);
-      pointer-events:none;
-    }
-    .champ-photo-empty{
-      display:flex;flex-direction:column;align-items:center;justify-content:center;
-      height:100%;gap:8px;
-    }
+    .champ-photo-wrap{position:relative;width:100%;aspect-ratio:16/9;background:linear-gradient(145deg,#0e0e1a,#141420);overflow:hidden}
+    .champ-photo-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+    .champ-photo-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 55%,#1a1408ee 100%);pointer-events:none}
+    .champ-photo-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:8px}
     .champ-photo-empty .icon{font-size:36px;animation:crownGlow 2s ease-in-out infinite;opacity:0.5}
     .champ-photo-empty .txt{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;color:#444}
-
-    .champ-info{
-      background:linear-gradient(135deg,#1a1408,#211900);
-      padding:12px 16px 14px;
-      position:relative;
-    }
-    .champ-name{
-      font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;line-height:1;
-      background:linear-gradient(90deg,#FFD700 30%,#FFA500 70%,#FFD700);
-      background-size:200% auto;
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-      animation:shimmer 3s linear infinite;
-    }
+    .champ-info{background:linear-gradient(135deg,#1a1408,#211900);padding:12px 16px 14px;position:relative}
+    .champ-name{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;line-height:1;background:linear-gradient(90deg,#FFD700 30%,#FFA500 70%,#FFD700);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 3s linear infinite}
     .champ-date{font-size:11px;color:#666;margin-top:4px;letter-spacing:0.5px}
-    .champ-badge{
-      position:absolute;top:12px;right:14px;
-      background:linear-gradient(135deg,#FFD70020,#FFD70010);
-      border:1px solid #FFD70040;border-radius:6px;
-      font-size:9px;font-weight:700;color:#FFD700aa;
-      letter-spacing:1px;padding:4px 8px;text-transform:uppercase;
-    }
+    .champ-badge{position:absolute;top:12px;right:14px;background:linear-gradient(135deg,#FFD70020,#FFD70010);border:1px solid #FFD70040;border-radius:6px;font-size:9px;font-weight:700;color:#FFD700aa;letter-spacing:1px;padding:4px 8px;text-transform:uppercase}
+
+    /* ── CAPACITY BAR ── */
+    .capacity-wrap{width:100%;max-width:420px;margin-bottom:20px;background:linear-gradient(145deg,#0f0f1e,#12122a);border:1px solid #ffffff0f;border-radius:16px;padding:14px 18px}
+    .capacity-bar-track{height:10px;background:#ffffff0d;border-radius:6px;overflow:hidden;margin:8px 0 6px}
+    .capacity-bar-fill{height:100%;border-radius:6px;transition:width 0.7s cubic-bezier(.22,1,.36,1)}
+
+    /* ── LISTA FECHADA ── */
+    .lista-fechada-card{width:100%;max-width:420px;background:linear-gradient(145deg,#1e0808,#150404);border:2px solid #ff444455;border-radius:22px;padding:36px 24px;text-align:center;box-shadow:0 12px 50px #ff444420;animation:pulsered 2s infinite}
+    .lock-icon{font-size:56px;display:block;margin-bottom:16px;animation:lockShake 0.5s ease 0.5s 1}
 
     /* ── FORM CARD ── */
-    .card{
-      background:linear-gradient(145deg,#1a1a2e,#131325);
-      border:1px solid #ffffff14;border-radius:22px;
-      padding:28px 24px;width:100%;max-width:420px;
-      box-shadow:0 20px 60px #00000088;
-    }
+    .card{background:linear-gradient(145deg,#1a1a2e,#131325);border:1px solid #ffffff14;border-radius:22px;padding:28px 24px;width:100%;max-width:420px;box-shadow:0 20px 60px #00000088}
     .section-label{font-size:11px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px}
-    .name-input{
-      width:100%;background:#ffffff0d;border:1.5px solid #ffffff18;border-radius:12px;
-      padding:14px 16px;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:22px;
-      letter-spacing:1px;outline:none;transition:border-color 0.2s;margin-bottom:20px;-webkit-appearance:none;
-    }
+    .name-input{width:100%;background:#ffffff0d;border:1.5px solid #ffffff18;border-radius:12px;padding:14px 16px;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;outline:none;transition:border-color 0.2s;margin-bottom:20px;-webkit-appearance:none}
     .name-input::placeholder{color:#333;font-size:18px}
     .name-input:focus{border-color:#00C2FF88}
-
     .pos-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
-    .pos-card{
-      padding:16px 12px;border-radius:14px;border:2px solid #ffffff12;
-      background:#ffffff07;cursor:pointer;transition:all 0.2s;text-align:center;
-    }
+    .pos-card{padding:16px 12px;border-radius:14px;border:2px solid #ffffff12;background:#ffffff07;cursor:pointer;transition:all 0.2s;text-align:center}
     .pos-card.active{border-color:var(--c);background:color-mix(in srgb,var(--c) 18%,transparent)}
     .pos-icon{font-size:28px;display:block;margin-bottom:6px}
     .pos-name{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:1px;color:#aaa}
     .pos-card.active .pos-name{color:var(--c)}
-
-    .error-box{
-      display:none;background:#ff444415;border:1px solid #ff444440;
-      border-radius:10px;padding:12px 14px;font-size:12px;color:#ff6666;margin-bottom:14px;
-    }
-    .submit-btn{
-      width:100%;padding:18px;border-radius:14px;border:none;
-      background:linear-gradient(135deg,#00C2FF,#0055ff);color:#fff;
-      font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;
-      cursor:pointer;box-shadow:0 6px 30px #00C2FF44;animation:pulse 2s infinite;-webkit-appearance:none;
-    }
+    .error-box{display:none;background:#ff444415;border:1px solid #ff444440;border-radius:10px;padding:12px 14px;font-size:12px;color:#ff6666;margin-bottom:14px}
+    .submit-btn{width:100%;padding:18px;border-radius:14px;border:none;background:linear-gradient(135deg,#00C2FF,#0055ff);color:#fff;font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;cursor:pointer;box-shadow:0 6px 30px #00C2FF44;animation:pulse 2s infinite;-webkit-appearance:none}
     .submit-btn:disabled{background:#ffffff12;color:#444;box-shadow:none;animation:none;cursor:not-allowed}
 
-    /* ── LISTA CONFIRMADOS ── */
+    /* ── LISTA DE CONFIRMADOS ── */
     .player-list{margin-top:28px;width:100%;max-width:420px}
-    .list-title{
-      font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;
-      color:#555;text-align:center;margin-bottom:14px;
-    }
-    .player-item{
-      display:flex;align-items:center;gap:12px;background:#ffffff08;
-      border:1px solid #ffffff0f;border-radius:12px;padding:11px 14px;margin-bottom:8px;
-    }
-    .player-avatar{
-      width:36px;height:36px;border-radius:50%;display:flex;align-items:center;
-      justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:16px;color:#fff;flex-shrink:0;
-    }
+    .list-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:#555;text-align:center;margin-bottom:14px}
+    .player-item{display:flex;align-items:center;gap:12px;background:#ffffff08;border:1px solid #ffffff0f;border-radius:12px;padding:11px 14px;margin-bottom:8px}
+    .player-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:16px;color:#fff;flex-shrink:0}
 
     /* ── SUCCESS ── */
     .success-confetti{position:relative;overflow:hidden}
-    .confetti-piece{
-      position:absolute;width:8px;height:8px;border-radius:2px;
-      animation:confettiFall 1.2s ease-in forwards;
-    }
+    .confetti-piece{position:absolute;width:8px;height:8px;border-radius:2px;animation:confettiFall 1.2s ease-in forwards}
 
     /* ── ADM PANEL ── */
-    .adm-toggle{
-      margin-top:40px;background:none;border:1px solid #ffffff10;
-      border-radius:10px;padding:8px 18px;color:#333;font-family:'Syne',sans-serif;
-      font-size:11px;letter-spacing:1px;cursor:pointer;transition:all 0.2s;
-    }
+    .adm-toggle{margin-top:40px;background:none;border:1px solid #ffffff10;border-radius:10px;padding:8px 18px;color:#333;font-family:'Syne',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;transition:all 0.2s}
     .adm-toggle:hover{border-color:#ffffff25;color:#555}
-
-    .adm-panel{
-      display:none;width:100%;max-width:420px;margin-top:14px;
-      background:linear-gradient(145deg,#0e0e1e,#111120);
-      border:1px solid #FFD70025;border-radius:20px;padding:22px 20px;
-    }
+    .adm-panel{display:none;width:100%;max-width:420px;margin-top:14px;background:linear-gradient(145deg,#0e0e1e,#111120);border:1px solid #FFD70025;border-radius:20px;padding:22px 20px}
     .adm-panel.open{display:block;animation:fadeUp 0.3s ease}
-    .adm-title{
-      font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;
-      color:#FFD70088;margin-bottom:16px;text-align:center;
-    }
+    .adm-title{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;color:#FFD70088;margin-bottom:16px;text-align:center}
     .adm-field{margin-bottom:14px}
     .adm-label{font-size:10px;font-weight:700;color:#444;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px}
-    .adm-input{
-      width:100%;background:#ffffff0d;border:1.5px solid #ffffff15;border-radius:10px;
-      padding:12px 14px;color:#fff;font-family:'Syne',sans-serif;font-size:13px;
-      outline:none;transition:border-color 0.2s;-webkit-appearance:none;
-    }
+    .adm-input{width:100%;background:#ffffff0d;border:1.5px solid #ffffff15;border-radius:10px;padding:12px 14px;color:#fff;font-family:'Syne',sans-serif;font-size:13px;outline:none;transition:border-color 0.2s;-webkit-appearance:none}
     .adm-input:focus{border-color:#FFD70055}
     .adm-input::placeholder{color:#333}
-
-    /* foto upload */
-    .photo-upload-area{
-      width:100%;border:2px dashed #FFD70025;border-radius:12px;
-      padding:20px;text-align:center;cursor:pointer;transition:all 0.2s;
-      background:#FFD70008;position:relative;overflow:hidden;
-    }
+    .photo-upload-area{width:100%;border:2px dashed #FFD70025;border-radius:12px;padding:20px;text-align:center;cursor:pointer;transition:all 0.2s;background:#FFD70008;position:relative;overflow:hidden}
     .photo-upload-area:hover{border-color:#FFD70055;background:#FFD70012}
-    .photo-upload-area input[type=file]{
-      position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;
-    }
-    .photo-preview{
-      width:100%;aspect-ratio:16/9;border-radius:10px;object-fit:cover;
-      display:none;margin-top:10px;border:1px solid #FFD70030;
-    }
+    .photo-upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+    .photo-preview{width:100%;aspect-ratio:16/9;border-radius:10px;object-fit:cover;display:none;margin-top:10px;border:1px solid #FFD70030}
     .photo-preview.visible{display:block}
     .upload-icon{font-size:28px;margin-bottom:6px;display:block}
     .upload-hint{font-size:11px;color:#444;letter-spacing:0.5px}
-
-    .adm-save-btn{
-      width:100%;padding:14px;border-radius:12px;border:none;margin-top:4px;
-      background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;
-      font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;
-      cursor:pointer;transition:opacity 0.2s;
-    }
+    .adm-save-btn{width:100%;padding:14px;border-radius:12px;border:none;margin-top:4px;background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;cursor:pointer;transition:opacity 0.2s}
     .adm-save-btn:hover{opacity:0.88}
-    .adm-clear-btn{
-      width:100%;padding:10px;border-radius:10px;border:1px solid #ff444430;
-      background:transparent;color:#ff4444aa;font-family:'Syne',sans-serif;
-      font-size:11px;letter-spacing:1px;cursor:pointer;margin-top:8px;transition:all 0.2s;
-    }
+    .adm-clear-btn{width:100%;padding:10px;border-radius:10px;border:1px solid #ff444430;background:transparent;color:#ff4444aa;font-family:'Syne',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;margin-top:8px;transition:all 0.2s}
     .adm-clear-btn:hover{background:#ff444415;border-color:#ff444460}
     .adm-msg{font-size:11px;text-align:center;margin-top:10px;min-height:16px;transition:color 0.3s}
 
     /* ── COUNTDOWN ── */
-    @keyframes countPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
-    @keyframes tickFlip{0%{transform:translateY(-4px);opacity:0}30%{transform:translateY(0);opacity:1}100%{transform:translateY(0);opacity:1}}
-
-    .countdown-wrap{
-      width:100%;max-width:420px;margin-bottom:28px;
-      border-radius:20px;overflow:hidden;
-      border:1px solid #00C2FF22;
-      box-shadow:0 8px 40px #00C2FF0f,0 2px 12px #00000050;
-      background:linear-gradient(145deg,#0a0f22,#0d1228);
-    }
-    .countdown-header{
-      padding:12px 18px;display:flex;align-items:center;justify-content:space-between;
-      border-bottom:1px solid #ffffff08;
-    }
+    .countdown-wrap{width:100%;max-width:420px;margin-bottom:28px;border-radius:20px;overflow:hidden;border:1px solid #00C2FF22;box-shadow:0 8px 40px #00C2FF0f,0 2px 12px #00000050;background:linear-gradient(145deg,#0a0f22,#0d1228)}
+    .countdown-header{padding:12px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff08}
     .countdown-label{font-size:9px;font-weight:700;color:#00C2FF88;letter-spacing:2.5px;text-transform:uppercase}
     .countdown-ball{font-size:18px;animation:trophyBounce 3s ease-in-out infinite}
-
     .countdown-body{padding:18px 16px 20px;text-align:center}
-    .countdown-date-str{
-      font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;
-      color:#ffffff30;margin-bottom:14px;
-    }
+    .countdown-date-str{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;color:#ffffff30;margin-bottom:14px}
     .countdown-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:6px}
-    .cd-block{
-      background:#ffffff06;border:1px solid #ffffff0d;border-radius:12px;
-      padding:10px 4px 8px;
-    }
-    .cd-num{
-      font-family:'Bebas Neue',sans-serif;font-size:32px;line-height:1;
-      color:#fff;display:block;
-    }
+    .cd-block{background:#ffffff06;border:1px solid #ffffff0d;border-radius:12px;padding:10px 4px 8px}
+    .cd-num{font-family:'Bebas Neue',sans-serif;font-size:32px;line-height:1;color:#fff;display:block}
     .cd-lbl{font-size:9px;font-weight:700;color:#555;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px}
-    .countdown-happening{
-      font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;
-      background:linear-gradient(90deg,#00C2FF,#2ECC71);
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-      animation:countPulse 1.5s ease-in-out infinite;padding:10px 0 4px;
-    }
+    .countdown-happening{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;background:linear-gradient(90deg,#00C2FF,#2ECC71);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:countPulse 1.5s ease-in-out infinite;padding:10px 0 4px}
     .countdown-soon{font-size:11px;color:#00C2FF66;letter-spacing:1px;margin-top:6px}
   </style>
 </head>
@@ -283,15 +151,15 @@
       </div>
     </div>
   </div>
+
+  <!-- CAMPEÃO -->
   <div id="champ-section" style="width:100%;max-width:420px;margin-bottom:28px;display:none" class="fu2">
     <div class="champ-banner">
       <div class="champ-banner-header">
         <div class="champ-banner-label">🏆 Campeão do último baba</div>
         <div class="champ-trophy">🏆</div>
       </div>
-      <div class="champ-photo-wrap" id="champ-photo-wrap">
-        <!-- preenchido por JS -->
-      </div>
+      <div class="champ-photo-wrap" id="champ-photo-wrap"></div>
       <div class="champ-info">
         <div class="champ-badge">CAMPEÃO</div>
         <div class="champ-name" id="champ-name-display">—</div>
@@ -300,8 +168,32 @@
     </div>
   </div>
 
-  <!-- FORMULÁRIO -->
-  <div class="card fu3">
+  <!-- BARRA DE CAPACIDADE (sempre visível) -->
+  <div class="capacity-wrap fu2" id="capacity-section">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <span id="capacity-label" style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#2ECC71">Vagas disponíveis</span>
+      <span id="capacity-count" style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:#2ECC71">0/28</span>
+    </div>
+    <div class="capacity-bar-track">
+      <div class="capacity-bar-fill" id="capacity-bar" style="width:0%;background:#2ECC71"></div>
+    </div>
+    <div id="capacity-sub" style="font-size:11px;color:#555;text-align:center"></div>
+  </div>
+
+  <!-- LISTA FECHADA (aparece quando 28 confirmados) -->
+  <div class="lista-fechada-card fu3" id="lista-fechada-card" style="display:none">
+    <span class="lock-icon">🔒</span>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:3px;color:#ff6666;margin-bottom:10px">LISTA FECHADA</div>
+    <div style="font-size:14px;color:#aa4444;line-height:1.7;margin-bottom:20px">
+      O baba já está com <strong style="color:#ff6666">28 jogadores</strong> confirmados.<br>Não há mais vagas no momento!
+    </div>
+    <div style="background:#ff444415;border:1px solid #ff444435;border-radius:14px;padding:16px 18px;font-size:12px;color:#ff8888;line-height:1.8">
+      💡 Fique de olho no grupo — se alguém desistir, uma vaga abre automaticamente e você poderá confirmar!
+    </div>
+  </div>
+
+  <!-- FORMULÁRIO (aparece quando há vagas) -->
+  <div class="card fu3" id="form-card">
     <div id="form-area">
       <div class="section-label">Seu nome</div>
       <input class="name-input" id="inp-name" placeholder="Como te chamam?" maxlength="30" autocomplete="off" autocorrect="off" spellcheck="false"/>
@@ -334,8 +226,6 @@
   <button class="adm-toggle fu4" id="adm-toggle-btn">⚙️ ADM</button>
 
   <div class="adm-panel" id="adm-panel">
-
-    <!-- TELA DE SENHA -->
     <div id="adm-lock" style="text-align:center;padding:8px 0 4px">
       <div style="font-size:28px;margin-bottom:8px">🔒</div>
       <div style="font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;color:#FFD70088;margin-bottom:14px">ACESSO RESTRITO</div>
@@ -344,55 +234,51 @@
       <button class="adm-save-btn" id="adm-unlock-btn" style="font-size:16px;padding:12px">ENTRAR 🔑</button>
     </div>
 
-    <!-- CONTEÚDO ADM (oculto até autenticar) -->
     <div id="adm-content" style="display:none">
-    <div class="adm-title">🏆 DEFINIR CAMPEÃO</div>
-
-    <div class="adm-field">
-      <div class="adm-label">Nome do Campeão / Time</div>
-      <input class="adm-input" id="adm-champ-name" placeholder="Ex: Time do Matheus" maxlength="40" autocomplete="off"/>
-    </div>
-
-    <div class="adm-field">
-      <div class="adm-label">Data do Baba</div>
-      <input class="adm-input" id="adm-champ-date" placeholder="Ex: 26 de Abril de 2025" maxlength="40" autocomplete="off"/>
-    </div>
-
-    <div class="adm-field">
-      <div class="adm-label">Foto do Campeão</div>
-      <div class="photo-upload-area" id="photo-upload-area">
-        <input type="file" id="adm-photo-input" accept="image/*"/>
-        <span class="upload-icon">📸</span>
-        <div class="upload-hint">Toque para escolher uma foto</div>
+      <div class="adm-title">🏆 DEFINIR CAMPEÃO</div>
+      <div class="adm-field">
+        <div class="adm-label">Nome do Campeão / Time</div>
+        <input class="adm-input" id="adm-champ-name" placeholder="Ex: Time do Matheus" maxlength="40" autocomplete="off"/>
       </div>
-      <img class="photo-preview" id="photo-preview" alt="Preview da foto"/>
+      <div class="adm-field">
+        <div class="adm-label">Data do Baba</div>
+        <input class="adm-input" id="adm-champ-date" placeholder="Ex: 26 de Abril de 2025" maxlength="40" autocomplete="off"/>
+      </div>
+      <div class="adm-field">
+        <div class="adm-label">Foto do Campeão</div>
+        <div class="photo-upload-area" id="photo-upload-area">
+          <input type="file" id="adm-photo-input" accept="image/*"/>
+          <span class="upload-icon">📸</span>
+          <div class="upload-hint">Toque para escolher uma foto</div>
+        </div>
+        <img class="photo-preview" id="photo-preview" alt="Preview da foto"/>
+      </div>
+      <button class="adm-save-btn" id="adm-save-btn">SALVAR CAMPEÃO 🏆</button>
+      <button class="adm-clear-btn" id="adm-clear-btn">Remover campeão atual</button>
+      <div class="adm-msg" id="adm-msg"></div>
     </div>
-
-    <button class="adm-save-btn" id="adm-save-btn">SALVAR CAMPEÃO 🏆</button>
-    <button class="adm-clear-btn" id="adm-clear-btn">Remover campeão atual</button>
-    <div class="adm-msg" id="adm-msg"></div>
-    </div><!-- /adm-content -->
   </div>
 
   <!-- LISTA DE CONFIRMADOS -->
   <div class="player-list fu4">
-    <div class="list-title">QUEM JÁ CONFIRMOU</div>
+    <div class="list-title" id="list-title-el">QUEM JÁ CONFIRMOU</div>
     <div id="player-list-items">
       <div style="text-align:center;color:#333;font-size:13px;padding:20px">Carregando...</div>
     </div>
   </div>
 
 <script>
+// ── CONFIG ────────────────────────────────────────────────────────────────────
+const MAX_JOGADORES = 28;
+
 // ── CONTAGEM REGRESSIVA ───────────────────────────────────────────────────────
 function getNextBaba() {
   const now = new Date();
   const next = new Date(now);
-  // Próximo sábado
-  const day = now.getDay(); // 0=dom, 6=sab
+  const day = now.getDay();
   const daysUntilSat = (6 - day + 7) % 7 || 7;
   next.setDate(now.getDate() + daysUntilSat);
   next.setHours(16, 0, 0, 0);
-  // Se hoje é sábado mas já passou das 17h (1h de baba), pula pro próximo
   if (day === 6 && now >= new Date(next.getTime() + 60*60*1000)) {
     next.setDate(next.getDate() + 7);
   }
@@ -401,47 +287,38 @@ function getNextBaba() {
 
 const MESES = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
 const DIAS_SEMANA = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
-
 function pad(n){ return String(n).padStart(2,"0"); }
 
 function updateCountdown() {
   const now = new Date();
   const target = getNextBaba();
   const diff = target - now;
-
   const dateStr = `${DIAS_SEMANA[target.getDay()]}, ${target.getDate()} de ${MESES[target.getMonth()]} — 16:00`;
   document.getElementById("cd-date-str").textContent = dateStr;
-
-  // Durante o baba (das 16h às 17h do sábado)
   const day = now.getDay();
   const h = now.getHours();
   const isBabaTime = day === 6 && h === 16;
-
   if (isBabaTime) {
     document.getElementById("cd-normal").style.display = "none";
     document.getElementById("cd-happening").style.display = "block";
     return;
   }
-
   document.getElementById("cd-normal").style.display = "block";
   document.getElementById("cd-happening").style.display = "none";
-
   const totalSec = Math.floor(diff / 1000);
   const d = Math.floor(totalSec / 86400);
   const hh = Math.floor((totalSec % 86400) / 3600);
   const mm = Math.floor((totalSec % 3600) / 60);
   const ss = totalSec % 60;
-
   document.getElementById("cd-d").textContent = pad(d);
   document.getElementById("cd-h").textContent = pad(hh);
   document.getElementById("cd-m").textContent = pad(mm);
   document.getElementById("cd-s").textContent = pad(ss);
 }
-
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-// ── FIREBASE ─────────────────────────────────────────────────────────────────
+// ── FIREBASE ──────────────────────────────────────────────────────────────────
 const POS_COLORS = {
   "Goleiro":"#FF6B35","Lateral":"#F1C40F",
   "Defesa":"#00C2FF","Meio-campo":"#9B59B6","Atacante":"#2ECC71"
@@ -463,7 +340,42 @@ const champRef   = db.ref("campeao");
 let players = [];
 let currentChamp = null;
 
-// ── CAMPEÃO — escuta em tempo real ───────────────────────────────────────────
+// ── CAPACIDADE ────────────────────────────────────────────────────────────────
+function updateCapacityUI(presentes) {
+  const count = presentes.length;
+  const vagas = MAX_JOGADORES - count;
+  const cheia = count >= MAX_JOGADORES;
+  const pct = Math.min((count / MAX_JOGADORES) * 100, 100);
+  const barColor = cheia ? '#ff4444' : count >= 24 ? '#FFB800' : '#2ECC71';
+
+  // Barra
+  document.getElementById("capacity-bar").style.width = pct + "%";
+  document.getElementById("capacity-bar").style.background = barColor;
+  document.getElementById("capacity-count").textContent = count + "/" + MAX_JOGADORES;
+  document.getElementById("capacity-count").style.color = barColor;
+  document.getElementById("capacity-label").style.color = barColor;
+
+  if (cheia) {
+    document.getElementById("capacity-label").textContent = "🔒 Lista fechada";
+    document.getElementById("capacity-sub").textContent = "Baba lotado! Aguarde uma vaga.";
+    document.getElementById("capacity-sub").style.color = "#ff6666bb";
+    // Mostrar card fechado, esconder form
+    document.getElementById("lista-fechada-card").style.display = "block";
+    document.getElementById("form-card").style.display = "none";
+  } else {
+    document.getElementById("capacity-label").textContent = "⚽ Vagas disponíveis";
+    document.getElementById("capacity-sub").textContent =
+      count >= 24
+        ? `⚠️ Últimas ${vagas} vaga${vagas===1?'':'s'}! Confirme logo.`
+        : `${vagas} vaga${vagas===1?'':'s'} restante${vagas===1?'':'s'}`;
+    document.getElementById("capacity-sub").style.color = count >= 24 ? "#FFB800bb" : "#555";
+    // Mostrar form, esconder card fechado
+    document.getElementById("lista-fechada-card").style.display = "none";
+    document.getElementById("form-card").style.display = "block";
+  }
+}
+
+// ── CAMPEÃO ───────────────────────────────────────────────────────────────────
 function renderChampion(ch) {
   currentChamp = ch;
   const section = document.getElementById("champ-section");
@@ -482,22 +394,26 @@ function renderChampion(ch) {
   document.getElementById("champ-date-display").textContent = ch.dateFormatted || ch.date || "";
 }
 
-champRef.on("value", snap => {
-  renderChampion(snap.val());
-});
+champRef.on("value", snap => { renderChampion(snap.val()); });
 
-// ── LISTA DE CONFIRMADOS — escuta em tempo real ───────────────────────────────
-function renderList() {
-  const presentes = players.filter(p => p.presente === true)
-    .sort((a,b) => (a.confirmedAt||0) - (b.confirmedAt||0));
+// ── LISTA DE CONFIRMADOS ──────────────────────────────────────────────────────
+function renderList(presentes) {
   const el = document.getElementById("player-list-items");
+  const titleEl = document.getElementById("list-title-el");
+  const cheia = presentes.length >= MAX_JOGADORES;
+
+  titleEl.innerHTML = cheia
+    ? `<span style="color:#ff6666">🔒 LISTA FECHADA — ${presentes.length}/${MAX_JOGADORES}</span>`
+    : `QUEM JÁ CONFIRMOU (${presentes.length}/${MAX_JOGADORES})`;
+
   if (!presentes.length) {
     el.innerHTML = '<div style="text-align:center;color:#333;font-size:13px;padding:20px">Nenhum jogador confirmou ainda</div>';
     return;
   }
-  el.innerHTML = presentes.map(p => {
+  el.innerHTML = presentes.map((p, idx) => {
     const c = POS_COLORS[p.position] || "#888";
     return `<div class="player-item">
+      <div style="width:24px;height:24px;border-radius:50%;background:#2ECC7120;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:12px;color:#2ECC71;flex-shrink:0">${idx+1}</div>
       <div class="player-avatar" style="background:linear-gradient(135deg,${c},${c}88)">${(p.name||"?").charAt(0)}</div>
       <div>
         <div style="font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px">${p.name}</div>
@@ -507,13 +423,18 @@ function renderList() {
   }).join('');
 }
 
+// ── ESCUTA FIREBASE ───────────────────────────────────────────────────────────
 playersRef.on("value", snap => {
   const data = snap.val() || {};
   players = Object.entries(data).map(([id, val]) => ({id, ...val}));
-  renderList();
+  const presentes = players
+    .filter(p => p.presente === true)
+    .sort((a, b) => (a.confirmedAt||0) - (b.confirmedAt||0));
+  updateCapacityUI(presentes);
+  renderList(presentes);
 });
 
-// ── FORMULÁRIO ───────────────────────────────────────────────────────────────
+// ── FORMULÁRIO ────────────────────────────────────────────────────────────────
 let selectedPos = null;
 
 function validate() {
@@ -535,6 +456,13 @@ document.getElementById("submit-btn").addEventListener("click", async () => {
   const name = document.getElementById("inp-name").value.trim();
   if (!name || !selectedPos) return;
 
+  // Verificar capacidade antes de confirmar
+  const presentes = players.filter(p => p.presente === true);
+  if (presentes.length >= MAX_JOGADORES) {
+    updateCapacityUI(presentes);
+    return;
+  }
+
   const btn = document.getElementById("submit-btn");
   btn.textContent = "VERIFICANDO..."; btn.disabled = true;
 
@@ -548,35 +476,23 @@ document.getElementById("submit-btn").addEventListener("click", async () => {
 
   document.getElementById("error-box").style.display = "none";
 
-  // Atualiza presença no Firebase
   await playersRef.child(existing.id).update({
     position: selectedPos,
     presente: true,
     confirmedAt: Date.now()
   });
 
-  // Mostra sucesso
   document.getElementById("form-area").style.display = "none";
   const successArea = document.getElementById("success-area");
   successArea.style.display = "block";
   document.getElementById("success-name").textContent = "Bem-vindo, " + existing.name + "! 👋";
 
-  // confete simples
+  // confete
   const colors = ["#FFD700","#00C2FF","#2ECC71","#FF6B35","#9B59B6","#fff"];
-  for(let i = 0; i < 18; i++){
+  for (let i = 0; i < 18; i++) {
     const c = document.createElement("div");
     c.className = "confetti-piece";
-    c.style.cssText = `
-      background:${colors[i%colors.length]};
-      left:${Math.random()*100}%;
-      top:${Math.random()*30}%;
-      animation-delay:${Math.random()*0.6}s;
-      animation-duration:${0.9+Math.random()*0.8}s;
-      transform:rotate(${Math.random()*360}deg);
-      width:${6+Math.random()*6}px;
-      height:${6+Math.random()*6}px;
-      border-radius:${Math.random()>0.5?'50%':'2px'};
-    `;
+    c.style.cssText = `background:${colors[i%colors.length]};left:${Math.random()*100}%;top:${Math.random()*30}%;animation-delay:${Math.random()*0.6}s;animation-duration:${0.9+Math.random()*0.8}s;transform:rotate(${Math.random()*360}deg);width:${6+Math.random()*6}px;height:${6+Math.random()*6}px;border-radius:${Math.random()>0.5?'50%':'2px'};`;
     successArea.appendChild(c);
     setTimeout(() => c.remove(), 2000);
   }
@@ -595,7 +511,6 @@ let pendingPhotoB64 = null;
 let admUnlocked = false;
 const ADM_PASS = "baba123";
 
-// Desbloquear com senha
 document.getElementById("adm-unlock-btn").addEventListener("click", checkAdmPass);
 document.getElementById("adm-password").addEventListener("keydown", e => {
   if (e.key === "Enter") checkAdmPass();
@@ -607,7 +522,6 @@ function checkAdmPass() {
     admUnlocked = true;
     document.getElementById("adm-lock").style.display = "none";
     document.getElementById("adm-content").style.display = "block";
-    // Preencher campos com dados atuais
     if (currentChamp) {
       admNameInp.value = currentChamp.name || "";
       admDateInp.value = currentChamp.dateFormatted || currentChamp.date || "";
@@ -662,30 +576,21 @@ admPhotoInp.addEventListener("change", () => {
 document.getElementById("adm-save-btn").addEventListener("click", () => {
   const name = admNameInp.value.trim();
   if (!name) { showAdmMsg("Informe o nome do campeão", "#FFD700"); return; }
-  const champion = {
-    name,
-    dateFormatted: admDateInp.value.trim(),
-    date: admDateInp.value.trim(),
-    photo: pendingPhotoB64 || null
-  };
-  champRef.set(champion);
+  champRef.set({ name, dateFormatted: admDateInp.value.trim(), date: admDateInp.value.trim(), photo: pendingPhotoB64 || null });
   showAdmMsg("Campeão salvo com sucesso! ✅", "#2ECC71");
 });
 
 document.getElementById("adm-clear-btn").addEventListener("click", () => {
   champRef.remove();
-  admNameInp.value = "";
-  admDateInp.value = "";
+  admNameInp.value = ""; admDateInp.value = "";
   pendingPhotoB64 = null;
-  photoPreview.src = "";
-  photoPreview.classList.remove("visible");
+  photoPreview.src = ""; photoPreview.classList.remove("visible");
   document.querySelector(".upload-hint").textContent = "Toque para escolher uma foto";
   showAdmMsg("Campeão removido 🗑️", "#ff6666");
 });
 
 function showAdmMsg(text, color) {
-  admMsg.textContent = text;
-  admMsg.style.color = color;
+  admMsg.textContent = text; admMsg.style.color = color;
   setTimeout(() => { admMsg.textContent = ""; }, 3000);
 }
 </script>
