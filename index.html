@@ -20,6 +20,8 @@
     @keyframes spin{to{transform:rotate(360deg)}}
     @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
     @keyframes pulse{0%,100%{box-shadow:0 0 0 0 #2ECC7144}50%{box-shadow:0 0 0 8px #2ECC7100}}
+    @keyframes pulsered{0%,100%{box-shadow:0 0 0 0 #ff444444}50%{box-shadow:0 0 0 8px #ff444400}}
+    @keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
     .fu{animation:fadeUp 0.35s ease forwards}
 
     .header{padding:28px 16px 0;background:linear-gradient(180deg,#0d1b3e 80%,transparent);position:sticky;top:0;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);z-index:100;border-bottom:1px solid #ffffff0f}
@@ -78,18 +80,40 @@
     .empty{text-align:center;padding:60px 20px;color:#444}
     .pending-badge{font-size:9px;background:#FFD70020;color:#FFD700;border-radius:4px;padding:2px 8px;font-weight:700;letter-spacing:0.5px}
     .live-dot{width:7px;height:7px;border-radius:50%;background:#2ECC71;animation:pulse 1.5s infinite;display:inline-block;margin-right:4px}
+
+    /* Capacity bar */
+    .capacity-bar-wrap{margin-bottom:18px}
+    .capacity-bar-track{height:10px;background:#ffffff0d;border-radius:6px;overflow:hidden;margin-top:6px;margin-bottom:4px}
+    .capacity-bar-fill{height:100%;border-radius:6px;transition:width 0.6s cubic-bezier(.22,1,.36,1)}
+    .lotado-banner{background:linear-gradient(135deg,#ff4444,#cc0000);border-radius:14px;padding:18px 20px;margin-bottom:18px;text-align:center;box-shadow:0 4px 30px #ff444444}
+    .lotado-dot{width:9px;height:9px;border-radius:50%;background:#ff4444;animation:pulsered 1.2s infinite;display:inline-block;margin-right:6px}
   </style>
 </head>
 <body>
-<div id="login-screen" style="display:none;position:fixed;inset:0;background:radial-gradient(ellipse at 30% 0%,#0d1b3e,#080c1a 60%);z-index:500;flex-direction:column;align-items:center;justify-content:center;padding:30px">
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen" style="display:none;position:fixed;inset:0;background:radial-gradient(ellipse at 30% 0%,#0d1b3e,#080c1a 60%);z-index:500;flex-direction:column;align-items:center;justify-content:center;padding:30px;overflow-y:auto">
   <div style="font-size:56px;margin-bottom:10px">⚽</div>
   <div style="font-family:'Bebas Neue',sans-serif;font-size:38px;letter-spacing:3px;background:linear-gradient(90deg,#fff 40%,#00C2FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px">ARENA PIB</div>
   <div style="font-size:13px;color:#666;letter-spacing:1px;margin-bottom:40px">Baba da PIB</div>
 
   <div style="width:100%;max-width:380px;display:flex;flex-direction:column;gap:14px">
-    <!-- JOGADOR -->
-    <div style="background:linear-gradient(145deg,#1a1a2e,#131325);border:1px solid #ffffff14;border-radius:20px;padding:22px 20px">
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:#fff;margin-bottom:14px">👤 SOU JOGADOR</div>
+
+    <!-- LISTA FECHADA (mostrado quando lotado) -->
+    <div id="lista-fechada-login" style="display:none;background:linear-gradient(135deg,#2a0808,#1a0404);border:2px solid #ff444460;border-radius:20px;padding:24px 20px;text-align:center">
+      <div style="font-size:48px;margin-bottom:12px">🔒</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;color:#ff6666;margin-bottom:8px">LISTA FECHADA</div>
+      <div style="font-size:13px;color:#aa5555;line-height:1.6;margin-bottom:16px">O baba já atingiu <strong style="color:#ff6666">28 jogadores</strong>.<br>A lista está completa!</div>
+      <div style="background:#ff444415;border:1px solid #ff444430;border-radius:12px;padding:12px 16px;font-size:12px;color:#ff8888;line-height:1.7">
+        Fique de olho no grupo — se alguém desistir, uma vaga abre automaticamente. 👀
+      </div>
+    </div>
+
+    <!-- JOGADOR (mostrado quando há vagas) -->
+    <div id="jogador-login-card" style="background:linear-gradient(145deg,#1a1a2e,#131325);border:1px solid #ffffff14;border-radius:20px;padding:22px 20px">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:#fff;margin-bottom:6px">👤 SOU JOGADOR</div>
+      <!-- Contador de vagas -->
+      <div id="login-vagas-info" style="margin-bottom:14px"></div>
       <input id="login-name" placeholder="Digite seu nome" maxlength="30" autocomplete="off" autocorrect="off" spellcheck="false"
         style="width:100%;background:#ffffff0d;border:1.5px solid #ffffff18;border-radius:10px;padding:12px 14px;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1px;outline:none;margin-bottom:10px;box-sizing:border-box"/>
       <div id="pos-grid-login" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
@@ -128,6 +152,7 @@
   </div>
 </div>
 
+<!-- SUCCESS SCREEN -->
 <div id="success-screen" style="display:none;position:fixed;inset:0;background:radial-gradient(ellipse at 30% 0%,#0d1b3e,#080c1a 60%);z-index:500;flex-direction:column;align-items:center;justify-content:center;padding:30px;text-align:center">
   <div style="font-size:64px;margin-bottom:16px">🎉</div>
   <div id="success-player-name" style="font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:2px;color:#2ECC71;margin-bottom:8px"></div>
@@ -138,9 +163,13 @@
   </div>
 </div>
 
+<!-- APP -->
 <div id="app"><div class="loading-screen"><div class="big-spinner"></div><div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:#555">CARREGANDO...</div></div></div>
 
 <script>
+// ── CONFIG ────────────────────────────────────────────────────────────────────
+const MAX_JOGADORES = 28;
+
 // ── FIREBASE ──────────────────────────────────────────────────────────────────
 firebase.initializeApp({
   apiKey: "AIzaSyDJ3BB-IRyh9DIrDR15qlmWflzra7LGVj0",
@@ -154,20 +183,26 @@ firebase.initializeApp({
 const db = firebase.database();
 const playersRef = db.ref("jogadores");
 
-// ── POSIÇÕES — agora com Lateral ─────────────────────────────────────────────
+// ── POSIÇÕES ──────────────────────────────────────────────────────────────────
 const POSITIONS = ["Goleiro","Lateral","Defesa","Meio-campo","Atacante"];
 const POS_COLORS = {
   "Goleiro":    {bg:"#FF6B35", glow:"#FF6B3530"},
-  "Lateral":    {bg:"#00D4AA", glow:"#00D4AA30"},   // 🏃 verde-água
+  "Lateral":    {bg:"#00D4AA", glow:"#00D4AA30"},
   "Defesa":     {bg:"#00C2FF", glow:"#00C2FF30"},
   "Meio-campo": {bg:"#9B59B6", glow:"#9B59B630"},
   "Atacante":   {bg:"#2ECC71", glow:"#2ECC7130"}
 };
 const QUALITY_LABELS = {1:"Fraco",2:"Regular",3:"Bom",4:"Ótimo",5:"Elite"};
-const TEAM_THEMES = [{name:"Time A",color:"#FF4444",emoji:"🔴"},{name:"Time B",color:"#4488FF",emoji:"🔵"},{name:"Time C",color:"#44CC44",emoji:"🟢"},{name:"Time D",color:"#FFB800",emoji:"🟡"}];
+const TEAM_THEMES = [
+  {name:"Time A",color:"#FF4444",emoji:"🔴"},
+  {name:"Time B",color:"#4488FF",emoji:"🔵"},
+  {name:"Time C",color:"#44CC44",emoji:"🟢"},
+  {name:"Time D",color:"#FFB800",emoji:"🟡"}
+];
 
 let state = {tab:"jogadores",players:[],loading:true,modal:null,filterPos:"Todos",numTeams:2,selected:new Set(),drawn:null,drawing:false};
 
+// ── HELPERS ───────────────────────────────────────────────────────────────────
 function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
 function snakeDraft(sorted, teams, maxPerTeam) {
@@ -191,41 +226,62 @@ function snakeDraft(sorted, teams, maxPerTeam) {
 function balancedDraw(players, n) {
   const teams = TEAM_THEMES.slice(0, n).map(t => ({ ...t, players: [], total: 0 }));
   const maxPerTeam = n === 4 ? 7 : null;
-
   const byPos = {};
   POSITIONS.forEach(pos => { byPos[pos] = []; });
   players.forEach(p => { (byPos[p.position] || (byPos["Outros"] = byPos["Outros"]||[])).push(p); });
-
   function sortByQuality(arr) {
     const g = {};
     arr.forEach(p => { if (!g[p.quality]) g[p.quality] = []; g[p.quality].push(p); });
     Object.keys(g).forEach(q => { g[q] = shuffle(g[q]); });
     return [5,4,3,2,1].flatMap(q => g[q] || []);
   }
-
-  // 1º — Defensores em snake draft
   const defensores = sortByQuality([...(byPos["Defesa"]||[]), ...(byPos["Lateral"]||[])]);
   snakeDraft(defensores, teams, maxPerTeam);
-
-  // 2º — Goleiros em snake draft
   const goleiros = sortByQuality(byPos["Goleiro"] || []);
   snakeDraft(goleiros, teams, maxPerTeam);
-
-  // 3º — Restantes
-  const resto = sortByQuality([
-    ...(byPos["Meio-campo"] || []),
-    ...(byPos["Atacante"] || []),
-    ...(byPos["Outros"] || [])
-  ]);
+  const resto = sortByQuality([...(byPos["Meio-campo"]||[]), ...(byPos["Atacante"]||[]), ...(byPos["Outros"]||[])]);
   snakeDraft(resto, teams, maxPerTeam);
-
   return teams;
 }
 
 function posColor(pos){return POS_COLORS[pos]||{bg:"#888",glow:"#88888830"};}
 function stars(val){return[1,2,3,4,5].map(s=>`<span style="font-size:16px;color:${s<=(val||0)?'#FFD700':'#2a2a3a'};text-shadow:${s<=(val||0)?'0 0 8px #FFD70099':'none'}">★</span>`).join('');}
 
-function playerCardHTML(p,selectable=false){
+function getPresentes(){return state.players.filter(p=>p.presente===true);}
+function isListaCheiaFn(){return getPresentes().length >= MAX_JOGADORES;}
+
+// ── CAPACITY BAR HTML ─────────────────────────────────────────────────────────
+function capacityBarHTML(presentes, compact=false){
+  const pct = Math.min((presentes / MAX_JOGADORES) * 100, 100);
+  const vagas = MAX_JOGADORES - presentes;
+  const cheia = presentes >= MAX_JOGADORES;
+  const barColor = cheia ? '#ff4444' : presentes >= 24 ? '#FFB800' : '#2ECC71';
+  if(compact){
+    return `<div style="display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;color:${barColor}">
+      <span>${cheia?'🔒 LISTA CHEIA':'🟢 '+(vagas)+' VAGA'+(vagas===1?'':'S')}</span>
+      <div style="flex:1;height:6px;background:#ffffff0d;border-radius:3px;overflow:hidden">
+        <div style="height:100%;width:${pct}%;background:${barColor};border-radius:3px;transition:width 0.5s"></div>
+      </div>
+      <span style="color:#aaa">${presentes}/${MAX_JOGADORES}</span>
+    </div>`;
+  }
+  return `<div class="capacity-bar-wrap">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+      <span style="font-size:11px;font-weight:700;color:${barColor};text-transform:uppercase;letter-spacing:1px">
+        ${cheia?'🔒 LISTA FECHADA — 28/28':'⚽ Vagas: '+vagas+' restante'+(vagas===1?'':'s')}
+      </span>
+      <span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:${barColor}">${presentes}/${MAX_JOGADORES}</span>
+    </div>
+    <div class="capacity-bar-track">
+      <div class="capacity-bar-fill" style="width:${pct}%;background:linear-gradient(90deg,${barColor},${barColor}bb)"></div>
+    </div>
+    ${cheia?`<div style="font-size:11px;color:#ff6666bb;margin-top:4px;text-align:center">🔴 Baba lotado! Retire alguém para abrir vaga.</div>`:
+    presentes>=24?`<div style="font-size:11px;color:#FFB800bb;margin-top:4px">⚠️ Quase lá! Só ${vagas} vaga${vagas===1?'':'s'} restante${vagas===1?'':'s'}.</div>`:''}
+  </div>`;
+}
+
+// ── PLAYER CARD ───────────────────────────────────────────────────────────────
+function playerCardHTML(p, selectable=false){
   const c=posColor(p.position);const sel=selectable&&state.selected.has(p.id);
   const pending=!p.quality||p.quality===0;
   const starsHTML=pending
@@ -249,6 +305,7 @@ function playerCardHTML(p,selectable=false){
   </div>`;
 }
 
+// ── MODAL ─────────────────────────────────────────────────────────────────────
 function modalHTML(){
   const p=state.modal;const pos=p?.position||"Goleiro";const c=posColor(pos);
   return `<div class="overlay" id="modal-overlay">
@@ -268,14 +325,17 @@ function modalHTML(){
   </div>`;
 }
 
+// ── RENDER ────────────────────────────────────────────────────────────────────
 function render(){
-  const {tab,players,loading,filterPos,numTeams,selected,drawn,drawing}=state;
+  const {tab,players,loading,filterPos,numTeams,drawn,drawing}=state;
   if(loading){document.getElementById("app").innerHTML=`<div class="loading-screen"><div class="big-spinner"></div><div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:#555">CARREGANDO...</div></div>`;return;}
-  const selPlayers=players.filter(p=>selected.has(p.id));
-  const selAvg=selPlayers.length?(selPlayers.reduce((s,p)=>s+(p.quality||0),0)/selPlayers.length).toFixed(1):"0";
-  const filteredPlayers=filterPos==="Todos"?players:players.filter(p=>p.position===filterPos);
-  const pendingCount=players.filter(p=>!p.quality||p.quality===0).length;
-  const presenteCount=players.filter(p=>p.presente===true).length;
+
+  const presentes = getPresentes();
+  const presenteCount = presentes.length;
+  const listaCheia = isListaCheiaFn();
+  const filteredPlayers = filterPos==="Todos" ? players : players.filter(p=>p.position===filterPos);
+  const pendingCount = players.filter(p=>!p.quality||p.quality===0).length;
+  const presentesComNota = presentes.filter(p=>p.quality>0);
 
   let html=`<div class="header"><div class="header-inner">
     <div style="display:flex;align-items:flex-end;justify-content:space-between;padding-bottom:2px">
@@ -283,6 +343,7 @@ function render(){
         <div class="logo">⚽ ARENA PIB</div>
         <div style="display:flex;align-items:center;gap:8px;margin-top:3px">
           <span style="font-size:11px;color:#555;letter-spacing:1px;text-transform:uppercase">${players.length} jogadores</span>
+          ${listaCheia?`<span style="display:inline-flex;align-items:center;background:#ff444420;border:1px solid #ff444440;border-radius:8px;padding:2px 8px;font-size:10px;font-weight:700;color:#ff6666;letter-spacing:0.5px"><span class="lotado-dot"></span>LOTADO</span>`:''}
         </div>
       </div>
       <div style="display:flex;gap:7px;align-items:center">
@@ -292,31 +353,48 @@ function render(){
     </div>
     <div class="tabs">
       <button class="tab-btn ${tab==='jogadores'?'active':''}" data-action="tab" data-tab="jogadores">👤 ELENCO${pendingCount>0?` <span style="background:#FFD700;color:#000;border-radius:10px;padding:1px 6px;font-size:10px">${pendingCount}</span>`:''}</button>
-      <button class="tab-btn ${tab==='presenca'?'active':''}" data-action="tab" data-tab="presenca">✅ PRESENÇA${presenteCount>0?` <span style="background:#2ECC71;color:#000;border-radius:10px;padding:1px 6px;font-size:10px">${presenteCount}</span>`:''}</button>
+      <button class="tab-btn ${tab==='presenca'?'active':''}" data-action="tab" data-tab="presenca">✅ PRESENÇA${presenteCount>0?` <span style="background:${listaCheia?'#ff4444':'#2ECC71'};color:#000;border-radius:10px;padding:1px 6px;font-size:10px">${presenteCount}</span>`:''}</button>
       <button class="tab-btn ${tab==='sorteio'?'active':''}" data-action="tab" data-tab="sorteio">⚽ SORTEAR</button>
     </div>
   </div></div><div class="content">`;
 
+  // ── ABA ELENCO ──
   if(tab==="jogadores"){
     html+=`<div class="filter-bar"><button class="fbtn ${filterPos==='Todos'?'active':''}" style="--c:#00C2FF" data-action="filter" data-pos="Todos">Todos</button>${POSITIONS.map(pos=>{const c=posColor(pos);return `<button class="fbtn ${filterPos===pos?'active':''}" style="--c:${c.bg}" data-action="filter" data-pos="${pos}">${pos}</button>`;}).join('')}</div>`;
     if(!filteredPlayers.length){html+=`<div class="empty"><div style="font-size:40px;margin-bottom:12px">⚽</div><div style="font-weight:700;font-size:15px">Nenhum jogador ainda</div></div>`;}
     else filteredPlayers.forEach(p=>{html+=playerCardHTML(p,false);});
   }
 
+  // ── ABA PRESENÇA ──
   if(tab==="presenca"){
-    const presentes=players.filter(p=>p.presente===true).sort((a,b)=>(a.confirmedAt||0)-(b.confirmedAt||0));
-    const ausentes=players.filter(p=>!p.presente);
-    html+=`<div style="background:#2ECC7110;border:1px solid #2ECC7130;border-radius:14px;padding:14px 16px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between">
-      <div><div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:#2ECC71;line-height:1">${presentes.length}</div><div style="font-size:11px;color:#2ECC71bb;font-weight:700;text-transform:uppercase;letter-spacing:1px">Confirmados</div></div>
+    const presentesOrdenados = presentes.sort((a,b)=>(a.confirmedAt||0)-(b.confirmedAt||0));
+    const ausentes = players.filter(p=>!p.presente);
+
+    // Barra de capacidade (ADM vê aqui)
+    html += capacityBarHTML(presenteCount);
+
+    // Banner lotado
+    if(listaCheia){
+      html += `<div class="lotado-banner fu">
+        <div style="font-size:36px;margin-bottom:8px">🔒</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;margin-bottom:6px">LISTA FECHADA!</div>
+        <div style="font-size:13px;opacity:0.8">Baba com 28 jogadores confirmados.<br>Retire alguém para abrir vaga.</div>
+      </div>`;
+    }
+
+    html+=`<div style="background:${listaCheia?'#2a080810':'#2ECC7110'};border:1px solid ${listaCheia?'#ff444430':'#2ECC7130'};border-radius:14px;padding:14px 16px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between">
+      <div><div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:#2ECC71;line-height:1">${presenteCount}</div><div style="font-size:11px;color:#2ECC71bb;font-weight:700;text-transform:uppercase;letter-spacing:1px">Confirmados</div></div>
       <div style="text-align:right"><div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:#ff6666;line-height:1">${ausentes.length}</div><div style="font-size:11px;color:#ff6666bb;font-weight:700;text-transform:uppercase;letter-spacing:1px">Pendentes</div></div>
     </div>`;
 
-    if(presentes.length>0){
-      html+=`<div style="font-size:11px;font-weight:700;color:#2ECC71;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">✅ Confirmados (${presentes.length})</div>`;
-      presentes.forEach(p=>{
+    if(presentesOrdenados.length>0){
+      html+=`<div style="font-size:11px;font-weight:700;color:#2ECC71;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">✅ Confirmados (${presentesOrdenados.length}/${MAX_JOGADORES})</div>`;
+      presentesOrdenados.forEach((p, idx)=>{
         const c=posColor(p.position);
+        const pos28 = idx < MAX_JOGADORES;
         html+=`<div style="background:linear-gradient(135deg,#162e1a,#1a2e1a);border:1.5px solid #2ECC7140;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;margin-bottom:8px">
-          <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,${c.bg},${c.bg}88);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:#fff;font-family:'Bebas Neue',sans-serif;box-shadow:0 0 10px #2ECC7140">${p.name.charAt(0)}</div>
+          <div style="width:28px;height:28px;border-radius:50%;background:#2ECC7130;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:13px;color:#2ECC71;flex-shrink:0">${idx+1}</div>
+          <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,${c.bg},${c.bg}88);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#fff;font-family:'Bebas Neue',sans-serif;box-shadow:0 0 10px #2ECC7140">${p.name.charAt(0)}</div>
           <div style="flex:1">
             <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap">
               <span style="font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px;color:#fff">${p.name}</span>
@@ -335,15 +413,20 @@ function render(){
       html+=`<div style="font-size:11px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:1px;margin:16px 0 10px">⏳ Ainda não confirmaram (${ausentes.length})</div>`;
       ausentes.forEach(p=>{
         const c=posColor(p.position);
-        html+=`<div style="background:#ffffff06;border:1.5px solid #ffffff10;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;margin-bottom:8px;opacity:0.6">
-          <div style="width:38px;height:38px;border-radius:50%;background:#333;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:#666;font-family:'Bebas Neue',sans-serif">${p.name.charAt(0)}</div>
+        const vagasRestantes = MAX_JOGADORES - presenteCount;
+        const podeMarcar = vagasRestantes > 0;
+        html+=`<div style="background:#ffffff06;border:1.5px solid #ffffff10;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;margin-bottom:8px;opacity:${podeMarcar?'0.7':'0.4'}">
+          <div style="width:36px;height:36px;border-radius:50%;background:#333;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:#666;font-family:'Bebas Neue',sans-serif">${p.name.charAt(0)}</div>
           <div style="flex:1">
             <div style="display:flex;align-items:center;gap:7px">
               <span style="font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px;color:#666">${p.name}</span>
               <span style="background:#333;color:#666;border-radius:5px;padding:2px 7px;font-size:9px;font-weight:700;text-transform:uppercase">${p.position}</span>
             </div>
           </div>
-          <button style="background:#ffffff08;border:1px solid #ffffff15;border-radius:7px;color:#aaa;cursor:pointer;font-size:11px;padding:5px 9px;font-weight:700;font-family:'Syne',sans-serif;-webkit-appearance:none" data-action="marcar-presente" data-id="${p.id}">+ MARCAR</button>
+          ${podeMarcar
+            ? `<button style="background:#ffffff08;border:1px solid #ffffff15;border-radius:7px;color:#aaa;cursor:pointer;font-size:11px;padding:5px 9px;font-weight:700;font-family:'Syne',sans-serif;-webkit-appearance:none" data-action="marcar-presente" data-id="${p.id}">+ MARCAR</button>`
+            : `<span style="font-size:10px;color:#ff6666;font-weight:700;text-align:right">🔒<br>LOTADO</span>`
+          }
         </div>`;
       });
     }
@@ -353,19 +436,20 @@ function render(){
     }
   }
 
+  // ── ABA SORTEIO ──
   if(tab==="sorteio"){
-    const presentes=players.filter(p=>p.presente===true);
-    const presentesComNota=presentes.filter(p=>p.quality>0);
     const canDraw=presentesComNota.length>=numTeams;
     const poolSize=numTeams===4?Math.min(presentesComNota.length,28):presentesComNota.length;
     const base=Math.floor(poolSize/numTeams);
     const extras=poolSize%numTeams;
     const sizeInfo=numTeams===4&&presentesComNota.length>=28?`7 por time`:(extras>0?`${base+1}x${extras} + ${base}x${numTeams-extras}`:`${base} por time`);
+
     html+=`<div class="config-card"><div class="config-title">⚙️ CONFIGURAR SORTEIO</div>
       <div class="section-label">Número de times</div>
       <div class="num-btns">${[2,3,4].map(n=>`<button class="num-btn ${numTeams===n?'active':''}" data-action="numteams" data-n="${n}">${n}</button>`).join('')}</div>
-      <div style="display:flex;align-items:center;justify-content:space-between;background:#2ECC7110;border:1px solid #2ECC7130;border-radius:10px;padding:10px 14px;margin-bottom:10px">
-        <div><span style="font-size:13px;font-weight:700;color:#2ECC71">${presentes.length} confirmados</span><span style="font-size:11px;color:#555;margin-left:6px">(mín. ${numTeams} com nota)</span></div>
+      ${capacityBarHTML(presenteCount, true)}
+      <div style="display:flex;align-items:center;justify-content:space-between;background:#2ECC7110;border:1px solid #2ECC7130;border-radius:10px;padding:10px 14px;margin-top:10px">
+        <div><span style="font-size:13px;font-weight:700;color:#2ECC71">${presenteCount} confirmados</span><span style="font-size:11px;color:#555;margin-left:6px">(mín. ${numTeams} com nota)</span></div>
         <span style="font-size:11px;color:#aaa">${presentesComNota.length>0?sizeInfo:presentesComNota.length+' com nota'}</span>
       </div>
     </div>
@@ -393,13 +477,16 @@ function render(){
       </button>`;
     }
   }
+
   html+=`</div>`;
   if(state.modal!==null) html+=modalHTML();
   document.getElementById("app").innerHTML=html;
 }
 
+// ── MODAL FIELDS ──────────────────────────────────────────────────────────────
 function getModalFields(){return{name:(document.getElementById("f-name")?.value||"").trim(),club:(document.getElementById("f-club")?.value||"").trim(),position:state.modal?.position||"Goleiro",quality:state.modal?.quality||0};}
 
+// ── EVENTS ────────────────────────────────────────────────────────────────────
 document.addEventListener("click",e=>{
   const el=e.target.closest("[data-action]");if(!el)return;
   const action=el.dataset.action,id=el.dataset.id;
@@ -419,8 +506,6 @@ document.addEventListener("click",e=>{
     state.modal=null;render();
   }
   else if(action==="numteams"){state.numTeams=parseInt(el.dataset.n);state.drawn=null;render();}
-  else if(action==="selall"){state.selected=new Set(state.players.map(p=>p.id));render();}
-  else if(action==="selnone"){state.selected=new Set();render();}
   else if(action==="draw"){
     let pool=state.players.filter(p=>p.presente===true&&p.quality>0);
     if(pool.length<state.numTeams)return;
@@ -434,6 +519,11 @@ document.addEventListener("click",e=>{
     setTimeout(()=>{state.drawn=balancedDraw(pool,state.numTeams);state.drawing=false;render();},900);
   }
   else if(action==="marcar-presente"){
+    // Bloquear se lista cheia
+    if(isListaCheiaFn()){
+      alert("🔒 Lista fechada! Já tem 28 jogadores confirmados.");
+      return;
+    }
     playersRef.child(id).update({presente:true, confirmedAt:Date.now()});
   }
   else if(action==="cancelar-presenca"){
@@ -469,6 +559,41 @@ document.addEventListener("click",e=>{
 // ── LOGIN LOGIC ───────────────────────────────────────────────────────────────
 const ADM_PASSWORD = "baba123";
 let selectedLoginPos = null;
+let loginPlayersData = {}; // cache dos jogadores para tela de login
+
+function updateLoginScreen(data) {
+  const presentes = Object.values(data).filter(p=>p.presente===true);
+  const listaCheia = presentes.length >= MAX_JOGADORES;
+  const vagas = MAX_JOGADORES - presentes.length;
+  const pct = Math.min((presentes.length / MAX_JOGADORES) * 100, 100);
+  const barColor = listaCheia ? '#ff4444' : presentes.length >= 24 ? '#FFB800' : '#2ECC71';
+
+  const listaFechadaEl = document.getElementById("lista-fechada-login");
+  const jogadorCard = document.getElementById("jogador-login-card");
+  const vagasInfo = document.getElementById("login-vagas-info");
+
+  if(!listaFechadaEl || !jogadorCard) return;
+
+  if(listaCheia){
+    listaFechadaEl.style.display = "block";
+    jogadorCard.style.display = "none";
+  } else {
+    listaFechadaEl.style.display = "none";
+    jogadorCard.style.display = "block";
+    if(vagasInfo) {
+      vagasInfo.innerHTML = `
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+          <span style="font-size:11px;font-weight:700;color:${barColor};text-transform:uppercase;letter-spacing:1px">${vagas} vaga${vagas===1?'':'s'} restante${vagas===1?'':'s'}</span>
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:16px;color:${barColor}">${presentes.length}/${MAX_JOGADORES}</span>
+        </div>
+        <div style="height:8px;background:#ffffff0d;border-radius:4px;overflow:hidden">
+          <div style="height:100%;width:${pct}%;background:${barColor};border-radius:4px;transition:width 0.5s"></div>
+        </div>
+        ${presentes.length >= 24 ? `<div style="font-size:11px;color:#FFB800;margin-top:5px;font-weight:700">⚠️ Últimas vagas! Confirme logo.</div>` : ''}
+      `;
+    }
+  }
+}
 
 function showLogin(){
   document.getElementById("login-screen").style.display="flex";
@@ -501,8 +626,19 @@ document.getElementById("pos-grid-login").addEventListener("click",e=>{
 document.getElementById("login-player-btn").addEventListener("click",async()=>{
   const name=document.getElementById("login-name").value.trim();
   if(!name||!selectedLoginPos){alert("Preencha seu nome e posição!");return;}
+
+  // Checar se lista está cheia antes de confirmar
+  const snapCheck = await playersRef.once("value");
+  const dataCheck = snapCheck.val()||{};
+  const presentesCheck = Object.values(dataCheck).filter(p=>p.presente===true);
+  if(presentesCheck.length >= MAX_JOGADORES){
+    updateLoginScreen(dataCheck);
+    return;
+  }
+
   const btn=document.getElementById("login-player-btn");
   btn.textContent="VERIFICANDO...";btn.disabled=true;
+
   const snap=await playersRef.once("value");
   const data=snap.val()||{};
   const existing=Object.entries(data).find(([id,p])=>p.name&&p.name.toLowerCase()===name.toLowerCase());
@@ -528,15 +664,23 @@ document.getElementById("login-adm-btn").addEventListener("click",()=>{
   }
 });
 
+// ── INIT ──────────────────────────────────────────────────────────────────────
 const isAdm = localStorage.getItem("adm")==="1";
 if(isAdm){ showApp(); } else { showLogin(); }
 
+// Escuta tempo-real para atualizar tela de login com vagas
 playersRef.on("value", snapshot=>{
   const data=snapshot.val()||{};
+  loginPlayersData = data;
+
+  // Atualizar tela de login se estiver visível
+  const loginVisible = document.getElementById("login-screen").style.display !== "none";
+  if(loginVisible) updateLoginScreen(data);
+
   state.players=Object.entries(data).map(([id,p])=>({id,...p})).sort((a,b)=>(a.name||"").localeCompare(b.name||""));
   state.players.forEach(p=>state.selected.add(p.id));
   state.loading=false;
-  render();
+  if(!loginVisible) render();
 }, err=>{
   state.loading=false;
   render();
@@ -551,4 +695,4 @@ playersRef.on("value", snapshot=>{
   }
 </script>
 </body>
-  </html>
+</html>
