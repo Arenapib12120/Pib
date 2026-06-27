@@ -102,18 +102,18 @@
     .profile-photo-section{margin-bottom:20px}
     .profile-photo-row{display:flex;align-items:center;gap:14px}
     .profile-photo-preview{
-      width:72px;height:72px;border-radius:50%;overflow:hidden;flex-shrink:0;
-      border:3px solid var(--verde);background:#002010;
-      display:flex;align-items:center;justify-content:center;
-      cursor:pointer;position:relative;transition:all 0.2s;
-      box-shadow:0 0 0 1px #009C3B40;
+      width:64px;height:86px;border-radius:12px;flex-shrink:0;padding:3px;
+      background:linear-gradient(135deg,var(--amarelo),var(--verde) 45%,var(--azul) 90%);
+      cursor:pointer;position:relative;transition:transform 0.2s;
+      box-shadow:0 4px 14px #00000060;
     }
-    .profile-photo-preview:hover{border-color:var(--amarelo);box-shadow:0 0 0 1px #FFDF0060}
+    .profile-photo-preview:hover{transform:scale(1.04)}
+    .ph-inner{width:100%;height:100%;border-radius:9px;overflow:hidden;background:#03130b;display:flex;align-items:center;justify-content:center;position:relative}
     .profile-photo-preview img{width:100%;height:100%;object-fit:cover;display:none}
     .profile-photo-preview img.visible{display:block}
-    .profile-photo-preview .ph-icon{font-size:28px;color:#1a5a20;transition:opacity 0.2s}
+    .profile-photo-preview .ph-icon{font-size:24px;color:#1a5a20;transition:opacity 0.2s}
     .profile-photo-preview .ph-icon.hidden{display:none}
-    .profile-photo-preview input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+    .profile-photo-preview input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:3}
     .profile-photo-hints{flex:1}
     .profile-photo-hints .ph-hint{font-size:11px;color:#2a5a30;line-height:1.6;margin-bottom:6px}
     .profile-photo-btns{display:flex;gap:6px;flex-wrap:wrap}
@@ -165,12 +165,60 @@
     .submit-btn{width:100%;padding:18px;border-radius:14px;border:none;background:linear-gradient(135deg,var(--verde),var(--azul-mid));color:#fff;font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;cursor:pointer;box-shadow:0 6px 30px #009C3B44;animation:pulse 2s infinite;-webkit-appearance:none}
     .submit-btn:disabled{background:#ffffff0d;color:#2a4a30;box-shadow:none;animation:none;cursor:not-allowed}
 
-    /* ── LISTA DE CONFIRMADOS ── */
+    /* ── LISTA DE CONFIRMADOS — ÁLBUM DE FIGURINHAS ── */
+    @keyframes foilShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+    @keyframes shineSweep{0%{background-position:180% 180%}100%{background-position:-60% -60%}}
+    @keyframes stickerIn{from{opacity:0;transform:scale(.85) rotate(-4deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+
     .player-list{margin-top:28px;width:100%;max-width:420px}
-    .list-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:#2a6a30;text-align:center;margin-bottom:14px}
-    .player-item{display:flex;align-items:center;gap:12px;background:#009C3B0a;border:1px solid #009C3B18;border-radius:12px;padding:11px 14px;margin-bottom:8px}
-    .player-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:16px;color:#fff;flex-shrink:0;overflow:hidden;border:2px solid transparent}
-    .player-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+    .list-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:#2a6a30;text-align:center;margin-bottom:4px}
+    .list-subtitle{font-size:10px;color:#1a4a2099;text-align:center;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px}
+
+    .sticker-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+
+    .sticker-card{
+      position:relative;aspect-ratio:3/4;border-radius:13px;padding:3px;
+      background:linear-gradient(135deg,#FFDF00,#009C3B 38%,#002776 70%,#FFDF00);
+      background-size:260% 260%;animation:foilShift 7s ease-in-out infinite,stickerIn .4s ease both;
+      box-shadow:0 6px 16px #00000070,0 0 0 1px #ffffff14;
+    }
+    .sticker-inner{
+      position:relative;width:100%;height:100%;border-radius:10px;overflow:hidden;
+      background:#03130b;display:flex;flex-direction:column;
+    }
+    .sticker-photo{
+      flex:1;position:relative;overflow:hidden;
+      background:linear-gradient(145deg,#0a2415,#051209);
+      display:flex;align-items:center;justify-content:center;
+    }
+    .sticker-photo img{width:100%;height:100%;object-fit:cover;display:block}
+    .sticker-photo .sticker-fallback{display:flex;flex-direction:column;align-items:center;gap:4px}
+    .sticker-photo .sticker-fallback .sf-emoji{font-size:24px;opacity:.85}
+    .sticker-photo .sticker-fallback .sf-initial{font-family:'Bebas Neue',sans-serif;font-size:26px;color:#ffffff30}
+    .sticker-shine{
+      position:absolute;inset:0;pointer-events:none;mix-blend-mode:overlay;
+      background:linear-gradient(125deg,transparent 35%,#ffffff80 50%,transparent 65%);
+      background-size:300% 300%;animation:shineSweep 4.5s ease-in-out infinite;
+    }
+    .sticker-num{
+      position:absolute;top:4px;left:4px;z-index:2;
+      background:#000000b0;color:#FFDF00;border:1px solid #FFDF0050;
+      font-family:'Bebas Neue',sans-serif;font-size:10px;letter-spacing:0.5px;
+      padding:1px 5px;border-radius:5px;
+    }
+    .sticker-pos{
+      position:absolute;top:4px;right:4px;z-index:2;color:#04150c;
+      font-size:8px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;
+      padding:2px 5px;border-radius:5px;
+    }
+    .sticker-plate{
+      background:linear-gradient(95deg,#FFDF00,#fefefe 48%,#009C3B);
+      padding:4px 3px 3px;text-align:center;
+    }
+    .sticker-plate span{
+      display:block;font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:0.3px;
+      color:#04150c;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
 
     /* ── SUCCESS ── */
     .success-confetti{position:relative;overflow:hidden}
@@ -358,12 +406,14 @@
         <div class="section-label">Sua foto (opcional)</div>
         <div class="profile-photo-row">
           <div class="profile-photo-preview" id="profile-photo-preview">
-            <img id="profile-photo-img" alt="Sua foto"/>
-            <span class="ph-icon" id="ph-placeholder-icon">🙋</span>
+            <div class="ph-inner">
+              <img id="profile-photo-img" alt="Sua foto"/>
+              <span class="ph-icon" id="ph-placeholder-icon">🙋</span>
+            </div>
             <input type="file" id="profile-photo-file" accept="image/*" onchange="handlePhotoUpload(event)"/>
           </div>
           <div class="profile-photo-hints">
-            <div class="ph-hint">Adicione uma foto para aparecer na lista 📸</div>
+            <div class="ph-hint">Adicione uma foto pra virar sua figurinha 📸</div>
             <div class="profile-photo-btns">
               <button class="ph-btn" onclick="triggerFileUpload()">🖼️ Galeria</button>
               <button class="ph-btn camera" onclick="openCamera()">📷 Câmera</button>
@@ -486,8 +536,9 @@
   <!-- LISTA -->
   <div class="player-list fu4">
     <div class="list-title" id="list-title-el">QUEM JÁ CONFIRMOU</div>
-    <div id="player-list-items">
-      <div style="text-align:center;color:#1a4a20;font-size:13px;padding:20px">Carregando...</div>
+    <div class="list-subtitle">✨ Álbum de figurinhas do baba</div>
+    <div id="player-list-items" class="sticker-grid">
+      <div style="grid-column:1/-1;text-align:center;color:#1a4a20;font-size:13px;padding:20px">Carregando...</div>
     </div>
   </div>
 
@@ -607,20 +658,25 @@ function renderList(presentes) {
     ? `<span style="color:#ff6666">🔒 LISTA FECHADA — ${presentes.length}/${MAX_JOGADORES}</span>`
     : `QUEM JÁ CONFIRMOU (${presentes.length}/${MAX_JOGADORES})`;
   if (!presentes.length) {
-    el.innerHTML = '<div style="text-align:center;color:#1a4a20;font-size:13px;padding:20px">Nenhum jogador confirmou ainda</div>';
+    el.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:#1a4a20;font-size:13px;padding:20px">Nenhum jogador confirmou ainda</div>';
     return;
   }
+  const POS_ABBR = { "Goleiro":"GOL", "Lateral":"LAT", "Defesa":"DEF", "Meio-campo":"MEI", "Atacante":"ATA" };
+  const POS_EMOJI = { "Goleiro":"🧤", "Lateral":"🏃", "Defesa":"🛡️", "Meio-campo":"⚙️", "Atacante":"🎯" };
   el.innerHTML = presentes.map((p, idx) => {
     const c = POS_COLORS[p.position] || "#009C3B";
-    const avatarContent = p.photo
-      ? `<img src="${p.photo}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%"/>`
-      : `${(p.name||"?").charAt(0)}`;
-    return `<div class="player-item">
-      <div style="width:24px;height:24px;border-radius:50%;background:#009C3B20;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:12px;color:#009C3B;flex-shrink:0">${idx+1}</div>
-      <div class="player-avatar" style="background:${p.photo?'transparent':'linear-gradient(135deg,'+c+','+c+'88)'};border-color:${c}40">${avatarContent}</div>
-      <div>
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px">${p.name}</div>
-        <span style="font-size:9px;background:${c}33;color:${c};border-radius:4px;padding:2px 6px;font-weight:700;text-transform:uppercase">${p.position||""}</span>
+    const photoContent = p.photo
+      ? `<img src="${p.photo}" alt="${p.name}"/>`
+      : `<div class="sticker-fallback"><span class="sf-emoji">${POS_EMOJI[p.position]||"⚽"}</span><span class="sf-initial">${(p.name||"?").charAt(0).toUpperCase()}</span></div>`;
+    return `<div class="sticker-card">
+      <div class="sticker-inner">
+        <div class="sticker-photo">
+          ${photoContent}
+          <div class="sticker-shine"></div>
+          <div class="sticker-num">#${idx+1}</div>
+          <div class="sticker-pos" style="background:${c}cc">${POS_ABBR[p.position]||""}</div>
+        </div>
+        <div class="sticker-plate"><span>${p.name}</span></div>
       </div>
     </div>`;
   }).join('');
