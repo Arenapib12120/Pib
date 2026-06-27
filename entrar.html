@@ -11,414 +11,676 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
   <style>
     :root{
-      --verde:#009C3B;
-      --verde-dark:#006828;
-      --verde-light:#00C44E;
-      --amarelo:#FFDF00;
-      --amarelo-dark:#C9A800;
+      --verde:#00C44E;
+      --verde-dark:#008C35;
+      --verde-glow:#00FF6655;
+      --amarelo:#FFD700;
+      --amarelo-glow:#FFD70040;
       --azul:#002776;
-      --azul-mid:#003FA0;
-      --azul-light:#1560BD;
+      --azul-mid:#1450B0;
       --branco:#F0F0F0;
-      --bg:#001A10;
-      --bg2:#00120B;
-      --card-bg:#001F12;
-      --card-border:#009C3B22;
+      --bg:#060d08;
+      --bg2:#050a06;
+      --card-bg:#0a1a0d;
+      --danger:#FF3B3B;
+      --danger-glow:#FF3B3B30;
     }
     *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+
+    html{scroll-behavior:smooth}
+
     body{
-      background:radial-gradient(ellipse at 30% 0%,#001a10,#000d07 70%);
+      background:var(--bg);
       min-height:100vh;color:#fff;font-family:'Syne',sans-serif;
-      display:flex;flex-direction:column;align-items:center;padding:36px 20px 100px
+      display:flex;flex-direction:column;align-items:center;
+      padding:0 0 120px;overflow-x:hidden;
     }
 
-    @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-    @keyframes pulse{0%,100%{box-shadow:0 0 0 0 #FFDF0044}50%{box-shadow:0 0 0 12px #FFDF0000}}
-    @keyframes shimmer{0%{background-position:-400% center}100%{background-position:400% center}}
-    @keyframes trophyBounce{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-5px) rotate(3deg)}}
-    @keyframes crownGlow{0%,100%{filter:drop-shadow(0 0 6px #FFDF0099)}50%{filter:drop-shadow(0 0 16px #FFD700cc)}}
-    @keyframes confettiFall{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(60px) rotate(720deg);opacity:0}}
-    @keyframes pulsered{0%,100%{box-shadow:0 0 0 0 #ff444444}50%{box-shadow:0 0 0 10px #ff444400}}
-    @keyframes lockShake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
-    @keyframes countPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
-    @keyframes spin360{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-    @keyframes equalizer{0%,100%{height:4px}25%{height:12px}50%{height:7px}75%{height:14px}}
-    @keyframes musicPop{0%{transform:translateX(-50%) scale(0.8);opacity:0}60%{transform:translateX(-50%) scale(1.05)}100%{transform:translateX(-50%) scale(1);opacity:1}}
-    @keyframes glowPulse{0%,100%{box-shadow:0 0 0 0 #FFDF0033}50%{box-shadow:0 0 0 8px #FFDF0000}}
-    @keyframes diamondSpin{0%{transform:rotate(0deg) scale(1)}50%{transform:rotate(180deg) scale(1.1)}100%{transform:rotate(360deg) scale(1)}}
-
-    .fu {animation:fadeUp 0.5s ease forwards}
-    .fu2{animation:fadeUp 0.5s 0.08s ease both}
-    .fu3{animation:fadeUp 0.5s 0.16s ease both}
-    .fu4{animation:fadeUp 0.5s 0.24s ease both}
-
-    /* ── HEADER ── */
-    .header-diamond{
-      width:64px;height:64px;background:linear-gradient(135deg,var(--verde),var(--amarelo));
-      transform:rotate(45deg);border-radius:8px;display:flex;align-items:center;
-      justify-content:center;margin:0 auto 16px;
-      box-shadow:0 8px 32px #FFDF0040,0 2px 8px #009C3B60;
-      animation:diamondSpin 8s linear infinite;
-    }
-    .header-diamond span{transform:rotate(-45deg);font-size:28px;display:block}
-
-    /* ── FAIXA VERDE/AMARELA/AZUL ── */
-    .brasil-stripe{
-      width:100%;max-width:420px;height:4px;border-radius:2px;
-      background:linear-gradient(90deg,var(--verde) 33%,var(--amarelo) 33%,var(--amarelo) 66%,var(--azul) 66%);
-      margin-bottom:28px;
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before{
+      content:'';position:fixed;inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events:none;z-index:0;opacity:0.4;
     }
 
-    /* ── CHAMPION BANNER ── */
-    .champ-banner{width:100%;max-width:420px;margin-bottom:28px;border-radius:20px;overflow:hidden;border:2px solid #FFDF0040;box-shadow:0 10px 50px #FFDF0018,0 4px 20px #00000060;position:relative}
-    .champ-banner-header{background:linear-gradient(135deg,#0a1a08,#101e00);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #FFDF0025}
-    .champ-banner-label{font-size:9px;font-weight:700;color:#FFDF0099;letter-spacing:2.5px;text-transform:uppercase}
-    .champ-trophy{font-size:20px;animation:trophyBounce 2.5s ease-in-out infinite}
-    .champ-photo-wrap{position:relative;width:100%;aspect-ratio:16/9;background:linear-gradient(145deg,#001a0d,#002010);overflow:hidden}
-    .champ-photo-wrap img{width:100%;height:100%;object-fit:cover;display:block}
-    .champ-photo-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 55%,#0a1a08ee 100%);pointer-events:none}
-    .champ-photo-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:8px}
-    .champ-photo-empty .icon{font-size:36px;animation:crownGlow 2s ease-in-out infinite;opacity:0.5}
-    .champ-photo-empty .txt{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;color:#1a4a20}
-    .champ-info{background:linear-gradient(135deg,#0a1a08,#111e00);padding:12px 16px 14px;position:relative}
-    .champ-name{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;line-height:1;background:linear-gradient(90deg,#FFDF00 30%,#009C3B 70%,#FFDF00);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 3s linear infinite}
-    .champ-date{font-size:11px;color:#3a6a30;margin-top:4px;letter-spacing:0.5px}
-    .champ-badge{position:absolute;top:12px;right:14px;background:linear-gradient(135deg,#FFDF0020,#FFDF0010);border:1px solid #FFDF0040;border-radius:6px;font-size:9px;font-weight:700;color:#FFDF00aa;letter-spacing:1px;padding:4px 8px;text-transform:uppercase}
+    /* ── HERO SECTION ── */
+    .hero{
+      width:100%;position:relative;overflow:hidden;
+      background:linear-gradient(180deg, #0d1f10 0%, #060d08 100%);
+      padding:0 0 32px;display:flex;flex-direction:column;align-items:center;
+      border-bottom:1px solid #009C3B18;
+    }
 
-    /* ── CAPACITY BAR ── */
-    .capacity-wrap{width:100%;max-width:420px;margin-bottom:20px;background:linear-gradient(145deg,#001a0d,#002010);border:1px solid #009C3B18;border-radius:16px;padding:14px 18px}
-    .capacity-bar-track{height:10px;background:#009C3B18;border-radius:6px;overflow:hidden;margin:8px 0 6px}
-    .capacity-bar-fill{height:100%;border-radius:6px;transition:width 0.7s cubic-bezier(.22,1,.36,1)}
+    /* Scanline stripe accent top */
+    .hero-accent-bar{
+      width:100%;height:3px;
+      background:linear-gradient(90deg,transparent,var(--verde),var(--amarelo),var(--azul),var(--verde),transparent);
+      margin-bottom:0;
+    }
+
+    .hero-inner{
+      padding:36px 24px 0;display:flex;flex-direction:column;align-items:center;
+      position:relative;z-index:1;width:100%;max-width:420px;
+    }
+
+    /* Big animated badge */
+    .arena-badge{
+      width:80px;height:80px;
+      background:conic-gradient(from 0deg,#009C3B,#FFD700,#002776,#009C3B);
+      border-radius:50%;display:flex;align-items:center;justify-content:center;
+      animation:badgeSpin 8s linear infinite;
+      box-shadow:0 0 0 3px #060d08, 0 0 30px var(--verde-glow), 0 0 60px #009C3B18;
+      margin-bottom:20px;flex-shrink:0;
+    }
+    .arena-badge-inner{
+      width:66px;height:66px;background:var(--bg);border-radius:50%;
+      display:flex;align-items:center;justify-content:center;font-size:32px;
+    }
+
+    .hero-title{
+      font-family:'Bebas Neue',sans-serif;
+      font-size:52px;letter-spacing:5px;line-height:0.92;
+      text-align:center;margin-bottom:6px;
+      background:linear-gradient(135deg,#fff 20%,#00C44E 55%,#FFD700 80%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+    .hero-sub{font-size:12px;color:#3a7a40;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;text-align:center}
+
+    .verse-box{
+      background:#009C3B08;border:1px solid #009C3B18;
+      border-radius:12px;padding:14px 18px;text-align:center;
+      font-size:11px;color:#2a5a30;line-height:1.7;max-width:320px;
+      margin-bottom:0;
+    }
+    .verse-box em{font-style:italic;color:#1a4a20}
+    .verse-box span{display:block;margin-top:4px;font-size:9.5px;letter-spacing:1.5px;color:#1a4a2066;font-style:normal}
+
+    /* ── URGENCY TICKER ── */
+    .ticker-wrap{
+      width:100%;background:linear-gradient(90deg,#FFD70008,#FFD70015,#FFD70008);
+      border-top:1px solid #FFD70020;border-bottom:1px solid #FFD70020;
+      overflow:hidden;padding:8px 0;margin-bottom:0;
+    }
+    .ticker-inner{
+      display:flex;gap:40px;animation:tickerScroll 20s linear infinite;
+      white-space:nowrap;width:max-content;
+    }
+    .ticker-item{font-size:11px;font-weight:700;letter-spacing:1.5px;color:#FFD700aa;text-transform:uppercase}
+    .ticker-item .dot{color:#009C3B;margin:0 6px}
+
+    /* ── SOCIAL PROOF BAR ── */
+    .social-proof{
+      width:100%;max-width:420px;padding:16px 20px;
+      display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+      text-align:center;
+    }
+    .sp-item{padding:10px 6px;position:relative}
+    .sp-item:not(:last-child)::after{
+      content:'';position:absolute;right:0;top:20%;height:60%;
+      width:1px;background:#009C3B20;
+    }
+    .sp-num{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--verde);line-height:1}
+    .sp-lbl{font-size:9px;color:#2a5a30;letter-spacing:1px;text-transform:uppercase;margin-top:3px}
+
+    /* ── CONTAINER ── */
+    .container{width:100%;max-width:420px;padding:0 16px}
+
+    /* ── COUNTDOWN — NEW DESIGN ── */
+    .countdown-card{
+      background:#0a1a0d;border-radius:20px;
+      border:1px solid #009C3B22;overflow:hidden;
+      box-shadow:0 20px 60px #00000060,0 0 0 1px #009C3B10;
+      margin:24px 0 20px;
+    }
+    .cd-header{
+      background:linear-gradient(90deg,#009C3B15,transparent);
+      padding:12px 18px;border-bottom:1px solid #009C3B18;
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .cd-header-left{display:flex;align-items:center;gap:8px}
+    .cd-pill{
+      background:var(--verde);color:#000;font-size:8px;font-weight:800;
+      letter-spacing:2px;padding:3px 8px;border-radius:20px;text-transform:uppercase;
+    }
+    .cd-title{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;color:#3a7a40}
+    .cd-date-line{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;color:#5aaa60}
+    .cd-body{padding:20px 16px 22px;text-align:center}
+
+    .cd-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:0}
+    .cd-block{
+      position:relative;overflow:hidden;
+      background:linear-gradient(145deg,#0d1f10,#091508);
+      border:1px solid #009C3B25;border-radius:14px;padding:14px 4px 10px;
+    }
+    .cd-block::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:2px;
+      background:linear-gradient(90deg,transparent,var(--verde),transparent);
+    }
+    .cd-num{
+      font-family:'Bebas Neue',sans-serif;font-size:40px;line-height:1;
+      color:#fff;display:block;position:relative;z-index:1;
+      text-shadow:0 0 20px var(--verde-glow);
+    }
+    .cd-lbl{font-size:8px;font-weight:700;color:#2a6a30;letter-spacing:2px;text-transform:uppercase;margin-top:6px}
+    .cd-colon{font-family:'Bebas Neue',sans-serif;font-size:32px;color:#009C3B40;line-height:1;align-self:center;margin-top:-8px}
+
+    .cd-happening{
+      padding:20px 16px;text-align:center;
+    }
+    .cd-happ-text{
+      font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;
+      background:linear-gradient(90deg,var(--verde),var(--amarelo));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+      animation:countPulse 1.2s ease-in-out infinite;
+    }
+    .cd-happ-sub{font-size:12px;color:#009C3B88;letter-spacing:1px;margin-top:6px}
+
+    /* ── CAPACITY — STADIUM VISUAL ── */
+    .capacity-card{
+      background:#0a1a0d;border-radius:20px;
+      border:1px solid #009C3B22;overflow:hidden;
+      margin-bottom:20px;padding:20px 18px 18px;
+    }
+    .cap-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+    .cap-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#009C3B}
+    .cap-fraction{
+      font-family:'Bebas Neue',sans-serif;font-size:28px;line-height:1;
+    }
+    .cap-fraction .big{font-size:36px}
+
+    /* Segmented bar — stadium seats */
+    .stadium-bar{display:flex;gap:3px;flex-wrap:nowrap;margin-bottom:10px}
+    .seat{flex:1;height:14px;border-radius:3px;background:#009C3B12;border:1px solid #009C3B18;transition:background 0.4s, box-shadow 0.4s}
+    .seat.filled{background:var(--verde);border-color:var(--verde);box-shadow:0 0 6px var(--verde-glow)}
+    .seat.critical{background:var(--danger);border-color:var(--danger);box-shadow:0 0 6px var(--danger-glow)}
+    .seat.warn{background:var(--amarelo);border-color:var(--amarelo);box-shadow:0 0 6px var(--amarelo-glow)}
+
+    .cap-sub-row{display:flex;align-items:center;justify-content:space-between}
+    .cap-sub{font-size:11px;color:#2a5a30;letter-spacing:0.5px}
+    .cap-urgency{font-size:11px;font-weight:700;letter-spacing:0.5px;display:flex;align-items:center;gap:4px}
+
+    /* ── CHAMPION ── */
+    .champ-card{
+      background:#0a1a0d;border-radius:20px;
+      border:1px solid #FFD70025;overflow:hidden;
+      margin-bottom:20px;
+      box-shadow:0 0 40px #FFD70008;
+    }
+    .champ-head{
+      padding:12px 18px;border-bottom:1px solid #FFD70015;
+      display:flex;align-items:center;justify-content:space-between;
+      background:linear-gradient(90deg,#FFD70008,transparent);
+    }
+    .champ-badge-label{font-size:9px;font-weight:700;letter-spacing:2px;color:#FFD70066;text-transform:uppercase}
+    .champ-trophy-anim{font-size:20px;animation:trophyBounce 2.5s ease-in-out infinite}
+    .champ-img-wrap{width:100%;aspect-ratio:16/9;overflow:hidden;position:relative;background:#051209}
+    .champ-img-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+    .champ-img-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,#0a1a0dee)}
+    .champ-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:160px;gap:8px}
+    .champ-empty .ei{font-size:32px;opacity:0.3}
+    .champ-empty .et{font-size:11px;letter-spacing:2px;color:#1a3a20;font-family:'Bebas Neue',sans-serif}
+    .champ-info{padding:14px 18px 16px;position:relative}
+    .champ-ribbon{
+      position:absolute;top:12px;right:14px;
+      background:linear-gradient(135deg,#FFD70025,#FFD70010);
+      border:1px solid #FFD70035;border-radius:6px;
+      font-size:8px;font-weight:800;color:#FFD700aa;letter-spacing:1.5px;
+      padding:4px 10px;text-transform:uppercase;
+    }
+    .champ-name-disp{
+      font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;
+      background:linear-gradient(90deg,#FFD700 30%,#009C3B 65%,#FFD700);
+      background-size:200%;animation:shimmer 4s linear infinite;
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+    .champ-date-disp{font-size:11px;color:#2a5a30;margin-top:4px;letter-spacing:0.5px}
 
     /* ── LISTA FECHADA ── */
-    .lista-fechada-card{width:100%;max-width:420px;background:linear-gradient(145deg,#1e0808,#150404);border:2px solid #ff444455;border-radius:22px;padding:36px 24px;text-align:center;box-shadow:0 12px 50px #ff444420;animation:pulsered 2s infinite}
-    .lock-icon{font-size:56px;display:block;margin-bottom:16px;animation:lockShake 0.5s ease 0.5s 1}
+    .lista-fechada{
+      background:linear-gradient(145deg,#1e0808,#130404);
+      border:2px solid #FF3B3B40;border-radius:20px;
+      padding:32px 24px;text-align:center;margin-bottom:20px;
+      box-shadow:0 12px 50px #FF3B3B15;
+      animation:pulseDanger 2.5s infinite;
+    }
+    .lf-icon{font-size:48px;display:block;margin-bottom:12px}
+    .lf-title{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:3px;color:#FF3B3B;margin-bottom:10px}
+    .lf-body{font-size:13px;color:#aa4444;line-height:1.7;margin-bottom:18px}
+    .lf-tip{background:#FF3B3B10;border:1px solid #FF3B3B20;border-radius:12px;padding:14px;font-size:11px;color:#ff7777;line-height:1.7}
 
     /* ── FORM CARD ── */
-    .card{background:linear-gradient(145deg,#001a0d,#001508);border:1px solid #009C3B22;border-radius:22px;padding:28px 24px;width:100%;max-width:420px;box-shadow:0 20px 60px #00000088}
-    .section-label{font-size:11px;font-weight:700;color:#2a6a30;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px}
-
-    /* ── FOTO DE PERFIL DO JOGADOR ── */
-    .profile-photo-section{margin-bottom:20px}
-    .profile-photo-row{display:flex;align-items:center;gap:14px}
-    .profile-photo-preview{
-      width:64px;height:86px;border-radius:12px;flex-shrink:0;padding:3px;
-      background:linear-gradient(135deg,var(--amarelo),var(--verde) 45%,var(--azul) 90%);
-      cursor:pointer;position:relative;transition:transform 0.2s;
-      box-shadow:0 4px 14px #00000060;
+    .form-card{
+      background:#0a1a0d;border:1px solid #009C3B20;border-radius:20px;
+      padding:26px 20px;margin-bottom:20px;
+      box-shadow:0 20px 60px #00000060;
     }
-    .profile-photo-preview:hover{transform:scale(1.04)}
-    .ph-inner{width:100%;height:100%;border-radius:9px;overflow:hidden;background:#03130b;display:flex;align-items:center;justify-content:center;position:relative}
-    .profile-photo-preview img{width:100%;height:100%;object-fit:cover;display:none}
-    .profile-photo-preview img.visible{display:block}
-    .profile-photo-preview .ph-icon{font-size:24px;color:#1a5a20;transition:opacity 0.2s}
-    .profile-photo-preview .ph-icon.hidden{display:none}
-    .profile-photo-preview input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:3}
-    .profile-photo-hints{flex:1}
-    .profile-photo-hints .ph-hint{font-size:11px;color:#2a5a30;line-height:1.6;margin-bottom:6px}
-    .profile-photo-btns{display:flex;gap:6px;flex-wrap:wrap}
+
+    /* FOMO strip */
+    .fomo-strip{
+      background:linear-gradient(90deg,#009C3B12,#009C3B08);
+      border:1px solid #009C3B20;border-radius:10px;
+      padding:10px 14px;margin-bottom:20px;
+      display:flex;align-items:center;gap:10px;
+    }
+    .fomo-dot{width:7px;height:7px;background:var(--verde);border-radius:50%;flex-shrink:0;animation:liveGlow 1.5s ease-in-out infinite}
+    .fomo-text{font-size:11px;color:#3a7a40;line-height:1.5}
+    .fomo-text strong{color:var(--verde);display:block;font-size:12px;margin-bottom:1px}
+
+    .section-label{font-size:10px;font-weight:700;color:#2a5a30;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+
+    /* Profile photo */
+    .photo-row{display:flex;gap:14px;align-items:center;margin-bottom:20px}
+    .ph-frame{
+      width:60px;height:80px;flex-shrink:0;border-radius:10px;padding:2px;
+      background:linear-gradient(135deg,#FFD700,#009C3B,#002776);
+      cursor:pointer;position:relative;box-shadow:0 4px 16px #00000050;
+      transition:transform 0.2s;
+    }
+    .ph-frame:hover{transform:scale(1.04)}
+    .ph-inner-frame{
+      width:100%;height:100%;border-radius:8px;overflow:hidden;
+      background:#060d08;display:flex;align-items:center;justify-content:center;
+    }
+    .ph-frame img{width:100%;height:100%;object-fit:cover;display:none}
+    .ph-frame img.visible{display:block}
+    .ph-placeholder{font-size:22px;color:#1a4a20;transition:opacity 0.2s}
+    .ph-placeholder.hidden{display:none}
+    .ph-frame input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:3}
+    .ph-hints{flex:1}
+    .ph-hint-text{font-size:11px;color:#2a5a30;line-height:1.6;margin-bottom:8px}
+    .ph-btns{display:flex;gap:6px;flex-wrap:wrap}
     .ph-btn{
-      padding:7px 12px;border-radius:8px;border:1px solid #009C3B30;
-      background:#009C3B12;color:#4aaa60;font-size:10px;font-weight:700;
-      letter-spacing:0.8px;cursor:pointer;transition:all 0.2s;white-space:nowrap;
+      padding:6px 11px;border-radius:8px;border:1px solid #009C3B25;
+      background:#009C3B10;color:#3aaa50;font-size:10px;font-weight:700;
+      letter-spacing:0.5px;cursor:pointer;transition:all 0.2s;
     }
-    .ph-btn:hover{background:#009C3B25;border-color:#009C3B55;color:#6acc80}
-    .ph-btn.camera{border-color:#FFDF0030;background:#FFDF0012;color:#ccaa00}
-    .ph-btn.camera:hover{background:#FFDF0025;border-color:#FFDF0055}
-    .ph-btn.remove{border-color:#ff444430;background:transparent;color:#ff666680}
-    .ph-btn.remove:hover{background:#ff444415;color:#ff6666}
-    .ph-btn.remove.hidden{display:none}
+    .ph-btn:hover{background:#009C3B22;border-color:#009C3B44}
+    .ph-btn.cam{border-color:#FFD70025;background:#FFD70010;color:#bbaa00}
+    .ph-btn.rem{border-color:#FF3B3B25;background:transparent;color:#FF3B3B88;display:none}
+    .ph-btn.rem.show{display:inline-block}
 
-    /* ── CAMERA MODAL ── */
-    .camera-modal{
-      position:fixed;inset:0;background:#000000ee;z-index:2000;
-      display:none;flex-direction:column;align-items:center;justify-content:center;
-      padding:20px;
+    /* Name input */
+    .name-input{
+      width:100%;background:#009C3B0a;border:1.5px solid #009C3B20;
+      border-radius:12px;padding:14px 16px;color:#fff;
+      font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1.5px;
+      outline:none;transition:border-color 0.2s,box-shadow 0.2s;
+      margin-bottom:20px;-webkit-appearance:none;
     }
-    .camera-modal.open{display:flex}
-    .camera-video{width:100%;max-width:360px;border-radius:16px;overflow:hidden;border:2px solid var(--verde);background:#000}
-    .camera-video video{width:100%;display:block;border-radius:14px}
-    .camera-actions{display:flex;gap:12px;margin-top:16px}
-    .cam-snap-btn{
-      width:64px;height:64px;border-radius:50%;border:3px solid var(--amarelo);
-      background:var(--verde);font-size:24px;cursor:pointer;transition:all 0.2s;
-      display:flex;align-items:center;justify-content:center;
-    }
-    .cam-snap-btn:hover{background:var(--verde-light);transform:scale(1.05)}
-    .cam-close-btn{
-      width:44px;height:44px;border-radius:50%;border:1px solid #ffffff20;
-      background:#ffffff10;color:#fff;font-size:16px;cursor:pointer;
-      display:flex;align-items:center;justify-content:center;align-self:flex-end;margin-bottom:10px;
-    }
-    .cam-canvas{display:none}
+    .name-input::placeholder{color:#1a3a20;font-size:17px}
+    .name-input:focus{border-color:#009C3B55;box-shadow:0 0 0 3px #009C3B10}
 
-    .name-input{width:100%;background:#009C3B12;border:1.5px solid #009C3B25;border-radius:12px;padding:14px 16px;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;outline:none;transition:border-color 0.2s;margin-bottom:20px;-webkit-appearance:none}
-    .name-input::placeholder{color:#1a4a20;font-size:18px}
-    .name-input:focus{border-color:#009C3B88}
-    .pos-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
-    .pos-card{padding:16px 12px;border-radius:14px;border:2px solid #009C3B18;background:#009C3B08;cursor:pointer;transition:all 0.2s;text-align:center}
-    .pos-card.active{border-color:var(--c);background:color-mix(in srgb,var(--c) 18%,transparent)}
-    .pos-icon{font-size:28px;display:block;margin-bottom:6px}
-    .pos-name{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:1px;color:#3a7a40}
+    /* Position grid */
+    .pos-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px}
+    .pos-card{
+      padding:14px 10px;border-radius:14px;
+      border:2px solid #009C3B12;background:#009C3B06;
+      cursor:pointer;transition:all 0.2s;text-align:center;position:relative;overflow:hidden;
+    }
+    .pos-card::before{
+      content:'';position:absolute;inset:0;
+      background:radial-gradient(circle at 50% 0%,var(--c,#009C3B)18,transparent 70%);
+      opacity:0;transition:opacity 0.3s;
+    }
+    .pos-card.active{border-color:var(--c);background:color-mix(in srgb,var(--c) 15%,transparent)}
+    .pos-card.active::before{opacity:1}
+    .pos-icon{font-size:26px;display:block;margin-bottom:5px;position:relative;z-index:1}
+    .pos-name{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1px;color:#3a7a40;position:relative;z-index:1}
     .pos-card.active .pos-name{color:var(--c)}
-    .error-box{display:none;background:#ff444415;border:1px solid #ff444440;border-radius:10px;padding:12px 14px;font-size:12px;color:#ff6666;margin-bottom:14px}
-    .submit-btn{width:100%;padding:18px;border-radius:14px;border:none;background:linear-gradient(135deg,var(--verde),var(--azul-mid));color:#fff;font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;cursor:pointer;box-shadow:0 6px 30px #009C3B44;animation:pulse 2s infinite;-webkit-appearance:none}
-    .submit-btn:disabled{background:#ffffff0d;color:#2a4a30;box-shadow:none;animation:none;cursor:not-allowed}
 
-    /* ── LISTA DE CONFIRMADOS — ÁLBUM DE FIGURINHAS ── */
-    @keyframes foilShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-    @keyframes shineSweep{0%{background-position:180% 180%}100%{background-position:-60% -60%}}
-    @keyframes stickerIn{from{opacity:0;transform:scale(.85) rotate(-4deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+    /* Error */
+    .error-box{display:none;background:#FF3B3B10;border:1px solid #FF3B3B30;border-radius:10px;padding:10px 14px;font-size:12px;color:#FF3B3B;margin-bottom:14px}
 
-    .player-list{margin-top:28px;width:100%;max-width:420px}
-    .list-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:#2a6a30;text-align:center;margin-bottom:4px}
-    .list-subtitle{font-size:10px;color:#1a4a2099;text-align:center;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px}
+    /* Submit button */
+    .submit-btn{
+      width:100%;padding:18px;border-radius:14px;border:none;
+      background:linear-gradient(135deg,#009C3B,#00C44E,#009C3B);
+      background-size:200%;
+      color:#fff;font-family:'Bebas Neue',sans-serif;font-size:23px;letter-spacing:4px;
+      cursor:pointer;position:relative;overflow:hidden;
+      box-shadow:0 8px 30px #009C3B44,0 0 0 1px #009C3B33;
+      animation:submitPulse 2.5s ease-in-out infinite;
+      -webkit-appearance:none;transition:all 0.2s;
+    }
+    .submit-btn:disabled{
+      background:#ffffff08;color:#2a4a30;
+      box-shadow:none;animation:none;cursor:not-allowed;
+    }
+    .submit-btn::after{
+      content:'';position:absolute;top:-50%;left:-70%;
+      width:40%;height:200%;
+      background:linear-gradient(105deg,transparent,#ffffff22,transparent);
+      transform:rotate(30deg);animation:shimmerBtn 3s ease-in-out infinite;
+    }
+    .submit-btn:disabled::after{display:none}
 
+    /* Success */
+    .success-area{display:none;text-align:center;padding:16px 0}
+    .success-emoji{font-size:60px;margin-bottom:14px;display:block}
+    .success-name{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;color:var(--verde);margin-bottom:8px}
+    .success-text{font-size:14px;color:#3a7a40;line-height:1.6;margin-bottom:16px}
+    .success-tip{background:#009C3B0a;border:1px solid #009C3B18;border-radius:12px;padding:14px 18px;font-size:12px;color:#2a6a30;line-height:1.7;max-width:320px;margin:0 auto}
+    .success-tip strong{color:#FFD700;display:block;margin-bottom:4px}
+
+    /* ── ÁLBUM DE FIGURINHAS ── */
+    .player-section{margin:8px 0 0;width:100%;max-width:420px;padding:0 16px}
+    .album-header{text-align:center;margin-bottom:20px}
+    .album-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:#2a6a30;margin-bottom:3px}
+    .album-sub{font-size:10px;color:#1a4a2077;letter-spacing:2px;text-transform:uppercase}
+
+    /* Position legend */
+    .pos-legend{
+      display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:16px;
+    }
+    .pos-badge{
+      font-size:9px;font-weight:700;letter-spacing:1px;padding:3px 8px;border-radius:20px;
+      text-transform:uppercase;
+    }
+
+    /* Stats row above grid */
+    .formation-stats{
+      display:flex;gap:8px;margin-bottom:16px;justify-content:center;
+    }
+    .fs-item{
+      flex:1;background:#0a1a0d;border:1px solid #009C3B15;border-radius:10px;
+      padding:8px 6px;text-align:center;
+    }
+    .fs-num{font-family:'Bebas Neue',sans-serif;font-size:20px;line-height:1;color:var(--verde)}
+    .fs-lbl{font-size:8px;color:#2a5a30;letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+
+    /* Sticker grid */
     .sticker-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 
-    .sticker-card{
-      position:relative;aspect-ratio:3/4;border-radius:13px;padding:3px;
-      background:linear-gradient(135deg,#FFDF00,#009C3B 38%,#002776 70%,#FFDF00);
-      background-size:260% 260%;animation:foilShift 7s ease-in-out infinite,stickerIn .4s ease both;
-      box-shadow:0 6px 16px #00000070,0 0 0 1px #ffffff14;
+    .sticker{
+      position:relative;aspect-ratio:3/4;border-radius:13px;padding:2.5px;
+      background:linear-gradient(145deg,#FFD700,#009C3B 38%,#002776 70%,#FFD700);
+      background-size:300%;animation:foilShift 6s ease-in-out infinite, stickerIn 0.4s ease both;
+      box-shadow:0 6px 20px #00000070,0 0 0 1px #ffffff10;
     }
-    .sticker-inner{
-      position:relative;width:100%;height:100%;border-radius:10px;overflow:hidden;
-      background:#03130b;display:flex;flex-direction:column;
-    }
-    .sticker-photo{
-      flex:1;position:relative;overflow:hidden;
-      background:linear-gradient(145deg,#0a2415,#051209);
-      display:flex;align-items:center;justify-content:center;
-    }
+    .sticker-inner{width:100%;height:100%;border-radius:10px;overflow:hidden;background:#060d08;display:flex;flex-direction:column}
+    .sticker-photo{flex:1;overflow:hidden;background:linear-gradient(145deg,#0a2010,#040e08);display:flex;align-items:center;justify-content:center;position:relative}
     .sticker-photo img{width:100%;height:100%;object-fit:cover;display:block}
-    .sticker-photo .sticker-fallback{display:flex;flex-direction:column;align-items:center;gap:4px}
-    .sticker-photo .sticker-fallback .sf-emoji{font-size:24px;opacity:.85}
-    .sticker-photo .sticker-fallback .sf-initial{font-family:'Bebas Neue',sans-serif;font-size:26px;color:#ffffff30}
-    .sticker-shine{
-      position:absolute;inset:0;pointer-events:none;mix-blend-mode:overlay;
-      background:linear-gradient(125deg,transparent 35%,#ffffff80 50%,transparent 65%);
-      background-size:300% 300%;animation:shineSweep 4.5s ease-in-out infinite;
-    }
-    .sticker-num{
-      position:absolute;top:4px;left:4px;z-index:2;
-      background:#000000b0;color:#FFDF00;border:1px solid #FFDF0050;
-      font-family:'Bebas Neue',sans-serif;font-size:10px;letter-spacing:0.5px;
-      padding:1px 5px;border-radius:5px;
-    }
-    .sticker-pos{
-      position:absolute;top:4px;right:4px;z-index:2;color:#04150c;
-      font-size:8px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;
-      padding:2px 5px;border-radius:5px;
-    }
-    .sticker-plate{
-      background:linear-gradient(95deg,#FFDF00,#fefefe 48%,#009C3B);
-      padding:4px 3px 3px;text-align:center;
-    }
-    .sticker-plate span{
-      display:block;font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:0.3px;
-      color:#04150c;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-    }
+    .sticker-fallback{display:flex;flex-direction:column;align-items:center;gap:4px}
+    .sticker-fallback .sf-emoji{font-size:22px;opacity:.85}
+    .sticker-fallback .sf-init{font-family:'Bebas Neue',sans-serif;font-size:24px;color:#ffffff22}
+    .sticker-shine{position:absolute;inset:0;pointer-events:none;mix-blend-mode:overlay;background:linear-gradient(125deg,transparent 30%,#ffffff70 50%,transparent 70%);background-size:300%;animation:shineSweep 4s ease-in-out infinite}
+    .sticker-num{position:absolute;top:4px;left:4px;z-index:2;background:#000000bb;color:#FFD700;border:1px solid #FFD70045;font-family:'Bebas Neue',sans-serif;font-size:9px;letter-spacing:0.5px;padding:1px 5px;border-radius:4px}
+    .sticker-pos-badge{position:absolute;top:4px;right:4px;z-index:2;font-size:7px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;padding:2px 5px;border-radius:4px;color:#040e08}
+    .sticker-plate{background:linear-gradient(95deg,#FFD700,#fff 48%,#009C3B);padding:5px 4px 4px;text-align:center}
+    .sticker-plate span{display:block;font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:0.3px;color:#040e08;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-    /* ── SUCCESS ── */
-    .success-confetti{position:relative;overflow:hidden}
-    .confetti-piece{position:absolute;width:8px;height:8px;border-radius:2px;animation:confettiFall 1.2s ease-in forwards}
+    /* Empty sticker */
+    .sticker.empty{opacity:0.25;animation:none;cursor:default}
+    .sticker.empty .sticker-inner{background:#0a1a0d}
+    .sticker.empty .sticker-photo{background:#060d08}
+    .sticker.empty .sticker-fallback .sf-empty{font-size:18px;opacity:0.3}
 
-    /* ── COUNTDOWN ── */
-    .countdown-wrap{width:100%;max-width:420px;margin-bottom:28px;border-radius:20px;overflow:hidden;border:1px solid #009C3B30;box-shadow:0 8px 40px #009C3B18,0 2px 12px #00000050;background:linear-gradient(145deg,#001a0d,#001208)}
-    .countdown-header{padding:12px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #009C3B18}
-    .countdown-label{font-size:9px;font-weight:700;color:#009C3B;letter-spacing:2.5px;text-transform:uppercase}
-    .countdown-ball{font-size:18px;animation:trophyBounce 3s ease-in-out infinite}
-    .countdown-body{padding:18px 16px 20px;text-align:center}
-    .countdown-date-str{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;color:#2a5a30;margin-bottom:14px}
-    .countdown-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:6px}
-    .cd-block{background:#009C3B0d;border:1px solid #009C3B20;border-radius:12px;padding:10px 4px 8px}
-    .cd-num{font-family:'Bebas Neue',sans-serif;font-size:32px;line-height:1;color:#FFDF00;display:block}
-    .cd-lbl{font-size:9px;font-weight:700;color:#2a6a30;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px}
-    .countdown-happening{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;background:linear-gradient(90deg,var(--verde),var(--amarelo));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:countPulse 1.5s ease-in-out infinite;padding:10px 0 4px}
-    .countdown-soon{font-size:11px;color:#009C3B88;letter-spacing:1px;margin-top:6px}
+    /* ── CAMERA MODAL ── */
+    .camera-modal{position:fixed;inset:0;background:#000000f0;z-index:2000;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px}
+    .camera-modal.open{display:flex}
+    .cam-video-wrap{width:100%;max-width:340px;border-radius:16px;overflow:hidden;border:2px solid var(--verde);background:#000}
+    .cam-video-wrap video{width:100%;display:block;border-radius:14px}
+    .cam-actions{display:flex;gap:12px;margin-top:16px}
+    .cam-snap{width:64px;height:64px;border-radius:50%;border:3px solid var(--amarelo);background:var(--verde);font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
+    .cam-snap:hover{transform:scale(1.06)}
+    .cam-close{width:42px;height:42px;border-radius:50%;border:1px solid #ffffff20;background:#ffffff10;color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;align-self:flex-end;margin-bottom:10px}
+    .cam-canvas{display:none}
 
-    /* ── ADM PANEL ── */
-    .adm-toggle{margin-top:40px;background:none;border:1px solid #009C3B20;border-radius:10px;padding:8px 18px;color:#1a5a20;font-family:'Syne',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;transition:all 0.2s}
-    .adm-toggle:hover{border-color:#009C3B40;color:#2a8a40}
-    .adm-panel{display:none;width:100%;max-width:420px;margin-top:14px;background:linear-gradient(145deg,#001a0d,#001208);border:1px solid #FFDF0025;border-radius:20px;padding:22px 20px}
+    /* ── ADM ── */
+    .adm-toggle{
+      margin:36px 0 0;background:none;border:1px solid #009C3B18;
+      border-radius:10px;padding:8px 20px;color:#1a4a20;
+      font-family:'Syne',sans-serif;font-size:10px;letter-spacing:1.5px;
+      cursor:pointer;transition:all 0.2s;z-index:1;position:relative;
+    }
+    .adm-toggle:hover{border-color:#009C3B35;color:#2a6a30}
+    .adm-panel{display:none;width:100%;max-width:420px;padding:0 16px;margin-top:14px}
     .adm-panel.open{display:block;animation:fadeUp 0.3s ease}
-    .adm-title{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;color:#FFDF0088;margin-bottom:16px;text-align:center}
-    .adm-field{margin-bottom:14px}
-    .adm-label{font-size:10px;font-weight:700;color:#2a5a20;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px}
-    .adm-input{width:100%;background:#009C3B0d;border:1.5px solid #009C3B20;border-radius:10px;padding:12px 14px;color:#fff;font-family:'Syne',sans-serif;font-size:13px;outline:none;transition:border-color 0.2s;-webkit-appearance:none}
-    .adm-input:focus{border-color:#009C3B55}
+    .adm-inner{background:#0a1a0d;border:1px solid #FFD70020;border-radius:20px;padding:22px 20px}
+    .adm-lock-area{text-align:center;padding:8px 0}
+    .adm-input{width:100%;background:#009C3B0a;border:1.5px solid #009C3B20;border-radius:10px;padding:12px 14px;color:#fff;font-family:'Syne',sans-serif;font-size:13px;outline:none;transition:border-color 0.2s;-webkit-appearance:none;margin-bottom:8px}
+    .adm-input:focus{border-color:#009C3B44}
     .adm-input::placeholder{color:#1a4a20}
-    .photo-upload-area{width:100%;border:2px dashed #FFDF0025;border-radius:12px;padding:20px;text-align:center;cursor:pointer;transition:all 0.2s;background:#FFDF0008;position:relative;overflow:hidden}
-    .photo-upload-area:hover{border-color:#FFDF0055;background:#FFDF0012}
-    .photo-upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-    .photo-preview{width:100%;aspect-ratio:16/9;border-radius:10px;object-fit:cover;display:none;margin-top:10px;border:1px solid #FFDF0030}
+    .adm-label{font-size:10px;font-weight:700;color:#2a5a30;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px;display:block}
+    .adm-field{margin-bottom:14px}
+    .adm-btn-green{width:100%;padding:13px;border-radius:12px;border:none;background:linear-gradient(135deg,#FFD700,#009C3B);color:#000;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;cursor:pointer;transition:opacity 0.2s;margin-top:4px}
+    .adm-btn-green:hover{opacity:0.88}
+    .adm-btn-danger{width:100%;padding:10px;border-radius:10px;border:1px solid #FF3B3B25;background:transparent;color:#FF3B3B88;font-family:'Syne',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;margin-top:8px;transition:all 0.2s}
+    .adm-btn-danger:hover{background:#FF3B3B12;border-color:#FF3B3B40}
+    .adm-divider{border:none;border-top:1px solid #009C3B12;margin:18px 0}
+    .adm-msg{font-size:11px;text-align:center;margin-top:10px;min-height:16px}
+    .adm-section-title{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:2px;color:#FFD70077;text-align:center;margin-bottom:14px}
+    .photo-upload-zone{width:100%;border:2px dashed #FFD70020;border-radius:12px;padding:18px;text-align:center;cursor:pointer;background:#FFD70006;position:relative;overflow:hidden;transition:all 0.2s}
+    .photo-upload-zone:hover{border-color:#FFD70040;background:#FFD7000e}
+    .photo-upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+    .photo-preview{width:100%;aspect-ratio:16/9;border-radius:10px;object-fit:cover;display:none;margin-top:10px;border:1px solid #FFD70025}
     .photo-preview.visible{display:block}
-    .upload-icon{font-size:28px;margin-bottom:6px;display:block}
-    .upload-hint{font-size:11px;color:#2a4a20;letter-spacing:0.5px}
-    .adm-save-btn{width:100%;padding:14px;border-radius:12px;border:none;margin-top:4px;background:linear-gradient(135deg,#FFDF00,#009C3B);color:#000;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;cursor:pointer;transition:opacity 0.2s}
-    .adm-save-btn:hover{opacity:0.88}
-    .adm-clear-btn{width:100%;padding:10px;border-radius:10px;border:1px solid #ff444430;background:transparent;color:#ff4444aa;font-family:'Syne',sans-serif;font-size:11px;letter-spacing:1px;cursor:pointer;margin-top:8px;transition:all 0.2s}
-    .adm-clear-btn:hover{background:#ff444415;border-color:#ff444460}
-    .adm-msg{font-size:11px;text-align:center;margin-top:10px;min-height:16px;transition:color 0.3s}
-    .adm-divider{border:none;border-top:1px solid #009C3B15;margin:18px 0}
-    .default-music-info{background:#009C3B0d;border:1px solid #009C3B22;border-radius:10px;padding:10px 12px;font-size:11px;color:#3a8a50;line-height:1.7;margin-bottom:14px}
-    .default-music-info strong{color:#4aaa60;display:block;margin-bottom:2px}
+    .music-default-info{background:#009C3B0a;border:1px solid #009C3B18;border-radius:10px;padding:10px 12px;font-size:11px;color:#3a7a40;line-height:1.7;margin-bottom:14px}
+    .music-default-info strong{color:#4aaa60;display:block;margin-bottom:2px}
 
     /* ── MUSIC PLAYER ── */
     .music-player{
-      position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
-      background:linear-gradient(135deg,#001a0dee,#002015ee);
-      border:1px solid #009C3B30;border-radius:50px;
-      padding:10px 18px;display:flex;align-items:center;gap:12px;
-      box-shadow:0 8px 32px #00000088,0 0 0 1px #009C3B18;
-      backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-      z-index:999;min-width:220px;max-width:340px;
+      position:fixed;bottom:18px;left:50%;transform:translateX(-50%);
+      background:linear-gradient(135deg,#0a1a0dee,#0d2010ee);
+      border:1px solid #009C3B28;border-radius:50px;
+      padding:10px 16px;display:flex;align-items:center;gap:10px;
+      box-shadow:0 10px 40px #00000099,0 0 0 1px #009C3B18,0 0 30px #009C3B10;
+      backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+      z-index:999;min-width:210px;max-width:320px;
       animation:musicPop 0.5s cubic-bezier(.22,1,.36,1);
-      cursor:pointer;user-select:none;transition:opacity 0.3s;
+      cursor:pointer;user-select:none;transition:opacity 0.3s;display:none;
     }
     .music-player:hover{opacity:0.95}
-    .music-disc{
-      width:36px;height:36px;border-radius:50%;
-      background:linear-gradient(135deg,var(--verde),var(--azul-mid));
-      display:flex;align-items:center;justify-content:center;
-      flex-shrink:0;font-size:16px;box-shadow:0 0 12px #009C3B44;transition:box-shadow 0.3s;
-    }
-    .music-disc.playing{animation:spin360 3s linear infinite;box-shadow:0 0 20px #009C3B66}
+    .music-disc{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--verde),var(--azul-mid));display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px;transition:box-shadow 0.3s}
+    .music-disc.playing{animation:spin360 3s linear infinite;box-shadow:0 0 20px var(--verde-glow)}
     .music-info{flex:1;min-width:0}
-    .music-title{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:1px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2}
-    .music-sub{font-size:10px;color:#2a6a30;letter-spacing:0.5px;margin-top:1px}
-    .music-eq{display:flex;align-items:flex-end;gap:2px;height:16px;flex-shrink:0}
+    .music-title-el{font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:1px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2}
+    .music-sub-el{font-size:9.5px;color:#2a6a30;letter-spacing:0.5px;margin-top:1px}
+    .music-eq{display:flex;align-items:flex-end;gap:2px;height:14px;flex-shrink:0}
     .music-eq span{display:inline-block;width:3px;background:var(--verde);border-radius:2px;height:4px}
     .music-eq.playing span:nth-child(1){animation:equalizer 0.8s ease-in-out infinite}
     .music-eq.playing span:nth-child(2){animation:equalizer 0.8s 0.15s ease-in-out infinite}
     .music-eq.playing span:nth-child(3){animation:equalizer 0.8s 0.3s ease-in-out infinite}
     .music-eq.playing span:nth-child(4){animation:equalizer 0.8s 0.1s ease-in-out infinite}
-    .music-toggle{width:28px;height:28px;border-radius:50%;border:1px solid #009C3B30;background:#009C3B18;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;transition:all 0.2s;cursor:pointer}
-    .music-toggle:hover{background:#009C3B35}
+    .music-toggle-btn{width:26px;height:26px;border-radius:50%;border:1px solid #009C3B28;background:#009C3B15;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;cursor:pointer;transition:all 0.2s}
+    .music-toggle-btn:hover{background:#009C3B30}
+
     .music-start-overlay{
-      position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+      position:fixed;bottom:18px;left:50%;transform:translateX(-50%);
       background:linear-gradient(135deg,var(--verde),var(--azul-mid));
-      border:none;border-radius:50px;
-      padding:14px 28px;display:flex;align-items:center;gap:10px;
-      box-shadow:0 8px 32px #009C3B55;
-      z-index:1000;cursor:pointer;user-select:none;
-      font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;color:#fff;
+      border:none;border-radius:50px;padding:14px 28px;
+      display:none;align-items:center;gap:10px;
+      box-shadow:0 8px 32px #009C3B55;z-index:1000;cursor:pointer;
+      font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;color:#fff;
       animation:musicPop 0.5s cubic-bezier(.22,1,.36,1),glowPulse 2s infinite;white-space:nowrap;
     }
+
+    #yt-container{position:fixed;bottom:-300px;left:-300px;width:1px;height:1px;overflow:hidden;pointer-events:none}
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes badgeSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+    @keyframes shimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+    @keyframes shimmerBtn{0%{left:-70%}100%{left:120%}}
+    @keyframes countPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+    @keyframes trophyBounce{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-5px) rotate(3deg)}}
+    @keyframes pulseDanger{0%,100%{box-shadow:0 12px 50px #FF3B3B10}50%{box-shadow:0 12px 50px #FF3B3B25}}
+    @keyframes submitPulse{0%,100%{box-shadow:0 8px 30px #009C3B44}50%{box-shadow:0 8px 40px #009C3B77,0 0 0 4px #009C3B18}}
+    @keyframes liveGlow{0%,100%{box-shadow:0 0 0 0 var(--verde-glow)}50%{box-shadow:0 0 0 6px transparent}}
+    @keyframes foilShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+    @keyframes stickerIn{from{opacity:0;transform:scale(.85) rotate(-3deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+    @keyframes shineSweep{0%{background-position:180% 180%}100%{background-position:-80% -80%}}
+    @keyframes tickerScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    @keyframes spin360{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+    @keyframes equalizer{0%,100%{height:4px}25%{height:12px}50%{height:7px}75%{height:14px}}
+    @keyframes musicPop{0%{transform:translateX(-50%) scale(0.85);opacity:0}100%{transform:translateX(-50%) scale(1);opacity:1}}
+    @keyframes glowPulse{0%,100%{box-shadow:0 8px 32px #009C3B44}50%{box-shadow:0 8px 50px #009C3B88}}
+    @keyframes confetti{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(70px) rotate(720deg);opacity:0}}
+
+    .fu{animation:fadeUp 0.5s ease both}
+    .fu2{animation:fadeUp 0.5s 0.08s ease both}
+    .fu3{animation:fadeUp 0.5s 0.16s ease both}
+    .fu4{animation:fadeUp 0.5s 0.24s ease both}
   </style>
 </head>
 <body>
 
-  <!-- CAMERA MODAL -->
-  <div class="camera-modal" id="camera-modal">
-    <button class="cam-close-btn" onclick="closeCamera()">✕</button>
-    <div class="camera-video">
-      <video id="cam-video" autoplay playsinline></video>
+<!-- CAMERA MODAL -->
+<div class="camera-modal" id="camera-modal">
+  <button class="cam-close" onclick="closeCamera()">✕</button>
+  <div class="cam-video-wrap"><video id="cam-video" autoplay playsinline></video></div>
+  <canvas class="cam-canvas" id="cam-canvas"></canvas>
+  <div class="cam-actions"><button class="cam-snap" onclick="snapPhoto()">📸</button></div>
+</div>
+
+<!-- HERO -->
+<div class="hero fu" style="width:100%">
+  <div class="hero-accent-bar"></div>
+  <div class="hero-inner">
+    <div class="arena-badge">
+      <div class="arena-badge-inner">⚽</div>
     </div>
-    <canvas class="cam-canvas" id="cam-canvas"></canvas>
-    <div class="camera-actions">
-      <button class="cam-snap-btn" onclick="snapPhoto()">📸</button>
+    <div class="hero-title">ARENA<br>PIB</div>
+    <div class="hero-sub">Confirme sua presença no baba</div>
+    <div class="verse-box">
+      <em>"Este é o dia que o Senhor fez;<br>alegremo-nos e nos regozijemos nele."</em>
+      <span>— Salmos 118:24</span>
     </div>
   </div>
+</div>
 
-  <!-- HEADER -->
-  <div class="header-diamond fu"><span>⚽</span></div>
-  <div style="font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:3px;background:linear-gradient(90deg,#FFDF00 20%,#fff 50%,#009C3B 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px;text-align:center" class="fu">ARENA PIB</div>
-  <div style="font-size:13px;color:#2a6a30;letter-spacing:1px;text-align:center;margin-bottom:12px" class="fu2">Confirme sua presença no baba</div>
-
-  <div class="brasil-stripe fu2"></div>
-
-  <div style="font-size:11px;color:#1a4a2088;text-align:center;margin-bottom:28px;font-style:italic;letter-spacing:0.5px;line-height:1.6;max-width:300px" class="fu2">
-    "Este é o dia que o Senhor fez;<br>alegremo-nos e nos regozijemos nele."<br>
-    <span style="font-style:normal;font-size:10px;letter-spacing:1.5px;color:#1a4a2055">— Salmos 118:24</span>
+<!-- TICKER DE URGÊNCIA -->
+<div class="ticker-wrap fu2">
+  <div class="ticker-inner" id="ticker-inner">
+    <span class="ticker-item">⚽ Baba todo sábado às 16h <span class="dot">•</span></span>
+    <span class="ticker-item">🔥 Confirme logo antes de fechar <span class="dot">•</span></span>
+    <span class="ticker-item">📸 Vire uma figurinha do álbum <span class="dot">•</span></span>
+    <span class="ticker-item">🏆 Campeão recebe destaque especial <span class="dot">•</span></span>
+    <span class="ticker-item">⚡ Vagas limitadas a 28 jogadores <span class="dot">•</span></span>
+    <span class="ticker-item">⚽ Baba todo sábado às 16h <span class="dot">•</span></span>
+    <span class="ticker-item">🔥 Confirme logo antes de fechar <span class="dot">•</span></span>
+    <span class="ticker-item">📸 Vire uma figurinha do álbum <span class="dot">•</span></span>
+    <span class="ticker-item">🏆 Campeão recebe destaque especial <span class="dot">•</span></span>
+    <span class="ticker-item">⚡ Vagas limitadas a 28 jogadores <span class="dot">•</span></span>
   </div>
+</div>
 
-  <!-- CONTAGEM REGRESSIVA -->
-  <div class="countdown-wrap fu2" id="countdown-wrap">
-    <div class="countdown-header">
-      <div class="countdown-label">⏱ Próximo baba</div>
-      <div class="countdown-ball">⚽</div>
+<!-- SOCIAL PROOF -->
+<div class="social-proof fu2" id="social-proof-bar">
+  <div class="sp-item">
+    <div class="sp-num" id="sp-confirmed">0</div>
+    <div class="sp-lbl">Confirmados</div>
+  </div>
+  <div class="sp-item">
+    <div class="sp-num" id="sp-vagas">28</div>
+    <div class="sp-lbl">Vagas</div>
+  </div>
+  <div class="sp-item">
+    <div class="sp-num">🔥</div>
+    <div class="sp-lbl">Todo sábado</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- COUNTDOWN -->
+  <div class="countdown-card fu3" id="countdown-wrap">
+    <div class="cd-header">
+      <div class="cd-header-left">
+        <div class="cd-pill">AO VIVO</div>
+        <div class="cd-title">Próximo baba</div>
+      </div>
+      <div class="cd-date-line" id="cd-date-str"></div>
     </div>
-    <div class="countdown-body">
-      <div class="countdown-date-str" id="cd-date-str"></div>
-      <div id="cd-normal">
-        <div class="countdown-grid">
+    <div id="cd-normal">
+      <div class="cd-body">
+        <div class="cd-grid">
           <div class="cd-block"><span class="cd-num" id="cd-d">00</span><div class="cd-lbl">Dias</div></div>
           <div class="cd-block"><span class="cd-num" id="cd-h">00</span><div class="cd-lbl">Horas</div></div>
           <div class="cd-block"><span class="cd-num" id="cd-m">00</span><div class="cd-lbl">Min</div></div>
           <div class="cd-block"><span class="cd-num" id="cd-s">00</span><div class="cd-lbl">Seg</div></div>
         </div>
       </div>
-      <div id="cd-happening" style="display:none">
-        <div class="countdown-happening">🔥 BABA ACONTECENDO AGORA!</div>
-        <div class="countdown-soon">Corre que já começou!</div>
+    </div>
+    <div id="cd-happening" style="display:none">
+      <div class="cd-happening">
+        <div class="cd-happ-text">🔥 BABA ACONTECENDO AGORA!</div>
+        <div class="cd-happ-sub">Corre que já começou!</div>
       </div>
     </div>
   </div>
 
-  <!-- CAMPEÃO -->
-  <div id="champ-section" style="width:100%;max-width:420px;margin-bottom:28px;display:none" class="fu2">
-    <div class="champ-banner">
-      <div class="champ-banner-header">
-        <div class="champ-banner-label">🏆 Campeão do último baba</div>
-        <div class="champ-trophy">🏆</div>
+  <!-- CAPACIDADE (STADIUM BAR) -->
+  <div class="capacity-card fu3" id="capacity-section">
+    <div class="cap-header">
+      <div>
+        <div class="cap-title" id="cap-title-el">⚽ Vagas disponíveis</div>
       </div>
-      <div class="champ-photo-wrap" id="champ-photo-wrap"></div>
-      <div class="champ-info">
-        <div class="champ-badge">CAMPEÃO</div>
-        <div class="champ-name" id="champ-name-display">—</div>
-        <div class="champ-date" id="champ-date-display"></div>
+      <div class="cap-fraction" id="cap-fraction-el" style="color:var(--verde)">
+        <span class="big" id="cap-count-big">0</span><span style="color:#2a5a30;font-size:20px">/28</span>
       </div>
     </div>
-  </div>
-
-  <!-- BARRA DE CAPACIDADE -->
-  <div class="capacity-wrap fu2" id="capacity-section">
-    <div style="display:flex;align-items:center;justify-content:space-between">
-      <span id="capacity-label" style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#009C3B">Vagas disponíveis</span>
-      <span id="capacity-count" style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:#009C3B">0/28</span>
+    <!-- Stadium segmented bar: 28 seats -->
+    <div class="stadium-bar" id="stadium-bar"></div>
+    <div class="cap-sub-row">
+      <div class="cap-sub" id="cap-sub-text">Confirme sua vaga!</div>
+      <div class="cap-urgency" id="cap-urgency-el" style="display:none"></div>
     </div>
-    <div class="capacity-bar-track">
-      <div class="capacity-bar-fill" id="capacity-bar" style="width:0%;background:#009C3B"></div>
-    </div>
-    <div id="capacity-sub" style="font-size:11px;color:#2a5a30;text-align:center"></div>
   </div>
 
   <!-- LISTA FECHADA -->
-  <div class="lista-fechada-card fu3" id="lista-fechada-card" style="display:none">
-    <span class="lock-icon">🔒</span>
-    <div style="font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:3px;color:#ff6666;margin-bottom:10px">LISTA FECHADA</div>
-    <div style="font-size:14px;color:#aa4444;line-height:1.7;margin-bottom:20px">
-      O baba já está com <strong style="color:#ff6666">28 jogadores</strong> confirmados.<br>Não há mais vagas no momento!
-    </div>
-    <div style="background:#ff444415;border:1px solid #ff444435;border-radius:14px;padding:16px 18px;font-size:12px;color:#ff8888;line-height:1.8">
-      💡 Fique de olho no grupo — se alguém desistir, uma vaga abre automaticamente!
+  <div class="lista-fechada fu3" id="lista-fechada-card" style="display:none">
+    <span class="lf-icon">🔒</span>
+    <div class="lf-title">LISTA FECHADA</div>
+    <div class="lf-body">O baba já tem <strong style="color:#FF3B3B">28 jogadores</strong> confirmados.<br>Não há mais vagas no momento!</div>
+    <div class="lf-tip">💡 Fique de olho — se alguém desistir, uma vaga abre automaticamente!</div>
+  </div>
+
+  <!-- CAMPEÃO -->
+  <div id="champ-section" style="display:none" class="fu3">
+    <div class="champ-card">
+      <div class="champ-head">
+        <div class="champ-badge-label">🏆 Campeão do último baba</div>
+        <div class="champ-trophy-anim">🏆</div>
+      </div>
+      <div class="champ-img-wrap" id="champ-img-wrap"></div>
+      <div class="champ-info">
+        <div class="champ-ribbon">CAMPEÃO</div>
+        <div class="champ-name-disp" id="champ-name-disp">—</div>
+        <div class="champ-date-disp" id="champ-date-disp"></div>
+      </div>
     </div>
   </div>
 
-  <!-- FORMULÁRIO -->
-  <div class="card fu3" id="form-card">
-    <div id="form-area">
+  <!-- FORM -->
+  <div class="form-card fu4" id="form-card">
 
-      <!-- FOTO DE PERFIL -->
-      <div class="profile-photo-section">
-        <div class="section-label">Sua foto (opcional)</div>
-        <div class="profile-photo-row">
-          <div class="profile-photo-preview" id="profile-photo-preview">
-            <div class="ph-inner">
-              <img id="profile-photo-img" alt="Sua foto"/>
-              <span class="ph-icon" id="ph-placeholder-icon">🙋</span>
-            </div>
-            <input type="file" id="profile-photo-file" accept="image/*" onchange="handlePhotoUpload(event)"/>
+    <!-- FOMO: social pressure strip -->
+    <div class="fomo-strip" id="fomo-strip">
+      <div class="fomo-dot"></div>
+      <div class="fomo-text">
+        <strong id="fomo-main">🔥 Baba está enchendo!</strong>
+        <span id="fomo-sub">Confirme sua vaga antes que feche.</span>
+      </div>
+    </div>
+
+    <div id="form-area">
+      <!-- Foto -->
+      <div class="section-label">Sua foto (opcional)</div>
+      <div class="photo-row">
+        <div class="ph-frame" id="ph-frame">
+          <div class="ph-inner-frame">
+            <img id="ph-img" alt="foto"/>
+            <span class="ph-placeholder" id="ph-icon">🙋</span>
           </div>
-          <div class="profile-photo-hints">
-            <div class="ph-hint">Adicione uma foto pra virar sua figurinha 📸</div>
-            <div class="profile-photo-btns">
-              <button class="ph-btn" onclick="triggerFileUpload()">🖼️ Galeria</button>
-              <button class="ph-btn camera" onclick="openCamera()">📷 Câmera</button>
-              <button class="ph-btn remove hidden" id="ph-remove-btn" onclick="removePhoto()">✕</button>
-            </div>
+          <input type="file" id="ph-file" accept="image/*" onchange="handlePhotoUpload(event)"/>
+        </div>
+        <div class="ph-hints">
+          <div class="ph-hint-text">Adicione uma foto pra virar sua figurinha! 📸</div>
+          <div class="ph-btns">
+            <button class="ph-btn" onclick="triggerFile()">🖼️ Galeria</button>
+            <button class="ph-btn cam" onclick="openCamera()">📷 Câmera</button>
+            <button class="ph-btn rem" id="ph-remove" onclick="removePhoto()">✕ Remover</button>
           </div>
         </div>
       </div>
@@ -429,9 +691,9 @@
       <div class="section-label">Sua posição</div>
       <div class="pos-grid" id="pos-grid">
         <div class="pos-card" data-pos="Goleiro"    style="--c:#FF6B35"><span class="pos-icon">🧤</span><div class="pos-name">Goleiro</div></div>
-        <div class="pos-card" data-pos="Lateral"    style="--c:#FFDF00"><span class="pos-icon">🏃</span><div class="pos-name">Lateral</div></div>
+        <div class="pos-card" data-pos="Lateral"    style="--c:#FFD700"><span class="pos-icon">🏃</span><div class="pos-name">Lateral</div></div>
         <div class="pos-card" data-pos="Defesa"     style="--c:#009C3B"><span class="pos-icon">🛡️</span><div class="pos-name">Defesa</div></div>
-        <div class="pos-card" data-pos="Meio-campo" style="--c:#002776"><span class="pos-icon">⚙️</span><div class="pos-name">Meio-campo</div></div>
+        <div class="pos-card" data-pos="Meio-campo" style="--c:#4488FF"><span class="pos-icon">⚙️</span><div class="pos-name">Meio-campo</div></div>
         <div class="pos-card" data-pos="Atacante"   style="--c:#2ECC71"><span class="pos-icon">🎯</span><div class="pos-name">Atacante</div></div>
       </div>
 
@@ -439,140 +701,155 @@
       <button class="submit-btn" id="submit-btn" disabled>CONFIRMAR PRESENÇA ⚽</button>
     </div>
 
-    <div id="success-area" style="display:none;text-align:center;padding:20px 0" class="success-confetti">
-      <div style="font-size:64px;margin-bottom:16px">🎉</div>
-      <div id="success-name" style="font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:2px;color:#009C3B;margin-bottom:8px"></div>
-      <div style="font-size:14px;color:#2a6a30;line-height:1.6">Você está na lista do baba!</div>
-      <div style="background:#009C3B0d;border-radius:12px;padding:14px 20px;font-size:12px;color:#2a6a30;line-height:1.6;max-width:320px;margin:16px auto 0">
-        <strong style="color:#FFDF00;display:block;margin-bottom:4px">⏳ Aguardando nota</strong>
-        O ADM vai avaliar sua habilidade antes do sorteio.
+    <div class="success-area" id="success-area">
+      <span class="success-emoji">🎉</span>
+      <div class="success-name" id="success-name"></div>
+      <div class="success-text">Você está na lista do baba!</div>
+      <div class="success-tip">
+        <strong>⏳ Aguardando nota do ADM</strong>
+        O ADM vai avaliar sua habilidade antes do sorteio. Nos vemos sábado!
       </div>
     </div>
+
   </div>
 
-  <!-- ADM PANEL -->
-  <button class="adm-toggle fu4" id="adm-toggle-btn">⚙️ ADM</button>
+</div><!-- /container -->
 
-  <div class="adm-panel" id="adm-panel">
-    <div id="adm-lock" style="text-align:center;padding:8px 0 4px">
-      <div style="font-size:28px;margin-bottom:8px">🔒</div>
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;color:#FFDF0088;margin-bottom:14px">ACESSO RESTRITO</div>
-      <input class="adm-input" id="adm-password" type="password" placeholder="Digite a senha" style="text-align:center;letter-spacing:4px;font-size:18px;margin-bottom:10px" autocomplete="off"/>
-      <div id="adm-pass-err" style="font-size:11px;color:#ff4444;min-height:16px;margin-bottom:8px"></div>
-      <button class="adm-save-btn" id="adm-unlock-btn" style="font-size:16px;padding:12px">ENTRAR 🔑</button>
+<!-- ADM TOGGLE -->
+<button class="adm-toggle fu4" id="adm-toggle-btn">⚙️ ADM</button>
+
+<div class="adm-panel" id="adm-panel">
+  <div class="adm-inner">
+
+    <!-- Lock screen -->
+    <div id="adm-lock" class="adm-lock-area">
+      <div style="font-size:26px;margin-bottom:8px">🔒</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:2px;color:#FFD70077;margin-bottom:14px">ACESSO RESTRITO</div>
+      <input class="adm-input" id="adm-password" type="password" placeholder="Senha" style="text-align:center;letter-spacing:4px;font-size:18px" autocomplete="off"/>
+      <div id="adm-pass-err" style="font-size:11px;color:#FF3B3B;min-height:16px;margin-bottom:8px;text-align:center"></div>
+      <button class="adm-btn-green" id="adm-unlock-btn" style="padding:12px;font-size:15px">ENTRAR 🔑</button>
     </div>
 
+    <!-- Content -->
     <div id="adm-content" style="display:none">
-      <div style="margin-bottom:4px">
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;color:#009C3B88;margin-bottom:14px;text-align:center">🎵 MÚSICA DO BABA</div>
-        <div class="default-music-info">
-          <strong>🎵 Música padrão ativa</strong>
-          Se nenhum link for salvo, o site toca automaticamente a música padrão. Cole um link do YouTube para substituir.
-        </div>
-        <div class="adm-field">
-          <div class="adm-label">Link do YouTube (opcional)</div>
-          <input class="adm-input" id="adm-music-url" placeholder="https://youtube.com/watch?v=..." autocomplete="off" autocorrect="off"/>
-        </div>
-        <div class="adm-field">
-          <div class="adm-label">Nome da Música (opcional)</div>
-          <input class="adm-input" id="adm-music-name" placeholder="Ex: Funk do Baba 🔥" maxlength="40" autocomplete="off"/>
-        </div>
-        <div style="display:flex;gap:8px">
-          <button onclick="saveMusic()" style="flex:2;padding:12px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--verde),var(--azul-mid));color:#fff;font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1.5px;cursor:pointer">SALVAR MÚSICA 🎵</button>
-          <button onclick="resetToDefaultMusic()" style="flex:1;padding:12px;border-radius:10px;border:1px solid #ff444430;background:transparent;color:#ff4444aa;font-family:'Syne',sans-serif;font-size:11px;cursor:pointer">PADRÃO</button>
-        </div>
-        <div id="adm-music-msg" style="font-size:11px;text-align:center;margin-top:10px;min-height:16px"></div>
+
+      <div class="adm-section-title">🎵 MÚSICA DO BABA</div>
+      <div class="music-default-info"><strong>🎵 Música padrão ativa</strong>Cole um link do YouTube para trocar a música.</div>
+      <div class="adm-field">
+        <label class="adm-label">Link do YouTube</label>
+        <input class="adm-input" id="adm-music-url" placeholder="https://youtube.com/watch?v=..." autocomplete="off"/>
       </div>
+      <div class="adm-field">
+        <label class="adm-label">Nome da Música</label>
+        <input class="adm-input" id="adm-music-name" placeholder="Ex: Funk do Baba 🔥" maxlength="40" autocomplete="off"/>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button onclick="saveMusic()" style="flex:2;padding:12px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--verde),var(--azul-mid));color:#fff;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1.5px;cursor:pointer">SALVAR 🎵</button>
+        <button onclick="resetToDefaultMusic()" style="flex:1;padding:12px;border-radius:10px;border:1px solid #FF3B3B25;background:transparent;color:#FF3B3B88;font-family:'Syne',sans-serif;font-size:11px;cursor:pointer">PADRÃO</button>
+      </div>
+      <div id="adm-music-msg" style="font-size:11px;text-align:center;margin-top:10px;min-height:16px"></div>
 
       <hr class="adm-divider"/>
 
-      <div class="adm-title">🏆 DEFINIR CAMPEÃO</div>
+      <div class="adm-section-title">🏆 DEFINIR CAMPEÃO</div>
       <div class="adm-field">
-        <div class="adm-label">Nome do Campeão / Time</div>
+        <label class="adm-label">Nome do Campeão / Time</label>
         <input class="adm-input" id="adm-champ-name" placeholder="Ex: Time do Matheus" maxlength="40" autocomplete="off"/>
       </div>
       <div class="adm-field">
-        <div class="adm-label">Data do Baba</div>
-        <input class="adm-input" id="adm-champ-date" placeholder="Ex: 26 de Abril de 2025" maxlength="40" autocomplete="off"/>
+        <label class="adm-label">Data do Baba</label>
+        <input class="adm-input" id="adm-champ-date" placeholder="Ex: 28 de Junho de 2026" maxlength="40" autocomplete="off"/>
       </div>
       <div class="adm-field">
-        <div class="adm-label">Foto do Campeão</div>
-        <div class="photo-upload-area" id="photo-upload-area">
+        <label class="adm-label">Foto do Campeão</label>
+        <div class="photo-upload-zone">
           <input type="file" id="adm-photo-input" accept="image/*"/>
-          <span class="upload-icon">📸</span>
-          <div class="upload-hint">Toque para escolher uma foto</div>
+          <span style="font-size:24px;display:block;margin-bottom:6px">📸</span>
+          <div style="font-size:11px;color:#2a4a20" id="upload-hint-text">Toque para escolher uma foto</div>
         </div>
-        <img class="photo-preview" id="photo-preview" alt="Preview da foto"/>
+        <img class="photo-preview" id="adm-photo-preview" alt="preview"/>
       </div>
-      <button class="adm-save-btn" id="adm-save-btn">SALVAR CAMPEÃO 🏆</button>
-      <button class="adm-clear-btn" id="adm-clear-btn">Remover campeão atual</button>
+      <button class="adm-btn-green" id="adm-save-btn">SALVAR CAMPEÃO 🏆</button>
+      <button class="adm-btn-danger" id="adm-clear-btn">Remover campeão atual</button>
       <div class="adm-msg" id="adm-msg"></div>
+
     </div>
   </div>
+</div>
 
-  <!-- MUSIC PLAYER -->
-  <div class="music-player" id="music-player" style="display:none" onclick="toggleMusic()">
-    <div style="position:relative;flex-shrink:0">
-      <div class="music-disc" id="music-disc">🎵</div>
-    </div>
-    <div class="music-info">
-      <div class="music-title" id="music-title">Música do Baba</div>
-      <div class="music-sub" id="music-sub">Toque para pausar</div>
-    </div>
-    <div class="music-eq" id="music-eq">
-      <span></span><span></span><span></span><span></span>
-    </div>
-    <div class="music-toggle" id="music-toggle-btn">⏸</div>
+<!-- MUSIC PLAYER -->
+<div class="music-player" id="music-player" onclick="toggleMusic()">
+  <div class="music-disc" id="music-disc">🎵</div>
+  <div class="music-info">
+    <div class="music-title-el" id="music-title">Música do Baba</div>
+    <div class="music-sub-el" id="music-sub">Toque para pausar</div>
+  </div>
+  <div class="music-eq" id="music-eq"><span></span><span></span><span></span><span></span></div>
+  <div class="music-toggle-btn" id="music-toggle-btn">⏸</div>
+</div>
+
+<button class="music-start-overlay" id="music-start-btn" onclick="userStartMusic()">🎵 TOCAR MÚSICA DO BABA</button>
+<div id="yt-container"><div id="yt-player"></div></div>
+
+<!-- PLAYER LIST -->
+<div class="player-section fu4">
+  <div class="album-header">
+    <div class="album-title" id="album-title-el">QUEM JÁ CONFIRMOU</div>
+    <div class="album-sub">✨ Álbum de figurinhas do baba</div>
   </div>
 
-  <button class="music-start-overlay" id="music-start-btn" style="display:none" onclick="userStartMusic()">
-    🎵 TOCAR MÚSICA DO BABA
-  </button>
-
-  <div id="yt-container" style="position:fixed;bottom:-200px;left:-200px;width:1px;height:1px;overflow:hidden;pointer-events:none">
-    <div id="yt-player"></div>
+  <!-- Position breakdown -->
+  <div class="formation-stats" id="formation-stats" style="display:none">
+    <div class="fs-item"><div class="fs-num" id="fs-gol">0</div><div class="fs-lbl">🧤 Gol</div></div>
+    <div class="fs-item"><div class="fs-num" id="fs-def">0</div><div class="fs-lbl">🛡️ Def</div></div>
+    <div class="fs-item"><div class="fs-num" id="fs-mei">0</div><div class="fs-lbl">⚙️ Mei</div></div>
+    <div class="fs-item"><div class="fs-num" id="fs-ata">0</div><div class="fs-lbl">🎯 Ata</div></div>
   </div>
 
-  <!-- LISTA -->
-  <div class="player-list fu4">
-    <div class="list-title" id="list-title-el">QUEM JÁ CONFIRMOU</div>
-    <div class="list-subtitle">✨ Álbum de figurinhas do baba</div>
-    <div id="player-list-items" class="sticker-grid">
-      <div style="grid-column:1/-1;text-align:center;color:#1a4a20;font-size:13px;padding:20px">Carregando...</div>
-    </div>
+  <div class="sticker-grid" id="sticker-grid">
+    <div style="grid-column:1/-1;text-align:center;color:#1a4a20;font-size:13px;padding:20px">Carregando...</div>
   </div>
+</div>
 
 <script>
-// ── CONFIG ─────────────────────────────────────────────────────────────────
+// ── CONFIG ──────────────────────────────────────────────────────
 const MAX_JOGADORES = 28;
-const DEFAULT_MUSIC = {
-  videoId: "l0U7sPBBMPE",
-  name: "🔥 Seleção Baba PIB",
-  isDefault: true
-};
-const POS_COLORS = {
-  "Goleiro":"#FF6B35","Lateral":"#FFDF00",
-  "Defesa":"#009C3B","Meio-campo":"#002776","Atacante":"#2ECC71"
-};
+const DEFAULT_MUSIC = { videoId:"l0U7sPBBMPE", name:"🔥 Seleção Baba PIB", isDefault:true };
+const POS_COLORS = { "Goleiro":"#FF6B35","Lateral":"#FFD700","Defesa":"#009C3B","Meio-campo":"#4488FF","Atacante":"#2ECC71" };
+const POS_ABBR   = { "Goleiro":"GOL","Lateral":"LAT","Defesa":"DEF","Meio-campo":"MEI","Atacante":"ATA" };
+const POS_EMOJI  = { "Goleiro":"🧤","Lateral":"🏃","Defesa":"🛡️","Meio-campo":"⚙️","Atacante":"🎯" };
 
-// ── COUNTDOWN ──────────────────────────────────────────────────────────────
+// ── STADIUM BAR INIT ────────────────────────────────────────────
+function buildStadiumBar() {
+  const bar = document.getElementById("stadium-bar");
+  bar.innerHTML = "";
+  for (let i = 0; i < MAX_JOGADORES; i++) {
+    const seat = document.createElement("div");
+    seat.className = "seat";
+    seat.id = "seat-" + i;
+    bar.appendChild(seat);
+  }
+}
+buildStadiumBar();
+
+// ── COUNTDOWN ───────────────────────────────────────────────────
 function getNextBaba() {
   const now = new Date(), next = new Date(now);
   const day = now.getDay();
-  const daysUntilSat = (6 - day + 7) % 7 || 7;
-  next.setDate(now.getDate() + daysUntilSat);
+  const daysUntil = (6 - day + 7) % 7 || 7;
+  next.setDate(now.getDate() + daysUntil);
   next.setHours(16, 0, 0, 0);
-  if (day === 6 && now >= new Date(next.getTime() + 60*60*1000)) next.setDate(next.getDate() + 7);
+  if (day === 6 && now >= new Date(next.getTime() + 60 * 60 * 1000)) next.setDate(next.getDate() + 7);
   return next;
 }
 const MESES = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
-const DIAS_SEMANA = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
-function pad(n){ return String(n).padStart(2,"0"); }
+const DIAS  = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
+const pad   = n => String(n).padStart(2, "0");
 
 function updateCountdown() {
   const now = new Date(), target = getNextBaba(), diff = target - now;
   document.getElementById("cd-date-str").textContent =
-    `${DIAS_SEMANA[target.getDay()]}, ${target.getDate()} de ${MESES[target.getMonth()]} — 16:00`;
+    `${DIAS[target.getDay()]} ${target.getDate()} ${MESES[target.getMonth()]} • 16h`;
   const isBabaTime = now.getDay() === 6 && now.getHours() === 16;
   if (isBabaTime) {
     document.getElementById("cd-normal").style.display = "none";
@@ -581,128 +858,205 @@ function updateCountdown() {
   }
   document.getElementById("cd-normal").style.display = "block";
   document.getElementById("cd-happening").style.display = "none";
-  const s = Math.floor(diff/1000);
-  document.getElementById("cd-d").textContent = pad(Math.floor(s/86400));
-  document.getElementById("cd-h").textContent = pad(Math.floor((s%86400)/3600));
-  document.getElementById("cd-m").textContent = pad(Math.floor((s%3600)/60));
-  document.getElementById("cd-s").textContent = pad(s%60);
+  const s = Math.floor(diff / 1000);
+  document.getElementById("cd-d").textContent = pad(Math.floor(s / 86400));
+  document.getElementById("cd-h").textContent = pad(Math.floor((s % 86400) / 3600));
+  document.getElementById("cd-m").textContent = pad(Math.floor((s % 3600) / 60));
+  document.getElementById("cd-s").textContent = pad(s % 60);
 }
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-// ── FIREBASE ───────────────────────────────────────────────────────────────
+// ── FIREBASE ────────────────────────────────────────────────────
 firebase.initializeApp({
-  apiKey: "AIzaSyDJ3BB-IRyh9DIrDR15qlmWflzra7LGVj0",
-  authDomain: "pib-123.firebaseapp.com",
-  databaseURL: "https://pib-123-default-rtdb.firebaseio.com",
-  projectId: "pib-123",
-  storageBucket: "pib-123.firebasestorage.app",
-  messagingSenderId: "652801707789",
-  appId: "1:652801707789:web:ac51161bb9845a2400ea44"
+  apiKey:"AIzaSyDJ3BB-IRyh9DIrDR15qlmWflzra7LGVj0",
+  authDomain:"pib-123.firebaseapp.com",
+  databaseURL:"https://pib-123-default-rtdb.firebaseio.com",
+  projectId:"pib-123",
+  storageBucket:"pib-123.firebasestorage.app",
+  messagingSenderId:"652801707789",
+  appId:"1:652801707789:web:ac51161bb9845a2400ea44"
 });
 const db = firebase.database();
 const playersRef = db.ref("jogadores");
 const champRef   = db.ref("campeao");
 const musicRef   = db.ref("musica");
-
 let players = [], currentChamp = null;
 
-// ── CAPACITY ────────────────────────────────────────────────────────────────
+// ── CAPACITY UI ─────────────────────────────────────────────────
 function updateCapacityUI(presentes) {
   const count = presentes.length, vagas = MAX_JOGADORES - count, cheia = count >= MAX_JOGADORES;
-  const pct = Math.min((count/MAX_JOGADORES)*100, 100);
-  const barColor = cheia ? '#ff4444' : count >= 24 ? '#FFDF00' : '#009C3B';
-  document.getElementById("capacity-bar").style.width = pct+"%";
-  document.getElementById("capacity-bar").style.background = barColor;
-  document.getElementById("capacity-count").textContent = count+"/"+MAX_JOGADORES;
-  document.getElementById("capacity-count").style.color = barColor;
-  document.getElementById("capacity-label").style.color = barColor;
+  const pct = count / MAX_JOGADORES;
+
+  // Social proof
+  document.getElementById("sp-confirmed").textContent = count;
+  document.getElementById("sp-vagas").textContent = Math.max(0, vagas);
+
+  // Stadium bar
+  for (let i = 0; i < MAX_JOGADORES; i++) {
+    const seat = document.getElementById("seat-" + i);
+    seat.classList.remove("filled","warn","critical");
+    if (i < count) {
+      seat.classList.add(cheia ? "critical" : count >= 24 ? "warn" : "filled");
+    }
+  }
+
+  // Fraction
+  const frac = document.getElementById("cap-fraction-el");
+  document.getElementById("cap-count-big").textContent = count;
+  const color = cheia ? "#FF3B3B" : count >= 24 ? "#FFD700" : "#00C44E";
+  frac.style.color = color;
+
+  // Labels & FOMO
   if (cheia) {
-    document.getElementById("capacity-label").textContent = "🔒 Lista fechada";
-    document.getElementById("capacity-sub").textContent = "Baba lotado! Aguarde uma vaga.";
-    document.getElementById("capacity-sub").style.color = "#ff6666bb";
+    document.getElementById("cap-title-el").textContent = "🔒 Lista fechada";
+    document.getElementById("cap-title-el").style.color = "#FF3B3B";
+    document.getElementById("cap-sub-text").textContent = "Baba lotado!";
+    document.getElementById("cap-sub-text").style.color = "#FF3B3Baa";
+    document.getElementById("cap-urgency-el").style.display = "none";
     document.getElementById("lista-fechada-card").style.display = "block";
     document.getElementById("form-card").style.display = "none";
   } else {
-    document.getElementById("capacity-label").textContent = "⚽ Vagas disponíveis";
-    document.getElementById("capacity-sub").textContent = count >= 24
-      ? `⚠️ Últimas ${vagas} vaga${vagas===1?'':'s'}! Confirme logo.`
-      : `${vagas} vaga${vagas===1?'':'s'} restante${vagas===1?'':'s'}`;
-    document.getElementById("capacity-sub").style.color = count >= 24 ? "#FFDF00bb" : "#2a5a30";
+    document.getElementById("cap-title-el").textContent = "⚽ Vagas disponíveis";
+    document.getElementById("cap-title-el").style.color = color;
     document.getElementById("lista-fechada-card").style.display = "none";
     document.getElementById("form-card").style.display = "block";
+
+    if (count >= 24) {
+      document.getElementById("cap-sub-text").textContent = "";
+      const urg = document.getElementById("cap-urgency-el");
+      urg.style.display = "flex";
+      urg.style.color = "#FFD700";
+      urg.innerHTML = `🚨 Últimas ${vagas} vaga${vagas===1?'':'s'}!`;
+    } else {
+      document.getElementById("cap-sub-text").textContent = `${vagas} vaga${vagas===1?'':'s'} disponível${vagas===1?'':'s'}`;
+      document.getElementById("cap-sub-text").style.color = "#2a5a30";
+      document.getElementById("cap-urgency-el").style.display = "none";
+    }
+
+    // FOMO messaging
+    const fomoMain = document.getElementById("fomo-main");
+    const fomoSub  = document.getElementById("fomo-sub");
+    if (count >= 24) {
+      fomoMain.textContent = `🚨 ÚLTIMAS ${vagas} VAGA${vagas===1?'':'S'}!`;
+      fomoSub.textContent  = "Corre antes que feche!";
+      fomoMain.style.color = "#FFD700";
+    } else if (count >= 16) {
+      fomoMain.textContent = `🔥 ${count} jogadores confirmados!`;
+      fomoSub.textContent  = "Não fique de fora — confirme agora.";
+      fomoMain.style.color = "#00C44E";
+    } else if (count >= 8) {
+      fomoMain.textContent = `⚡ ${count} jogadores já garantiram vaga!`;
+      fomoSub.textContent  = "Confirme a sua antes de encher.";
+      fomoMain.style.color = "#00C44E";
+    } else {
+      fomoMain.textContent = "⚽ Seja o primeiro a confirmar!";
+      fomoSub.textContent  = "Garanta sua vaga no baba de sábado.";
+      fomoMain.style.color = "#00C44E";
+    }
   }
 }
 
-// ── CHAMPION ────────────────────────────────────────────────────────────────
+// ── CHAMPION ─────────────────────────────────────────────────────
 function renderChampion(ch) {
   currentChamp = ch;
   const section = document.getElementById("champ-section");
   if (!ch) { section.style.display = "none"; return; }
   section.style.display = "block";
-  const wrap = document.getElementById("champ-photo-wrap");
+  const wrap = document.getElementById("champ-img-wrap");
   wrap.innerHTML = ch.photo
-    ? `<img src="${ch.photo}" alt="Campeão"/>`
-    : `<div class="champ-photo-empty"><div class="icon">🏆</div><div class="txt">FOTO A CAMINHO</div></div>`;
-  document.getElementById("champ-name-display").textContent = ch.name || "—";
-  document.getElementById("champ-date-display").textContent = ch.dateFormatted || ch.date || "";
+    ? `<img src="${ch.photo}" alt="campeão"/>`
+    : `<div class="champ-empty"><div class="ei">🏆</div><div class="et">FOTO A CAMINHO</div></div>`;
+  document.getElementById("champ-name-disp").textContent = ch.name || "—";
+  document.getElementById("champ-date-disp").textContent = ch.dateFormatted || ch.date || "";
 }
-champRef.on("value", snap => { renderChampion(snap.val()); });
+champRef.on("value", snap => renderChampion(snap.val()));
 
-// ── RENDER LIST ─────────────────────────────────────────────────────────────
+// ── RENDER LIST ──────────────────────────────────────────────────
 function renderList(presentes) {
-  const el = document.getElementById("player-list-items");
-  const titleEl = document.getElementById("list-title-el");
+  const grid = document.getElementById("sticker-grid");
+  const titleEl = document.getElementById("album-title-el");
   const cheia = presentes.length >= MAX_JOGADORES;
+
   titleEl.innerHTML = cheia
-    ? `<span style="color:#ff6666">🔒 LISTA FECHADA — ${presentes.length}/${MAX_JOGADORES}</span>`
+    ? `<span style="color:#FF3B3B">🔒 LISTA FECHADA — ${presentes.length}/${MAX_JOGADORES}</span>`
     : `QUEM JÁ CONFIRMOU (${presentes.length}/${MAX_JOGADORES})`;
+
+  // Formation stats
+  if (presentes.length > 0) {
+    document.getElementById("formation-stats").style.display = "flex";
+    const counts = { gol:0, def:0, mei:0, ata:0 };
+    presentes.forEach(p => {
+      if (p.position === "Goleiro") counts.gol++;
+      else if (p.position === "Defesa" || p.position === "Lateral") counts.def++;
+      else if (p.position === "Meio-campo") counts.mei++;
+      else if (p.position === "Atacante") counts.ata++;
+    });
+    document.getElementById("fs-gol").textContent = counts.gol;
+    document.getElementById("fs-def").textContent = counts.def;
+    document.getElementById("fs-mei").textContent = counts.mei;
+    document.getElementById("fs-ata").textContent = counts.ata;
+  } else {
+    document.getElementById("formation-stats").style.display = "none";
+  }
+
   if (!presentes.length) {
-    el.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:#1a4a20;font-size:13px;padding:20px">Nenhum jogador confirmou ainda</div>';
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:#1a4a20;font-size:13px;padding:24px">Nenhum jogador confirmou ainda<br><span style="font-size:20px;display:block;margin-top:8px;opacity:0.3">⚽</span></div>';
     return;
   }
-  const POS_ABBR = { "Goleiro":"GOL", "Lateral":"LAT", "Defesa":"DEF", "Meio-campo":"MEI", "Atacante":"ATA" };
-  const POS_EMOJI = { "Goleiro":"🧤", "Lateral":"🏃", "Defesa":"🛡️", "Meio-campo":"⚙️", "Atacante":"🎯" };
-  el.innerHTML = presentes.map((p, idx) => {
+
+  // Filled stickers
+  let html = presentes.map((p, idx) => {
     const c = POS_COLORS[p.position] || "#009C3B";
-    const photoContent = p.photo
+    const delay = (idx * 0.05).toFixed(2);
+    const photo = p.photo
       ? `<img src="${p.photo}" alt="${p.name}"/>`
-      : `<div class="sticker-fallback"><span class="sf-emoji">${POS_EMOJI[p.position]||"⚽"}</span><span class="sf-initial">${(p.name||"?").charAt(0).toUpperCase()}</span></div>`;
-    return `<div class="sticker-card">
+      : `<div class="sticker-fallback"><span class="sf-emoji">${POS_EMOJI[p.position]||"⚽"}</span><span class="sf-init">${(p.name||"?").charAt(0).toUpperCase()}</span></div>`;
+    return `<div class="sticker" style="animation-delay:${delay}s">
       <div class="sticker-inner">
         <div class="sticker-photo">
-          ${photoContent}
+          ${photo}
           <div class="sticker-shine"></div>
           <div class="sticker-num">#${idx+1}</div>
-          <div class="sticker-pos" style="background:${c}cc">${POS_ABBR[p.position]||""}</div>
+          <div class="sticker-pos-badge" style="background:${c}cc">${POS_ABBR[p.position]||""}</div>
         </div>
         <div class="sticker-plate"><span>${p.name}</span></div>
       </div>
     </div>`;
   }).join('');
+
+  // Empty sticker slots (visual completeness — scarcity cue)
+  const remaining = MAX_JOGADORES - presentes.length;
+  const emptyToShow = Math.min(remaining, 3);
+  for (let i = 0; i < emptyToShow; i++) {
+    html += `<div class="sticker empty">
+      <div class="sticker-inner">
+        <div class="sticker-photo"><div class="sticker-fallback"><span class="sf-empty">❓</span></div></div>
+        <div class="sticker-plate"><span style="color:#1a3a20;font-size:9px">VAGA LIVRE</span></div>
+      </div>
+    </div>`;
+  }
+
+  grid.innerHTML = html;
 }
 
-// ── FIREBASE LISTENER ───────────────────────────────────────────────────────
+// ── FIREBASE LISTENER ────────────────────────────────────────────
 playersRef.on("value", snap => {
   const data = snap.val() || {};
-  players = Object.entries(data).map(([id, val]) => ({id, ...val}));
+  players = Object.entries(data).map(([id, val]) => ({ id, ...val }));
   const presentes = players.filter(p => p.presente === true)
     .sort((a, b) => (a.confirmedAt||0) - (b.confirmedAt||0));
   updateCapacityUI(presentes);
   renderList(presentes);
 });
 
-// ── FOTO DE PERFIL ──────────────────────────────────────────────────────────
-let playerPhotoB64 = null;
-let cameraStream = null;
+// ── FOTO DE PERFIL ───────────────────────────────────────────────
+let playerPhotoB64 = null, cameraStream = null;
 
-function triggerFileUpload() {
-  document.getElementById("profile-photo-file").click();
-}
+function triggerFile() { document.getElementById("ph-file").click(); }
 
 function handlePhotoUpload(e) {
-  const file = e.target.files[0];
-  if (!file) return;
+  const file = e.target.files[0]; if (!file) return;
   const reader = new FileReader();
   reader.onload = ev => setPlayerPhoto(ev.target.result);
   reader.readAsDataURL(file);
@@ -710,35 +1064,27 @@ function handlePhotoUpload(e) {
 
 function setPlayerPhoto(b64) {
   playerPhotoB64 = b64;
-  const img = document.getElementById("profile-photo-img");
-  const icon = document.getElementById("ph-placeholder-icon");
-  const removeBtn = document.getElementById("ph-remove-btn");
-  img.src = b64;
-  img.classList.add("visible");
-  icon.classList.add("hidden");
-  removeBtn.classList.remove("hidden");
+  const img = document.getElementById("ph-img");
+  img.src = b64; img.classList.add("visible");
+  document.getElementById("ph-icon").classList.add("hidden");
+  document.getElementById("ph-remove").classList.add("show");
 }
 
 function removePhoto() {
   playerPhotoB64 = null;
-  const img = document.getElementById("profile-photo-img");
-  const icon = document.getElementById("ph-placeholder-icon");
-  const removeBtn = document.getElementById("ph-remove-btn");
-  img.src = "";
-  img.classList.remove("visible");
-  icon.classList.remove("hidden");
-  removeBtn.classList.add("hidden");
-  document.getElementById("profile-photo-file").value = "";
+  const img = document.getElementById("ph-img");
+  img.src = ""; img.classList.remove("visible");
+  document.getElementById("ph-icon").classList.remove("hidden");
+  document.getElementById("ph-remove").classList.remove("show");
+  document.getElementById("ph-file").value = "";
 }
 
 async function openCamera() {
   try {
-    cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: false });
+    cameraStream = await navigator.mediaDevices.getUserMedia({ video:{facingMode:"user"}, audio:false });
     document.getElementById("cam-video").srcObject = cameraStream;
     document.getElementById("camera-modal").classList.add("open");
-  } catch(err) {
-    alert("Não foi possível acessar a câmera. Verifique as permissões.");
-  }
+  } catch { alert("Não foi possível acessar a câmera. Verifique as permissões."); }
 }
 
 function closeCamera() {
@@ -748,17 +1094,14 @@ function closeCamera() {
 }
 
 function snapPhoto() {
-  const video = document.getElementById("cam-video");
-  const canvas = document.getElementById("cam-canvas");
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
-  canvas.getContext("2d").drawImage(video, 0, 0);
-  const b64 = canvas.toDataURL("image/jpeg", 0.75);
-  setPlayerPhoto(b64);
+  const v = document.getElementById("cam-video"), c = document.getElementById("cam-canvas");
+  c.width = v.videoWidth; c.height = v.videoHeight;
+  c.getContext("2d").drawImage(v, 0, 0);
+  setPlayerPhoto(c.toDataURL("image/jpeg", 0.75));
   closeCamera();
 }
 
-// ── FORMULÁRIO ──────────────────────────────────────────────────────────────
+// ── FORM ─────────────────────────────────────────────────────────
 let selectedPos = null;
 
 function validate() {
@@ -791,33 +1134,29 @@ document.getElementById("submit-btn").addEventListener("click", async () => {
   }
   document.getElementById("error-box").style.display = "none";
   await playersRef.child(existing.id).update({
-    position: selectedPos, presente: true, confirmedAt: Date.now(),
-    photo: playerPhotoB64 || null
+    position: selectedPos, presente: true, confirmedAt: Date.now(), photo: playerPhotoB64 || null
   });
   document.getElementById("form-area").style.display = "none";
-  const sa = document.getElementById("success-area");
-  sa.style.display = "block";
+  document.getElementById("success-area").style.display = "block";
   document.getElementById("success-name").textContent = "Bem-vindo, " + existing.name + "! 👋";
-  const colors = ["#FFDF00","#009C3B","#002776","#FF6B35","#2ECC71","#fff"];
-  for (let i = 0; i < 18; i++) {
-    const c = document.createElement("div");
-    c.className = "confetti-piece";
-    c.style.cssText = `background:${colors[i%colors.length]};left:${Math.random()*100}%;top:${Math.random()*30}%;animation-delay:${Math.random()*0.6}s;animation-duration:${0.9+Math.random()*0.8}s;transform:rotate(${Math.random()*360}deg);width:${6+Math.random()*6}px;height:${6+Math.random()*6}px;border-radius:${Math.random()>0.5?'50%':'2px'};`;
-    sa.appendChild(c);
-    setTimeout(() => c.remove(), 2000);
-  }
+  launchConfetti();
 });
 
-// ── ADM ─────────────────────────────────────────────────────────────────────
-const admPanel   = document.getElementById("adm-panel");
-const admToggle  = document.getElementById("adm-toggle-btn");
-const admNameInp = document.getElementById("adm-champ-name");
-const admDateInp = document.getElementById("adm-champ-date");
-const admPhotoInp= document.getElementById("adm-photo-input");
-const photoPreview=document.getElementById("photo-preview");
-const admMsg     = document.getElementById("adm-msg");
+function launchConfetti() {
+  const area = document.getElementById("success-area");
+  const colors = ["#FFD700","#009C3B","#002776","#FF6B35","#2ECC71","#fff"];
+  for (let i = 0; i < 22; i++) {
+    const c = document.createElement("div");
+    c.style.cssText = `position:absolute;width:${6+Math.random()*6}px;height:${6+Math.random()*6}px;border-radius:${Math.random()>.5?'50%':'3px'};background:${colors[i%colors.length]};left:${Math.random()*100}%;top:${Math.random()*20}%;animation:confetti ${0.9+Math.random()*.8}s ${Math.random()*.6}s ease-in forwards;`;
+    area.appendChild(c);
+    setTimeout(() => c.remove(), 2000);
+  }
+}
+
+// ── ADM ──────────────────────────────────────────────────────────
 let pendingPhotoB64 = null, admUnlocked = false;
 const ADM_PASS = "baba123";
+const admPanel = document.getElementById("adm-panel");
 
 document.getElementById("adm-unlock-btn").addEventListener("click", checkAdmPass);
 document.getElementById("adm-password").addEventListener("keydown", e => { if(e.key==="Enter") checkAdmPass(); });
@@ -829,126 +1168,160 @@ function checkAdmPass() {
     document.getElementById("adm-lock").style.display = "none";
     document.getElementById("adm-content").style.display = "block";
     if (currentChamp) {
-      admNameInp.value = currentChamp.name||"";
-      admDateInp.value = currentChamp.dateFormatted||currentChamp.date||"";
-      if (currentChamp.photo) { photoPreview.src=currentChamp.photo; photoPreview.classList.add("visible"); pendingPhotoB64=currentChamp.photo; }
+      document.getElementById("adm-champ-name").value = currentChamp.name || "";
+      document.getElementById("adm-champ-date").value = currentChamp.dateFormatted || currentChamp.date || "";
+      if (currentChamp.photo) {
+        document.getElementById("adm-photo-preview").src = currentChamp.photo;
+        document.getElementById("adm-photo-preview").classList.add("visible");
+        pendingPhotoB64 = currentChamp.photo;
+      }
     }
     if (currentMusic && !currentMusic.isDefault) {
-      document.getElementById("adm-music-url").value = currentMusic.url||"";
-      document.getElementById("adm-music-name").value = currentMusic.name||"";
+      document.getElementById("adm-music-url").value = currentMusic.url || "";
+      document.getElementById("adm-music-name").value = currentMusic.name || "";
     }
   } else {
     const err = document.getElementById("adm-pass-err");
     err.textContent = "❌ Senha incorreta";
     document.getElementById("adm-password").value = "";
-    setTimeout(() => { err.textContent=""; }, 2000);
+    setTimeout(() => { err.textContent = ""; }, 2500);
   }
 }
 
-admToggle.addEventListener("click", () => {
+document.getElementById("adm-toggle-btn").addEventListener("click", () => {
   const open = admPanel.classList.toggle("open");
-  admToggle.textContent = open ? "✕ Fechar ADM" : "⚙️ ADM";
+  document.getElementById("adm-toggle-btn").textContent = open ? "✕ Fechar ADM" : "⚙️ ADM";
   if (open && !admUnlocked) {
-    document.getElementById("adm-lock").style.display="block";
-    document.getElementById("adm-content").style.display="none";
-    document.getElementById("adm-password").value="";
+    document.getElementById("adm-lock").style.display = "block";
+    document.getElementById("adm-content").style.display = "none";
+    document.getElementById("adm-password").value = "";
   }
 });
 
-admPhotoInp.addEventListener("change", () => {
-  const file = admPhotoInp.files[0]; if (!file) return;
+document.getElementById("adm-photo-input").addEventListener("change", () => {
+  const file = document.getElementById("adm-photo-input").files[0]; if (!file) return;
   const reader = new FileReader();
   reader.onload = e => {
     pendingPhotoB64 = e.target.result;
-    photoPreview.src = pendingPhotoB64;
-    photoPreview.classList.add("visible");
-    document.querySelector(".upload-hint").textContent = file.name;
+    const prev = document.getElementById("adm-photo-preview");
+    prev.src = pendingPhotoB64; prev.classList.add("visible");
+    document.getElementById("upload-hint-text").textContent = file.name;
   };
   reader.readAsDataURL(file);
 });
 
 document.getElementById("adm-save-btn").addEventListener("click", () => {
-  const name = admNameInp.value.trim();
-  if (!name) { showAdmMsg("Informe o nome do campeão","#FFDF00"); return; }
-  champRef.set({ name, dateFormatted:admDateInp.value.trim(), date:admDateInp.value.trim(), photo:pendingPhotoB64||null });
-  showAdmMsg("Campeão salvo! ✅","#009C3B");
+  const name = document.getElementById("adm-champ-name").value.trim();
+  if (!name) { showAdmMsg("Informe o nome do campeão", "#FFD700"); return; }
+  champRef.set({ name, dateFormatted: document.getElementById("adm-champ-date").value.trim(), date: document.getElementById("adm-champ-date").value.trim(), photo: pendingPhotoB64||null });
+  showAdmMsg("Campeão salvo! ✅", "#009C3B");
 });
 
 document.getElementById("adm-clear-btn").addEventListener("click", () => {
   champRef.remove();
-  admNameInp.value=""; admDateInp.value=""; pendingPhotoB64=null;
-  photoPreview.src=""; photoPreview.classList.remove("visible");
-  document.querySelector(".upload-hint").textContent="Toque para escolher uma foto";
-  showAdmMsg("Campeão removido 🗑️","#ff6666");
+  document.getElementById("adm-champ-name").value = "";
+  document.getElementById("adm-champ-date").value = "";
+  pendingPhotoB64 = null;
+  document.getElementById("adm-photo-preview").src = "";
+  document.getElementById("adm-photo-preview").classList.remove("visible");
+  document.getElementById("upload-hint-text").textContent = "Toque para escolher uma foto";
+  showAdmMsg("Campeão removido 🗑️", "#FF3B3B");
 });
 
-function showAdmMsg(text,color){ admMsg.textContent=text; admMsg.style.color=color; setTimeout(()=>{admMsg.textContent="";},3000); }
-
-// ── MÚSICA ───────────────────────────────────────────────────────────────────
-let ytPlayer=null, musicPlaying=false, currentMusic=null, ytReady=false, userInteracted=false, pendingVideoId=null;
-
-(function(){ const t=document.createElement("script"); t.src="https://www.youtube.com/iframe_api"; document.head.appendChild(t); })();
-window.onYouTubeIframeAPIReady = function(){ ytReady=true; if(pendingVideoId){ userInteracted?startYTPlayer(pendingVideoId):showMusicStartButton(); }};
-
-function extractYTVideoId(url){
-  if(!url) return null;
-  const m=url.match(/(?:youtube\.com\/watch\?(?:.*&)?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/v\/)([a-zA-Z0-9_-]{11})/)||url.match(/^([a-zA-Z0-9_-]{11})$/);
-  return m?m[1]:null;
+function showAdmMsg(text, color) {
+  const el = document.getElementById("adm-msg"); el.textContent = text; el.style.color = color;
+  setTimeout(() => { el.textContent = ""; }, 3000);
 }
-function showMusicStartButton(){ document.getElementById("music-start-btn").style.display="flex"; document.getElementById("music-player").style.display="none"; }
-function hideMusicStartButton(){ document.getElementById("music-start-btn").style.display="none"; }
-function userStartMusic(){ userInteracted=true; hideMusicStartButton(); if(pendingVideoId){ startYTPlayer(pendingVideoId); document.getElementById("music-player").style.display="flex"; }}
-document.addEventListener("click", function onFirstClick(){ userInteracted=true; document.removeEventListener("click",onFirstClick); if(pendingVideoId&&!ytPlayer){ hideMusicStartButton(); if(ytReady){ startYTPlayer(pendingVideoId); document.getElementById("music-player").style.display="flex"; }}},{once:true});
 
-function startYTPlayer(videoId){
-  if(!videoId) return; pendingVideoId=videoId;
-  if(ytPlayer){ ytPlayer.loadVideoById(videoId); ytPlayer.playVideo(); setMusicUI(true); }
+// ── MÚSICA ────────────────────────────────────────────────────────
+let ytPlayer = null, musicPlaying = false, currentMusic = null, ytReady = false, userInteracted = false, pendingVideoId = null;
+
+(function(){ const t = document.createElement("script"); t.src = "https://www.youtube.com/iframe_api"; document.head.appendChild(t); })();
+window.onYouTubeIframeAPIReady = function() {
+  ytReady = true;
+  if (pendingVideoId) { userInteracted ? startYTPlayer(pendingVideoId) : showMusicStartBtn(); }
+};
+
+function extractYTId(url) {
+  if (!url) return null;
+  const m = url.match(/(?:youtube\.com\/watch\?(?:.*&)?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/v\/)([a-zA-Z0-9_-]{11})/) || url.match(/^([a-zA-Z0-9_-]{11})$/);
+  return m ? m[1] : null;
+}
+
+function showMusicStartBtn() {
+  document.getElementById("music-start-btn").style.display = "flex";
+  document.getElementById("music-player").style.display = "none";
+}
+function hideMusicStartBtn() { document.getElementById("music-start-btn").style.display = "none"; }
+function userStartMusic() {
+  userInteracted = true; hideMusicStartBtn();
+  if (pendingVideoId) { startYTPlayer(pendingVideoId); document.getElementById("music-player").style.display = "flex"; }
+}
+
+document.addEventListener("click", function onFirstClick() {
+  userInteracted = true;
+  document.removeEventListener("click", onFirstClick);
+  if (pendingVideoId && !ytPlayer) { hideMusicStartBtn(); if (ytReady) { startYTPlayer(pendingVideoId); document.getElementById("music-player").style.display = "flex"; }}
+}, { once:true });
+
+function startYTPlayer(videoId) {
+  if (!videoId) return; pendingVideoId = videoId;
+  if (ytPlayer) { ytPlayer.loadVideoById(videoId); ytPlayer.playVideo(); setMusicUI(true); }
   else {
-    ytPlayer=new YT.Player("yt-player",{height:"1",width:"1",videoId,
-      playerVars:{autoplay:1,loop:1,playlist:videoId,controls:0,fs:0,rel:0,modestbranding:1,mute:0},
+    ytPlayer = new YT.Player("yt-player", {
+      height:"1", width:"1", videoId,
+      playerVars:{ autoplay:1, loop:1, playlist:videoId, controls:0, fs:0, rel:0, modestbranding:1, mute:0 },
       events:{
-        onReady:e=>{e.target.playVideo();setMusicUI(true);},
-        onStateChange:e=>{
-          if(e.data===YT.PlayerState.PLAYING)setMusicUI(true);
-          if(e.data===YT.PlayerState.PAUSED||e.data===YT.PlayerState.ENDED)setMusicUI(false);
+        onReady: e => { e.target.playVideo(); setMusicUI(true); },
+        onStateChange: e => {
+          if (e.data===YT.PlayerState.PLAYING) setMusicUI(true);
+          if (e.data===YT.PlayerState.PAUSED||e.data===YT.PlayerState.ENDED) setMusicUI(false);
         }
       }
     });
   }
-  musicPlaying=true;
+  musicPlaying = true;
 }
 
-function setMusicUI(playing){
-  musicPlaying=playing;
-  const disc=document.getElementById("music-disc"), eq=document.getElementById("music-eq"),
-        btn=document.getElementById("music-toggle-btn"), sub=document.getElementById("music-sub");
-  if(playing){disc.classList.add("playing");eq.classList.add("playing");btn.textContent="⏸";sub.textContent="Toque para pausar";}
-  else{disc.classList.remove("playing");eq.classList.remove("playing");btn.textContent="▶";sub.textContent="Pausado — toque para tocar";}
+function setMusicUI(playing) {
+  musicPlaying = playing;
+  const disc = document.getElementById("music-disc"), eq = document.getElementById("music-eq"), btn = document.getElementById("music-toggle-btn"), sub = document.getElementById("music-sub");
+  if (playing) { disc.classList.add("playing"); eq.classList.add("playing"); btn.textContent = "⏸"; sub.textContent = "Toque para pausar"; }
+  else { disc.classList.remove("playing"); eq.classList.remove("playing"); btn.textContent = "▶"; sub.textContent = "Pausado"; }
 }
-function toggleMusic(){ if(!ytPlayer)return; musicPlaying?ytPlayer.pauseVideo():ytPlayer.playVideo(); setMusicUI(!musicPlaying); }
-function updatePlayerTitle(music){ document.getElementById("music-title").textContent=music.name||"🎵 Música do Baba"; }
 
-musicRef.on("value", snap=>{
-  const data=snap.val();
-  currentMusic=(!data||!data.videoId)?{...DEFAULT_MUSIC}:{...data,isDefault:false};
-  document.getElementById("music-player").style.display="flex";
-  updatePlayerTitle(currentMusic);
-  pendingVideoId=currentMusic.videoId;
-  if(userInteracted&&ytReady){startYTPlayer(currentMusic.videoId);hideMusicStartButton();}
-  else if(!userInteracted){showMusicStartButton();}
-  else if(ytReady){startYTPlayer(currentMusic.videoId);}
+function toggleMusic() { if (!ytPlayer) return; musicPlaying ? ytPlayer.pauseVideo() : ytPlayer.playVideo(); setMusicUI(!musicPlaying); }
+
+musicRef.on("value", snap => {
+  const data = snap.val();
+  currentMusic = (!data || !data.videoId) ? {...DEFAULT_MUSIC} : {...data, isDefault:false};
+  document.getElementById("music-player").style.display = "flex";
+  document.getElementById("music-title").textContent = currentMusic.name || "🎵 Música do Baba";
+  pendingVideoId = currentMusic.videoId;
+  if (userInteracted && ytReady) { startYTPlayer(currentMusic.videoId); hideMusicStartBtn(); }
+  else if (!userInteracted) showMusicStartBtn();
+  else if (ytReady) startYTPlayer(currentMusic.videoId);
 });
 
-function saveMusic(){
-  const url=document.getElementById("adm-music-url").value.trim(), name=document.getElementById("adm-music-name").value.trim();
-  if(!url){resetToDefaultMusic();return;}
-  const videoId=extractYTVideoId(url);
-  if(!videoId){showMusicMsg("Link inválido. Use um link do YouTube.","#ff6666");return;}
-  musicRef.set({videoId,url,name:name||"Música do Baba"});
-  showMusicMsg("Música salva! 🎵","#009C3B");
+function saveMusic() {
+  const url = document.getElementById("adm-music-url").value.trim();
+  const name = document.getElementById("adm-music-name").value.trim();
+  if (!url) { resetToDefaultMusic(); return; }
+  const videoId = extractYTId(url);
+  if (!videoId) { showMusicMsg("Link inválido. Use um link do YouTube.", "#FF3B3B"); return; }
+  musicRef.set({ videoId, url, name: name || "Música do Baba" });
+  showMusicMsg("Música salva! 🎵", "#009C3B");
 }
-function resetToDefaultMusic(){ musicRef.remove(); document.getElementById("adm-music-url").value=""; document.getElementById("adm-music-name").value=""; showMusicMsg("Voltando para música padrão 🎵","#009C3B"); }
-function showMusicMsg(text,color){ const el=document.getElementById("adm-music-msg"); el.textContent=text; el.style.color=color; setTimeout(()=>{el.textContent="";},3000); }
+function resetToDefaultMusic() {
+  musicRef.remove();
+  document.getElementById("adm-music-url").value = "";
+  document.getElementById("adm-music-name").value = "";
+  showMusicMsg("Voltando para música padrão 🎵", "#009C3B");
+}
+function showMusicMsg(text, color) {
+  const el = document.getElementById("adm-music-msg"); el.textContent = text; el.style.color = color;
+  setTimeout(() => { el.textContent = ""; }, 3000);
+}
 </script>
 </body>
 </html>
