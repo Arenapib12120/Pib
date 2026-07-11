@@ -521,6 +521,64 @@
     .fu2{animation:fadeUp 0.5s 0.08s ease both}
     .fu3{animation:fadeUp 0.5s 0.16s ease both}
     .fu4{animation:fadeUp 0.5s 0.24s ease both}
+
+    /* ── XP / NÍVEL / CONQUISTAS ── */
+    .level-chip{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:800;letter-spacing:1px;padding:3px 9px;border-radius:20px;text-transform:uppercase}
+    .sticker-level{position:absolute;bottom:34px;left:4px;z-index:2;font-size:14px;filter:drop-shadow(0 1px 2px #000)}
+    .sticker{cursor:pointer}
+    .badge-row{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+    .badge-chip{display:flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:5px 9px;border-radius:20px;background:#009C3B12;border:1px solid #009C3B25;color:#5aaa60}
+
+    /* Ranking */
+    .ranking-card{background:#0a1a0d;border:1px solid #FFD70020;border-radius:20px;padding:18px 16px;margin-bottom:20px}
+    .ranking-title{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;color:#FFD70099;margin-bottom:12px;text-align:center}
+    .rank-row{display:flex;align-items:center;gap:10px;padding:8px 6px;border-radius:10px}
+    .rank-row:nth-child(odd){background:#ffffff03}
+    .rank-medal{width:26px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:14px;color:#FFD70099;flex-shrink:0}
+    .rank-photo{width:34px;height:34px;border-radius:50%;overflow:hidden;background:#060d08;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:15px;border:1px solid #009C3B25}
+    .rank-photo img{width:100%;height:100%;object-fit:cover}
+    .rank-info{flex:1;min-width:0}
+    .rank-name{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:0.5px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .rank-sub{font-size:9px;color:#2a5a30;letter-spacing:0.5px}
+    .rank-xp{font-family:'Bebas Neue',sans-serif;font-size:15px;color:var(--verde);flex-shrink:0}
+
+    /* XP bar (perfil) */
+    .xp-bar-wrap{width:100%;height:9px;background:#009C3B10;border-radius:20px;overflow:hidden;border:1px solid #009C3B20;margin:6px 0}
+    .xp-bar-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--verde),var(--amarelo));transition:width .4s}
+
+    /* Votação Craque da Rodada */
+    .vote-card{background:#0a1a0d;border:1px solid #FFD70020;border-radius:20px;padding:18px 16px;margin:20px 0}
+    .vote-title{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;color:#FFD70099;margin-bottom:4px;text-align:center}
+    .vote-sub{font-size:10px;color:#2a5a30;text-align:center;margin-bottom:14px;letter-spacing:0.5px}
+    .vote-list{display:flex;flex-direction:column;gap:8px}
+    .vote-row{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:12px;background:#009C3B08;border:1px solid #009C3B18;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+    .vote-row:hover{background:#009C3B14}
+    .vote-row.mine{border-color:#FFD70055}
+    .vote-fill{position:absolute;left:0;top:0;bottom:0;background:#009C3B18;z-index:0;transition:width .4s}
+    .vote-photo{width:30px;height:30px;border-radius:50%;overflow:hidden;background:#060d08;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;z-index:1;border:1px solid #009C3B25}
+    .vote-photo img{width:100%;height:100%;object-fit:cover}
+    .vote-name{flex:1;font-size:12px;font-weight:700;color:#dfe;z-index:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .vote-count{font-family:'Bebas Neue',sans-serif;font-size:16px;color:#FFD700;z-index:1;flex-shrink:0}
+    .vote-crown{font-size:13px;z-index:1}
+    .who-select-wrap{margin-bottom:12px}
+    .who-select{width:100%;background:#009C3B0a;border:1.5px solid #009C3B25;border-radius:10px;padding:10px 12px;color:#fff;font-family:'Syne',sans-serif;font-size:12px;outline:none;-webkit-appearance:none}
+
+    /* Modal de perfil */
+    .profile-modal{position:fixed;inset:0;background:#000000cc;z-index:1500;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(6px)}
+    .profile-modal.open{display:flex;animation:fadeUp .25s ease}
+    .profile-sheet{width:100%;max-width:420px;background:linear-gradient(180deg,#0d2010,#060d08);border-radius:24px 24px 0 0;border:1px solid #009C3B25;border-bottom:none;padding:22px 20px 32px;max-height:82vh;overflow-y:auto}
+    .profile-close{width:32px;height:4px;background:#009C3B30;border-radius:4px;margin:0 auto 16px;cursor:pointer}
+    .profile-head{display:flex;gap:14px;align-items:center;margin-bottom:16px}
+    .profile-photo{width:74px;height:74px;border-radius:16px;overflow:hidden;background:#060d08;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:30px;border:2px solid #009C3B30}
+    .profile-photo img{width:100%;height:100%;object-fit:cover}
+    .profile-name{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1.5px;color:#fff;line-height:1}
+    .profile-pos{font-size:11px;color:#2a5a30;margin-top:4px;letter-spacing:0.5px}
+    .profile-stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}
+    .pstat{background:#009C3B0a;border:1px solid #009C3B18;border-radius:12px;padding:10px 6px;text-align:center}
+    .pstat-num{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--verde)}
+    .pstat-lbl{font-size:8px;color:#2a5a30;letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+    .profile-xp-row{display:flex;justify-content:space-between;font-size:10px;color:#2a5a30;margin-bottom:2px}
+    .profile-badges-title{font-size:10px;font-weight:700;color:#2a5a30;letter-spacing:1.5px;text-transform:uppercase;margin:16px 0 8px}
   </style>
 </head>
 <body>
@@ -531,6 +589,30 @@
   <div class="cam-video-wrap"><video id="cam-video" autoplay playsinline></video></div>
   <canvas class="cam-canvas" id="cam-canvas"></canvas>
   <div class="cam-actions"><button class="cam-snap" onclick="snapPhoto()">📸</button></div>
+</div>
+
+<!-- PROFILE MODAL -->
+<div class="profile-modal" id="profile-modal">
+  <div class="profile-sheet" onclick="event.stopPropagation()">
+    <div class="profile-close" onclick="closeProfile()"></div>
+    <div class="profile-head">
+      <div class="profile-photo" id="pm-photo">🙋</div>
+      <div>
+        <div class="profile-name" id="pm-name">—</div>
+        <div class="profile-pos" id="pm-pos">—</div>
+        <div class="level-chip" id="pm-level" style="margin-top:6px"></div>
+      </div>
+    </div>
+    <div class="profile-xp-row"><span id="pm-xp-cur"></span><span id="pm-xp-next"></span></div>
+    <div class="xp-bar-wrap"><div class="xp-bar-fill" id="pm-xp-fill"></div></div>
+    <div class="profile-stats-grid">
+      <div class="pstat"><div class="pstat-num" id="pm-total">0</div><div class="pstat-lbl">Presenças</div></div>
+      <div class="pstat"><div class="pstat-num" id="pm-streak">0</div><div class="pstat-lbl">Sequência</div></div>
+      <div class="pstat"><div class="pstat-num" id="pm-votes">0</div><div class="pstat-lbl">Votos hoje</div></div>
+    </div>
+    <div class="profile-badges-title">Conquistas</div>
+    <div class="badge-row" id="pm-badges"></div>
+  </div>
 </div>
 
 <!-- HERO -->
@@ -652,6 +734,12 @@
     </div>
   </div>
 
+  <!-- RANKING DE PRESENÇA -->
+  <div class="ranking-card fu3" id="ranking-card" style="display:none">
+    <div class="ranking-title">🏆 Ranking de Presença</div>
+    <div id="ranking-list"></div>
+  </div>
+
   <!-- FORM -->
   <div class="form-card fu4" id="form-card">
 
@@ -705,6 +793,7 @@
       <span class="success-emoji">🎉</span>
       <div class="success-name" id="success-name"></div>
       <div class="success-text">Você está na lista do baba!</div>
+      <div class="success-text" id="success-xp-line" style="color:#FFD700;font-weight:700;margin-top:-8px"></div>
       <div class="success-tip">
         <strong>⏳ Aguardando nota do ADM</strong>
         O ADM vai avaliar sua habilidade antes do sorteio. Nos vemos sábado!
@@ -809,6 +898,18 @@
   <div class="sticker-grid" id="sticker-grid">
     <div style="grid-column:1/-1;text-align:center;color:#1a4a20;font-size:13px;padding:20px">Carregando...</div>
   </div>
+
+  <!-- VOTAÇÃO CRAQUE DA RODADA -->
+  <div class="vote-card" id="vote-card" style="display:none">
+    <div class="vote-title">🗳️ Craque da Rodada</div>
+    <div class="vote-sub">Vote em quem vai brilhar no baba de hoje!</div>
+    <div class="who-select-wrap" id="who-select-wrap">
+      <select class="who-select" id="who-select">
+        <option value="">Selecione seu nome para votar...</option>
+      </select>
+    </div>
+    <div class="vote-list" id="vote-list"></div>
+  </div>
 </div>
 
 <script>
@@ -882,6 +983,45 @@ const playersRef = db.ref("jogadores");
 const champRef   = db.ref("campeao");
 const musicRef   = db.ref("musica");
 let players = [], currentChamp = null;
+let myPlayerId = null, myPlayerName = null, currentVotes = {};
+const votosRef = db.ref("votos");
+
+// ── XP / NÍVEL / SEQUÊNCIA / CONQUISTAS ──────────────────────────
+const LEVELS = [
+  { name:"Bronze", min:0,   color:"#CD7F32", icon:"🥉" },
+  { name:"Prata",  min:50,  color:"#C0C0C0", icon:"🥈" },
+  { name:"Ouro",   min:120, color:"#FFD700", icon:"🥇" },
+  { name:"Lenda",  min:250, color:"#3FE0C8", icon:"👑" }
+];
+function computeLevel(xp) {
+  xp = xp || 0;
+  let idx = 0;
+  for (let i = 0; i < LEVELS.length; i++) if (xp >= LEVELS[i].min) idx = i;
+  const lvl = LEVELS[idx], next = LEVELS[idx + 1];
+  return { ...lvl, next, xp };
+}
+function getWeekKey(d) {
+  const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const dayNum = date.getUTCDay() || 7;
+  date.setUTCDate(date.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+  const weekNo = Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
+  return `${date.getUTCFullYear()}-W${String(weekNo).padStart(2, "0")}`;
+}
+function getPrevWeekKey(d) {
+  const prev = new Date(d); prev.setDate(prev.getDate() - 7);
+  return getWeekKey(prev);
+}
+function computeBadges(p) {
+  const b = [];
+  if ((p.totalPresences||0) >= 1)  b.push({ icon:"⚽", name:"Estreante" });
+  if ((p.totalPresences||0) >= 10) b.push({ icon:"🏅", name:"Veterano" });
+  if ((p.totalPresences||0) >= 25) b.push({ icon:"💎", name:"Raiz do Baba" });
+  if ((p.streak||0) >= 3) b.push({ icon:"🔥", name:"Sequência 3+" });
+  if ((p.streak||0) >= 8) b.push({ icon:"⚡", name:"Imparável" });
+  if (p.level === "Lenda") b.push({ icon:"👑", name:"Lenda" });
+  return b;
+}
 
 // ── CAPACITY UI ─────────────────────────────────────────────────
 function updateCapacityUI(presentes) {
@@ -1009,15 +1149,17 @@ function renderList(presentes) {
   let html = presentes.map((p, idx) => {
     const c = POS_COLORS[p.position] || "#009C3B";
     const delay = (idx * 0.05).toFixed(2);
+    const lvl = computeLevel(p.xp || 0);
     const photo = p.photo
       ? `<img src="${p.photo}" alt="${p.name}"/>`
       : `<div class="sticker-fallback"><span class="sf-emoji">${POS_EMOJI[p.position]||"⚽"}</span><span class="sf-init">${(p.name||"?").charAt(0).toUpperCase()}</span></div>`;
-    return `<div class="sticker" style="animation-delay:${delay}s">
+    return `<div class="sticker" style="animation-delay:${delay}s" onclick="openProfile('${p.id}')">
       <div class="sticker-inner">
         <div class="sticker-photo">
           ${photo}
           <div class="sticker-shine"></div>
           <div class="sticker-num">#${idx+1}</div>
+          <div class="sticker-level">${lvl.icon}</div>
           <div class="sticker-pos-badge" style="background:${c}cc">${POS_ABBR[p.position]||""}</div>
         </div>
         <div class="sticker-plate"><span>${p.name}</span></div>
@@ -1048,7 +1190,120 @@ playersRef.on("value", snap => {
     .sort((a, b) => (a.confirmedAt||0) - (b.confirmedAt||0));
   updateCapacityUI(presentes);
   renderList(presentes);
+  renderRanking();
+  renderVoteCard(presentes);
 });
+
+// ── RANKING ──────────────────────────────────────────────────────
+function renderRanking() {
+  const card = document.getElementById("ranking-card");
+  const ranked = players.filter(p => (p.totalPresences||0) > 0)
+    .sort((a,b) => (b.xp||0) - (a.xp||0)).slice(0, 5);
+  if (!ranked.length) { card.style.display = "none"; return; }
+  card.style.display = "block";
+  const medals = ["🥇","🥈","🥉"];
+  document.getElementById("ranking-list").innerHTML = ranked.map((p, i) => {
+    const lvl = computeLevel(p.xp||0);
+    const photo = p.photo ? `<img src="${p.photo}"/>` : (POS_EMOJI[p.position]||"⚽");
+    return `<div class="rank-row">
+      <div class="rank-medal">${medals[i] || (i+1)+"º"}</div>
+      <div class="rank-photo">${photo}</div>
+      <div class="rank-info">
+        <div class="rank-name">${p.name}</div>
+        <div class="rank-sub">${lvl.icon} ${lvl.name} • 🔥${p.streak||0} • ${p.totalPresences||0} jogos</div>
+      </div>
+      <div class="rank-xp">${p.xp||0}</div>
+    </div>`;
+  }).join("");
+}
+
+// ── VOTAÇÃO CRAQUE DA RODADA ──────────────────────────────────────
+function renderVoteCard(presentes) {
+  const card = document.getElementById("vote-card");
+  if (presentes.length < 2) { card.style.display = "none"; return; }
+  card.style.display = "block";
+
+  const sel = document.getElementById("who-select");
+  const selWrap = document.getElementById("who-select-wrap");
+  if (myPlayerId && presentes.some(p => p.id === myPlayerId)) {
+    selWrap.style.display = "none";
+  } else {
+    selWrap.style.display = "block";
+    sel.innerHTML = '<option value="">Selecione seu nome para votar...</option>' +
+      presentes.map(p => `<option value="${p.id}">${p.name}</option>`).join("");
+  }
+
+  const totalVotes = Object.keys(currentVotes).length;
+  const tally = {};
+  Object.values(currentVotes).forEach(id => { tally[id] = (tally[id]||0) + 1; });
+  const maxVotes = Math.max(0, ...Object.values(tally));
+  const myVote = myPlayerId ? currentVotes[myPlayerId] : null;
+
+  document.getElementById("vote-list").innerHTML = presentes.map(p => {
+    const count = tally[p.id] || 0;
+    const pct = totalVotes ? (count / totalVotes) * 100 : 0;
+    const isLeader = count > 0 && count === maxVotes;
+    const isMine = myVote === p.id;
+    const photo = p.photo ? `<img src="${p.photo}"/>` : (POS_EMOJI[p.position]||"⚽");
+    return `<div class="vote-row ${isMine?'mine':''}" onclick="castVote('${p.id}')">
+      <div class="vote-fill" style="width:${pct}%"></div>
+      <div class="vote-photo">${photo}</div>
+      <div class="vote-name">${p.name}</div>
+      ${isLeader ? '<span class="vote-crown">👑</span>' : ''}
+      <div class="vote-count">${count}</div>
+    </div>`;
+  }).join("");
+}
+
+document.getElementById("who-select").addEventListener("change", e => {
+  const id = e.target.value;
+  if (!id) return;
+  const p = players.find(x => x.id === id);
+  if (p) { myPlayerId = id; myPlayerName = p.name; renderVoteCard(players.filter(x=>x.presente===true)); }
+});
+
+function castVote(targetId) {
+  if (!myPlayerId) { document.getElementById("who-select").focus(); return; }
+  if (myPlayerId === targetId) return; // não pode votar em si mesmo
+  const weekKey = getWeekKey(new Date());
+  votosRef.child(weekKey).child(myPlayerId).set(targetId);
+}
+
+votosRef.on("value", snap => {
+  const weekKey = getWeekKey(new Date());
+  const data = snap.val() || {};
+  currentVotes = data[weekKey] || {};
+  renderVoteCard(players.filter(p => p.presente === true));
+});
+
+// ── PERFIL DO JOGADOR ──────────────────────────────────────────────
+function openProfile(id) {
+  const p = players.find(x => x.id === id);
+  if (!p) return;
+  const lvl = computeLevel(p.xp || 0);
+  document.getElementById("pm-photo").innerHTML = p.photo ? `<img src="${p.photo}"/>` : (POS_EMOJI[p.position]||"🙋");
+  document.getElementById("pm-name").textContent = p.name;
+  document.getElementById("pm-pos").textContent = p.position || "—";
+  const chip = document.getElementById("pm-level");
+  chip.textContent = `${lvl.icon} ${lvl.name}`;
+  chip.style.background = lvl.color + "22"; chip.style.color = lvl.color; chip.style.border = "1px solid " + lvl.color + "44";
+  const curFloor = lvl.min, nextFloor = lvl.next ? lvl.next.min : lvl.min + 100;
+  const pct = lvl.next ? Math.min(100, ((p.xp - curFloor) / (nextFloor - curFloor)) * 100) : 100;
+  document.getElementById("pm-xp-fill").style.width = pct + "%";
+  document.getElementById("pm-xp-cur").textContent = `${p.xp || 0} XP`;
+  document.getElementById("pm-xp-next").textContent = lvl.next ? `Próximo: ${lvl.next.icon} ${lvl.next.name} (${lvl.next.min} XP)` : "Nível máximo! 🎉";
+  document.getElementById("pm-total").textContent = p.totalPresences || 0;
+  document.getElementById("pm-streak").textContent = p.streak || 0;
+  const votesForP = Object.values(currentVotes).filter(v => v === id).length;
+  document.getElementById("pm-votes").textContent = votesForP;
+  const badges = computeBadges({ ...p, level: lvl.name });
+  document.getElementById("pm-badges").innerHTML = badges.length
+    ? badges.map(b => `<div class="badge-chip">${b.icon} ${b.name}</div>`).join("")
+    : '<div style="font-size:11px;color:#1a4a20">Nenhuma conquista ainda</div>';
+  document.getElementById("profile-modal").classList.add("open");
+}
+function closeProfile() { document.getElementById("profile-modal").classList.remove("open"); }
+document.getElementById("profile-modal").addEventListener("click", closeProfile);
 
 // ── FOTO DE PERFIL ───────────────────────────────────────────────
 let playerPhotoB64 = null, cameraStream = null;
@@ -1133,12 +1388,29 @@ document.getElementById("submit-btn").addEventListener("click", async () => {
     return;
   }
   document.getElementById("error-box").style.display = "none";
+
+  const now = new Date();
+  const weekKey = getWeekKey(now);
+  const prevWeekKey = getPrevWeekKey(now);
+  const lastWeekKey = existing.lastWeekKey || null;
+  let newStreak;
+  if (lastWeekKey === weekKey) newStreak = existing.streak || 1;
+  else if (lastWeekKey === prevWeekKey) newStreak = (existing.streak || 0) + 1;
+  else newStreak = 1;
+  const gainedXp = newStreak >= 3 ? 15 : 10;
+  const newXp = (existing.xp || 0) + gainedXp;
+  const newTotal = (existing.totalPresences || 0) + 1;
+  const lvl = computeLevel(newXp);
+
   await playersRef.child(existing.id).update({
-    position: selectedPos, presente: true, confirmedAt: Date.now(), photo: playerPhotoB64 || null
+    position: selectedPos, presente: true, confirmedAt: Date.now(), photo: playerPhotoB64 || null,
+    xp: newXp, streak: newStreak, totalPresences: newTotal, lastWeekKey: weekKey, level: lvl.name
   });
+  myPlayerId = existing.id; myPlayerName = existing.name;
   document.getElementById("form-area").style.display = "none";
   document.getElementById("success-area").style.display = "block";
   document.getElementById("success-name").textContent = "Bem-vindo, " + existing.name + "! 👋";
+  document.getElementById("success-xp-line").textContent = `+${gainedXp} XP • ${lvl.icon} ${lvl.name} • 🔥 Sequência ${newStreak}`;
   launchConfetti();
 });
 
