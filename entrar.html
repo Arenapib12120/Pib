@@ -234,7 +234,6 @@
       -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
     }
     .champ-date-disp{font-size:11px;color:#2a5a30;margin-top:4px;letter-spacing:0.5px}
-    .champ-hof-link{display:block;text-align:center;margin-top:10px;font-size:10px;font-weight:700;letter-spacing:1.5px;color:#FFD70099;text-transform:uppercase;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
 
     /* ── LISTA FECHADA ── */
     .lista-fechada{
@@ -310,17 +309,6 @@
     }
     .name-input::placeholder{color:#1a3a20;font-size:17px}
     .name-input:focus{border-color:#009C3B55;box-shadow:0 0 0 3px #009C3B10}
-
-    /* Nickname / time do coração input (smaller, secondary style) */
-    .mini-input{
-      width:100%;background:#009C3B08;border:1.5px solid #009C3B18;
-      border-radius:10px;padding:11px 14px;color:#dfe;
-      font-family:'Syne',sans-serif;font-size:13px;font-weight:600;
-      outline:none;transition:border-color 0.2s,box-shadow 0.2s;
-      margin-bottom:14px;-webkit-appearance:none;
-    }
-    .mini-input::placeholder{color:#1a3a20}
-    .mini-input:focus{border-color:#009C3B44;box-shadow:0 0 0 3px #009C3B0a}
 
     /* Position grid */
     .pos-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px}
@@ -584,8 +572,6 @@
     .profile-photo{width:74px;height:74px;border-radius:16px;overflow:hidden;background:#060d08;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:30px;border:2px solid #009C3B30}
     .profile-photo img{width:100%;height:100%;object-fit:cover}
     .profile-name{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1.5px;color:#fff;line-height:1}
-    .profile-nickname{font-size:11px;color:#FFD70099;margin-top:3px;font-weight:700;letter-spacing:0.5px}
-    .profile-team{font-size:10px;color:#2a5a30;margin-top:2px;letter-spacing:0.5px}
     .profile-pos{font-size:11px;color:#2a5a30;margin-top:4px;letter-spacing:0.5px}
     .profile-stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}
     .pstat{background:#009C3B0a;border:1px solid #009C3B18;border-radius:12px;padding:10px 6px;text-align:center}
@@ -593,51 +579,6 @@
     .pstat-lbl{font-size:8px;color:#2a5a30;letter-spacing:1px;text-transform:uppercase;margin-top:2px}
     .profile-xp-row{display:flex;justify-content:space-between;font-size:10px;color:#2a5a30;margin-bottom:2px}
     .profile-badges-title{font-size:10px;font-weight:700;color:#2a5a30;letter-spacing:1.5px;text-transform:uppercase;margin:16px 0 8px}
-
-    /* ── HALL DA FAMA MODAL ── */
-    .hof-modal{position:fixed;inset:0;background:#000000cc;z-index:1500;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(6px)}
-    .hof-modal.open{display:flex;animation:fadeUp .25s ease}
-    .hof-sheet{width:100%;max-width:420px;background:linear-gradient(180deg,#1a1508,#060d08);border-radius:24px 24px 0 0;border:1px solid #FFD70025;border-bottom:none;padding:22px 20px 32px;max-height:82vh;overflow-y:auto}
-    .hof-close{width:32px;height:4px;background:#FFD70030;border-radius:4px;margin:0 auto 16px;cursor:pointer}
-    .hof-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:#FFD700;text-align:center;margin-bottom:4px}
-    .hof-sub{font-size:10px;color:#FFD70066;text-align:center;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:18px}
-    .hof-row{display:flex;align-items:center;gap:12px;padding:10px 8px;border-radius:12px;margin-bottom:8px;background:#FFD70006;border:1px solid #FFD70012}
-    .hof-photo{width:46px;height:46px;border-radius:10px;overflow:hidden;background:#060d08;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;border:1px solid #FFD70025}
-    .hof-photo img{width:100%;height:100%;object-fit:cover}
-    .hof-info{flex:1;min-width:0}
-    .hof-name{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .hof-date{font-size:10px;color:#FFD70077;letter-spacing:0.5px}
-    .hof-empty{text-align:center;color:#5a4a20;font-size:12px;padding:24px 0}
-
-    /* ── GALERIA DE FOTOS ── */
-    .gallery-card{background:#0a1a0d;border:1px solid #009C3B22;border-radius:20px;padding:18px 16px;margin:20px 0}
-    .gallery-title{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;color:#3a7a40;margin-bottom:4px;text-align:center}
-    .gallery-sub{font-size:10px;color:#2a5a30;text-align:center;margin-bottom:14px;letter-spacing:0.5px}
-    .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-    .gallery-thumb{aspect-ratio:1/1;border-radius:10px;overflow:hidden;background:#060d08;cursor:pointer;border:1px solid #009C3B18}
-    .gallery-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
-    .gallery-thumb:hover img{transform:scale(1.08)}
-    .gallery-empty{grid-column:1/-1;text-align:center;color:#1a4a20;font-size:12px;padding:16px 0}
-    .lightbox{position:fixed;inset:0;background:#000000ee;z-index:1800;display:none;align-items:center;justify-content:center;padding:24px}
-    .lightbox.open{display:flex}
-    .lightbox img{max-width:100%;max-height:80vh;border-radius:12px;border:1px solid #009C3B25}
-    .lightbox-cap{position:absolute;bottom:40px;left:0;right:0;text-align:center;font-size:12px;color:#9dc}
-    .lightbox-close{position:absolute;top:20px;right:20px;width:38px;height:38px;border-radius:50%;background:#ffffff10;border:1px solid #ffffff20;color:#fff;font-size:16px;cursor:pointer}
-
-    /* ── SUGESTÕES ── */
-    .suggest-card{background:#0a1a0d;border:1px solid #4488FF25;border-radius:20px;padding:18px 16px;margin:20px 0}
-    .suggest-title{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;color:#7aa8ff;margin-bottom:4px;text-align:center}
-    .suggest-sub{font-size:10px;color:#2a5a30;text-align:center;margin-bottom:14px;letter-spacing:0.5px}
-    .suggest-textarea{width:100%;background:#4488FF08;border:1.5px solid #4488FF20;border-radius:12px;padding:12px 14px;color:#fff;font-family:'Syne',sans-serif;font-size:13px;outline:none;resize:vertical;min-height:64px;margin-bottom:10px;-webkit-appearance:none}
-    .suggest-textarea::placeholder{color:#1a3a20}
-    .suggest-textarea:focus{border-color:#4488FF44}
-    .suggest-submit{width:100%;padding:12px;border-radius:10px;border:none;background:linear-gradient(135deg,#4488FF,#1450B0);color:#fff;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;cursor:pointer}
-    .suggest-msg{font-size:11px;text-align:center;margin-top:8px;min-height:14px}
-    .suggest-toggle-list{font-size:10px;color:#4488FF88;text-align:center;margin-top:12px;cursor:pointer;letter-spacing:0.5px;text-decoration:underline;text-underline-offset:3px}
-    .suggest-list{margin-top:12px;display:none}
-    .suggest-list.open{display:block}
-    .suggest-item{background:#4488FF08;border:1px solid #4488FF15;border-radius:10px;padding:10px 12px;margin-bottom:8px;font-size:12px;color:#cfe;line-height:1.5}
-    .suggest-item .si-meta{font-size:9px;color:#4488FF66;margin-top:4px;letter-spacing:0.5px}
   </style>
 </head>
 <body>
@@ -658,8 +599,6 @@
       <div class="profile-photo" id="pm-photo">🙋</div>
       <div>
         <div class="profile-name" id="pm-name">—</div>
-        <div class="profile-nickname" id="pm-nickname" style="display:none"></div>
-        <div class="profile-team" id="pm-team" style="display:none"></div>
         <div class="profile-pos" id="pm-pos">—</div>
         <div class="level-chip" id="pm-level" style="margin-top:6px"></div>
       </div>
@@ -674,22 +613,6 @@
     <div class="profile-badges-title">Conquistas</div>
     <div class="badge-row" id="pm-badges"></div>
   </div>
-</div>
-
-<!-- HALL DA FAMA MODAL -->
-<div class="hof-modal" id="hof-modal">
-  <div class="hof-sheet" onclick="event.stopPropagation()">
-    <div class="hof-close" onclick="closeHOF()"></div>
-    <div class="hof-title">🏛️ HALL DA FAMA</div>
-    <div class="hof-sub">Todos os campeões do Arena PIB</div>
-    <div id="hof-list"></div>
-  </div>
-</div>
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox">
-  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
-  <img id="lightbox-img" alt="foto"/>
-  <div class="lightbox-cap" id="lightbox-cap"></div>
 </div>
 
 <!-- HERO -->
@@ -807,7 +730,6 @@
         <div class="champ-ribbon">CAMPEÃO</div>
         <div class="champ-name-disp" id="champ-name-disp">—</div>
         <div class="champ-date-disp" id="champ-date-disp"></div>
-        <div class="champ-hof-link" onclick="openHOF()">🏛️ Ver Hall da Fama completo</div>
       </div>
     </div>
   </div>
@@ -854,12 +776,6 @@
       <div class="section-label">Seu nome</div>
       <input class="name-input" id="inp-name" placeholder="Como te chamam?" maxlength="30" autocomplete="off" autocorrect="off" spellcheck="false"/>
 
-      <div class="section-label">Apelido (opcional)</div>
-      <input class="mini-input" id="inp-nickname" placeholder="Ex: Canhotinha, Muralha..." maxlength="24" autocomplete="off" autocorrect="off" spellcheck="false"/>
-
-      <div class="section-label">Time do coração (opcional)</div>
-      <input class="mini-input" id="inp-team" placeholder="Ex: Flamengo, Corinthians..." maxlength="24" autocomplete="off" autocorrect="off" spellcheck="false"/>
-
       <div class="section-label">Sua posição</div>
       <div class="pos-grid" id="pos-grid">
         <div class="pos-card" data-pos="Goleiro"    style="--c:#FF6B35"><span class="pos-icon">🧤</span><div class="pos-name">Goleiro</div></div>
@@ -884,27 +800,6 @@
       </div>
     </div>
 
-  </div>
-
-  <!-- GALERIA DE FOTOS -->
-  <div class="gallery-card fu4" id="gallery-card">
-    <div class="gallery-title">📸 Galeria do Baba</div>
-    <div class="gallery-sub">Momentos registrados pelo ADM</div>
-    <div class="gallery-grid" id="gallery-grid">
-      <div class="gallery-empty">Nenhuma foto publicada ainda</div>
-    </div>
-  </div>
-
-  <!-- SUGESTÕES -->
-  <div class="suggest-card fu4">
-    <div class="suggest-title">💡 Área de Sugestões</div>
-    <div class="suggest-sub">Ideias pra melhorar o baba? Manda aqui!</div>
-    <textarea class="suggest-textarea" id="suggest-text" placeholder="Ex: Podíamos trocar o horário pra 17h nos dias de calor..." maxlength="240"></textarea>
-    <input class="mini-input" id="suggest-name" placeholder="Seu nome (opcional)" maxlength="30" autocomplete="off"/>
-    <button class="suggest-submit" id="suggest-submit-btn">ENVIAR SUGESTÃO 💬</button>
-    <div class="suggest-msg" id="suggest-msg"></div>
-    <div class="suggest-toggle-list" id="suggest-toggle-list">Ver sugestões da galera</div>
-    <div class="suggest-list" id="suggest-list"></div>
   </div>
 
 </div><!-- /container -->
@@ -969,25 +864,6 @@
 
       <hr class="adm-divider"/>
 
-      <div class="adm-section-title">📸 GALERIA DE FOTOS</div>
-      <div class="adm-field">
-        <label class="adm-label">Adicionar foto à galeria</label>
-        <div class="photo-upload-zone">
-          <input type="file" id="adm-gallery-input" accept="image/*"/>
-          <span style="font-size:24px;display:block;margin-bottom:6px">📸</span>
-          <div style="font-size:11px;color:#2a4a20" id="gallery-upload-hint">Toque para escolher uma foto</div>
-        </div>
-        <img class="photo-preview" id="adm-gallery-preview" alt="preview"/>
-      </div>
-      <div class="adm-field">
-        <label class="adm-label">Legenda (opcional)</label>
-        <input class="adm-input" id="adm-gallery-caption" placeholder="Ex: Gol de placa do sábado" maxlength="60" autocomplete="off"/>
-      </div>
-      <button class="adm-btn-green" id="adm-gallery-save-btn">PUBLICAR NA GALERIA 📸</button>
-      <div class="adm-msg" id="adm-gallery-msg"></div>
-
-      <hr class="adm-divider"/>
-
       <div class="adm-section-title">✏️ EDITAR RANKING</div>
       <div class="adm-field">
         <label class="adm-label">Jogador</label>
@@ -1009,11 +885,6 @@
       </div>
       <button class="adm-btn-green" id="adm-rank-save-btn">SALVAR RANKING ✏️</button>
       <div class="adm-msg" id="adm-rank-msg"></div>
-
-      <hr class="adm-divider"/>
-
-      <div class="adm-section-title">💡 SUGESTÕES DA GALERA</div>
-      <div id="adm-suggest-list" style="max-height:260px;overflow-y:auto"></div>
 
     </div>
   </div>
@@ -1135,10 +1006,7 @@ const db = firebase.database();
 const playersRef = db.ref("jogadores");
 const champRef   = db.ref("campeao");
 const musicRef   = db.ref("musica");
-const historicoRef = db.ref("historicoCampeoes");
-const galeriaRef = db.ref("galeria");
-const sugestoesRef = db.ref("sugestoes");
-let players = [], currentChamp = null, hallOfFame = [], galeria = [], sugestoes = [];
+let players = [], currentChamp = null;
 let myPlayerId = null, myPlayerName = null, currentVotes = {};
 const votosRef = db.ref("votos");
 
@@ -1268,31 +1136,6 @@ function renderChampion(ch) {
 }
 champRef.on("value", snap => renderChampion(snap.val()));
 
-// ── HALL DA FAMA ───────────────────────────────────────────────
-historicoRef.orderByChild("ts").on("value", snap => {
-  const data = snap.val() || {};
-  hallOfFame = Object.entries(data).map(([id, val]) => ({ id, ...val })).sort((a,b) => (b.ts||0) - (a.ts||0));
-});
-
-function openHOF() {
-  const list = document.getElementById("hof-list");
-  if (!hallOfFame.length) {
-    list.innerHTML = '<div class="hof-empty">🏛️ Ainda não há campeões no histórico.<br>O primeiro título está por vir!</div>';
-  } else {
-    list.innerHTML = hallOfFame.map(ch => `
-      <div class="hof-row">
-        <div class="hof-photo">${ch.photo ? `<img src="${ch.photo}"/>` : "🏆"}</div>
-        <div class="hof-info">
-          <div class="hof-name">${ch.name || "—"}</div>
-          <div class="hof-date">${ch.dateFormatted || ch.date || ""}</div>
-        </div>
-      </div>`).join("");
-  }
-  document.getElementById("hof-modal").classList.add("open");
-}
-function closeHOF() { document.getElementById("hof-modal").classList.remove("open"); }
-document.getElementById("hof-modal").addEventListener("click", closeHOF);
-
 // ── RENDER LIST ──────────────────────────────────────────────────
 function renderList(presentes) {
   const grid = document.getElementById("sticker-grid");
@@ -1343,7 +1186,7 @@ function renderList(presentes) {
           <div class="sticker-level">${lvl.icon}</div>
           <div class="sticker-pos-badge" style="background:${c}cc">${POS_ABBR[p.position]||""}</div>
         </div>
-        <div class="sticker-plate"><span>${p.nickname ? p.nickname : p.name}</span></div>
+        <div class="sticker-plate"><span>${p.name}</span></div>
       </div>
     </div>`;
   }).join('');
@@ -1391,7 +1234,7 @@ function renderRanking() {
       <div class="rank-medal">${medals[i] || (i+1)+"º"}</div>
       <div class="rank-photo">${photo}</div>
       <div class="rank-info">
-        <div class="rank-name">${p.nickname ? p.nickname : p.name}</div>
+        <div class="rank-name">${p.name}</div>
         <div class="rank-sub">${lvl.icon} ${lvl.name} • 🔥${p.streak||0} • ${p.totalPresences||0} jogos</div>
       </div>
       <div class="rank-xp">${p.xp||0}</div>
@@ -1430,7 +1273,7 @@ function renderVoteCard(presentes) {
     return `<div class="vote-row ${isMine?'mine':''}" onclick="castVote('${p.id}')">
       <div class="vote-fill" style="width:${pct}%"></div>
       <div class="vote-photo">${photo}</div>
-      <div class="vote-name">${p.nickname ? p.nickname : p.name}</div>
+      <div class="vote-name">${p.name}</div>
       ${isLeader ? '<span class="vote-crown">👑</span>' : ''}
       <div class="vote-count">${count}</div>
     </div>`;
@@ -1465,12 +1308,6 @@ function openProfile(id) {
   const lvl = computeLevel(p.xp || 0);
   document.getElementById("pm-photo").innerHTML = p.photo ? `<img src="${p.photo}"/>` : (POS_EMOJI[p.position]||"🙋");
   document.getElementById("pm-name").textContent = p.name;
-  const nickEl = document.getElementById("pm-nickname");
-  if (p.nickname) { nickEl.textContent = `"${p.nickname}"`; nickEl.style.display = "block"; }
-  else { nickEl.style.display = "none"; }
-  const teamEl = document.getElementById("pm-team");
-  if (p.team) { teamEl.textContent = `❤️ Torce pro ${p.team}`; teamEl.style.display = "block"; }
-  else { teamEl.style.display = "none"; }
   document.getElementById("pm-pos").textContent = p.position || "—";
   const chip = document.getElementById("pm-level");
   chip.textContent = `${lvl.icon} ${lvl.name}`;
@@ -1564,8 +1401,6 @@ document.getElementById("inp-name").addEventListener("input", validate);
 
 document.getElementById("submit-btn").addEventListener("click", async () => {
   const name = document.getElementById("inp-name").value.trim();
-  const nickname = document.getElementById("inp-nickname").value.trim();
-  const team = document.getElementById("inp-team").value.trim();
   if (!name || !selectedPos) return;
   const presentes = players.filter(p => p.presente === true);
   if (presentes.length >= MAX_JOGADORES) { updateCapacityUI(presentes); return; }
@@ -1594,13 +1429,12 @@ document.getElementById("submit-btn").addEventListener("click", async () => {
 
   await playersRef.child(existing.id).update({
     position: selectedPos, presente: true, confirmedAt: Date.now(), photo: playerPhotoB64 || null,
-    nickname: nickname || null, team: team || null,
     xp: newXp, streak: newStreak, totalPresences: newTotal, lastWeekKey: weekKey, level: lvl.name
   });
   myPlayerId = existing.id; myPlayerName = existing.name;
   document.getElementById("form-area").style.display = "none";
   document.getElementById("success-area").style.display = "block";
-  document.getElementById("success-name").textContent = "Bem-vindo, " + (nickname || existing.name) + "! 👋";
+  document.getElementById("success-name").textContent = "Bem-vindo, " + existing.name + "! 👋";
   document.getElementById("success-xp-line").textContent = `+${gainedXp} XP • ${lvl.icon} ${lvl.name} • 🔥 Sequência ${newStreak}`;
   launchConfetti();
 });
@@ -1616,88 +1450,8 @@ function launchConfetti() {
   }
 }
 
-// ── GALERIA DE FOTOS ───────────────────────────────────────────
-function renderGallery() {
-  const grid = document.getElementById("gallery-grid");
-  if (!galeria.length) {
-    grid.innerHTML = '<div class="gallery-empty">Nenhuma foto publicada ainda</div>';
-    return;
-  }
-  const sorted = [...galeria].sort((a,b) => (b.ts||0) - (a.ts||0));
-  grid.innerHTML = sorted.map(g => `
-    <div class="gallery-thumb" onclick="openLightbox('${g.id}')">
-      <img src="${g.photo}" alt="${g.caption||'foto do baba'}"/>
-    </div>`).join("");
-}
-galeriaRef.on("value", snap => {
-  const data = snap.val() || {};
-  galeria = Object.entries(data).map(([id, val]) => ({ id, ...val }));
-  renderGallery();
-});
-function openLightbox(id) {
-  const g = galeria.find(x => x.id === id); if (!g) return;
-  document.getElementById("lightbox-img").src = g.photo;
-  document.getElementById("lightbox-cap").textContent = g.caption || "";
-  document.getElementById("lightbox").classList.add("open");
-}
-function closeLightbox() { document.getElementById("lightbox").classList.remove("open"); }
-document.getElementById("lightbox").addEventListener("click", e => { if (e.target.id === "lightbox") closeLightbox(); });
-
-// ── SUGESTÕES ────────────────────────────────────────────────────
-sugestoesRef.orderByChild("ts").on("value", snap => {
-  const data = snap.val() || {};
-  sugestoes = Object.entries(data).map(([id, val]) => ({ id, ...val })).sort((a,b) => (b.ts||0) - (a.ts||0));
-  renderSuggestList();
-  renderAdmSuggestList();
-});
-
-function renderSuggestList() {
-  const list = document.getElementById("suggest-list");
-  if (!sugestoes.length) {
-    list.innerHTML = '<div style="font-size:11px;color:#1a3a20;text-align:center;padding:10px 0">Nenhuma sugestão ainda. Seja o primeiro!</div>';
-    return;
-  }
-  list.innerHTML = sugestoes.map(s => `
-    <div class="suggest-item">
-      ${s.text}
-      <div class="si-meta">— ${s.name || "Anônimo"}</div>
-    </div>`).join("");
-}
-
-function renderAdmSuggestList() {
-  const list = document.getElementById("adm-suggest-list");
-  if (!sugestoes.length) {
-    list.innerHTML = '<div style="font-size:11px;color:#1a3a20;text-align:center;padding:10px 0">Nenhuma sugestão recebida.</div>';
-    return;
-  }
-  list.innerHTML = sugestoes.map(s => `
-    <div class="suggest-item">
-      ${s.text}
-      <div class="si-meta">— ${s.name || "Anônimo"}</div>
-    </div>`).join("");
-}
-
-document.getElementById("suggest-toggle-list").addEventListener("click", () => {
-  const list = document.getElementById("suggest-list");
-  const open = list.classList.toggle("open");
-  document.getElementById("suggest-toggle-list").textContent = open ? "Ocultar sugestões" : "Ver sugestões da galera";
-});
-
-document.getElementById("suggest-submit-btn").addEventListener("click", () => {
-  const text = document.getElementById("suggest-text").value.trim();
-  const name = document.getElementById("suggest-name").value.trim();
-  const msg = document.getElementById("suggest-msg");
-  if (!text) { msg.textContent = "Escreva sua sugestão primeiro 🙂"; msg.style.color = "#FFD700"; return; }
-  sugestoesRef.push({ text, name: name || null, ts: Date.now() });
-  document.getElementById("suggest-text").value = "";
-  document.getElementById("suggest-name").value = "";
-  msg.textContent = "Sugestão enviada! Valeu 🙌"; msg.style.color = "#009C3B";
-  setTimeout(() => { msg.textContent = ""; }, 3000);
-});
-
 // ── ADM ──────────────────────────────────────────────────────────
 let pendingPhotoB64 = null, admUnlocked = false;
-let pendingGalleryPhotoB64 = null;
 const ADM_PASS = "baba123";
 const admPanel = document.getElementById("adm-panel");
 
@@ -1723,7 +1477,6 @@ function checkAdmPass() {
       document.getElementById("adm-music-url").value = currentMusic.url || "";
       document.getElementById("adm-music-name").value = currentMusic.name || "";
     }
-    renderAdmSuggestList();
   } else {
     const err = document.getElementById("adm-pass-err");
     err.textContent = "❌ Senha incorreta";
@@ -1757,10 +1510,8 @@ document.getElementById("adm-photo-input").addEventListener("change", () => {
 document.getElementById("adm-save-btn").addEventListener("click", () => {
   const name = document.getElementById("adm-champ-name").value.trim();
   if (!name) { showAdmMsg("Informe o nome do campeão", "#FFD700"); return; }
-  const champData = { name, dateFormatted: document.getElementById("adm-champ-date").value.trim(), date: document.getElementById("adm-champ-date").value.trim(), photo: pendingPhotoB64||null };
-  champRef.set(champData);
-  historicoRef.push({ ...champData, ts: Date.now() });
-  showAdmMsg("Campeão salvo e adicionado ao Hall da Fama! ✅", "#009C3B");
+  champRef.set({ name, dateFormatted: document.getElementById("adm-champ-date").value.trim(), date: document.getElementById("adm-champ-date").value.trim(), photo: pendingPhotoB64||null });
+  showAdmMsg("Campeão salvo! ✅", "#009C3B");
 });
 
 document.getElementById("adm-clear-btn").addEventListener("click", () => {
@@ -1771,42 +1522,11 @@ document.getElementById("adm-clear-btn").addEventListener("click", () => {
   document.getElementById("adm-photo-preview").src = "";
   document.getElementById("adm-photo-preview").classList.remove("visible");
   document.getElementById("upload-hint-text").textContent = "Toque para escolher uma foto";
-  showAdmMsg("Campeão removido 🗑️ (o Hall da Fama mantém o histórico)", "#FF3B3B");
+  showAdmMsg("Campeão removido 🗑️", "#FF3B3B");
 });
 
 function showAdmMsg(text, color) {
   const el = document.getElementById("adm-msg"); el.textContent = text; el.style.color = color;
-  setTimeout(() => { el.textContent = ""; }, 3000);
-}
-
-// ── ADM — GALERIA ─────────────────────────────────────────────
-document.getElementById("adm-gallery-input").addEventListener("change", () => {
-  const file = document.getElementById("adm-gallery-input").files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    pendingGalleryPhotoB64 = e.target.result;
-    const prev = document.getElementById("adm-gallery-preview");
-    prev.src = pendingGalleryPhotoB64; prev.classList.add("visible");
-    document.getElementById("gallery-upload-hint").textContent = file.name;
-  };
-  reader.readAsDataURL(file);
-});
-
-document.getElementById("adm-gallery-save-btn").addEventListener("click", () => {
-  if (!pendingGalleryPhotoB64) { showAdmGalleryMsg("Escolha uma foto primeiro", "#FFD700"); return; }
-  const caption = document.getElementById("adm-gallery-caption").value.trim();
-  galeriaRef.push({ photo: pendingGalleryPhotoB64, caption: caption || null, ts: Date.now() });
-  pendingGalleryPhotoB64 = null;
-  document.getElementById("adm-gallery-input").value = "";
-  document.getElementById("adm-gallery-caption").value = "";
-  document.getElementById("adm-gallery-preview").src = "";
-  document.getElementById("adm-gallery-preview").classList.remove("visible");
-  document.getElementById("gallery-upload-hint").textContent = "Toque para escolher uma foto";
-  showAdmGalleryMsg("Foto publicada na galeria! 📸", "#009C3B");
-});
-
-function showAdmGalleryMsg(text, color) {
-  const el = document.getElementById("adm-gallery-msg"); el.textContent = text; el.style.color = color;
   setTimeout(() => { el.textContent = ""; }, 3000);
 }
 
@@ -1925,4 +1645,13 @@ function saveMusic() {
 function resetToDefaultMusic() {
   musicRef.remove();
   document.getElementById("adm-music-url").value = "";
-  document.getElementById("adm-mu
+  document.getElementById("adm-music-name").value = "";
+  showMusicMsg("Voltando para música padrão 🎵", "#009C3B");
+}
+function showMusicMsg(text, color) {
+  const el = document.getElementById("adm-music-msg"); el.textContent = text; el.style.color = color;
+  setTimeout(() => { el.textContent = ""; }, 3000);
+}
+</script>
+</body>
+</html>
