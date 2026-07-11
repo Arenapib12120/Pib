@@ -862,6 +862,30 @@
       <button class="adm-btn-danger" id="adm-clear-btn">Remover campeão atual</button>
       <div class="adm-msg" id="adm-msg"></div>
 
+      <hr class="adm-divider"/>
+
+      <div class="adm-section-title">✏️ EDITAR RANKING</div>
+      <div class="adm-field">
+        <label class="adm-label">Jogador</label>
+        <select class="adm-input" id="adm-rank-player">
+          <option value="">Selecione um jogador...</option>
+        </select>
+      </div>
+      <div class="adm-field">
+        <label class="adm-label">XP</label>
+        <input class="adm-input" id="adm-rank-xp" type="number" placeholder="0"/>
+      </div>
+      <div class="adm-field">
+        <label class="adm-label">Total de presenças</label>
+        <input class="adm-input" id="adm-rank-total" type="number" placeholder="0"/>
+      </div>
+      <div class="adm-field">
+        <label class="adm-label">Sequência (streak)</label>
+        <input class="adm-input" id="adm-rank-streak" type="number" placeholder="0"/>
+      </div>
+      <button class="adm-btn-green" id="adm-rank-save-btn">SALVAR RANKING ✏️</button>
+      <div class="adm-msg" id="adm-rank-msg"></div>
+
     </div>
   </div>
 </div>
@@ -1192,6 +1216,7 @@ playersRef.on("value", snap => {
   renderList(presentes);
   renderRanking();
   renderVoteCard(presentes);
+  populateAdmRankSelect();
 });
 
 // ── RANKING ──────────────────────────────────────────────────────
@@ -1502,6 +1527,39 @@ document.getElementById("adm-clear-btn").addEventListener("click", () => {
 
 function showAdmMsg(text, color) {
   const el = document.getElementById("adm-msg"); el.textContent = text; el.style.color = color;
+  setTimeout(() => { el.textContent = ""; }, 3000);
+}
+
+// ── EDITAR RANKING (ADM) ─────────────────────────────────────────
+function populateAdmRankSelect() {
+  const sel = document.getElementById("adm-rank-player");
+  const current = sel.value;
+  const sorted = [...players].sort((a,b) => (a.name||"").localeCompare(b.name||""));
+  sel.innerHTML = '<option value="">Selecione um jogador...</option>' +
+    sorted.map(p => `<option value="${p.id}">${p.name}</option>`).join("");
+  if (current && players.some(p => p.id === current)) sel.value = current;
+}
+
+document.getElementById("adm-rank-player").addEventListener("change", e => {
+  const p = players.find(x => x.id === e.target.value);
+  document.getElementById("adm-rank-xp").value = p ? (p.xp || 0) : "";
+  document.getElementById("adm-rank-total").value = p ? (p.totalPresences || 0) : "";
+  document.getElementById("adm-rank-streak").value = p ? (p.streak || 0) : "";
+});
+
+document.getElementById("adm-rank-save-btn").addEventListener("click", () => {
+  const id = document.getElementById("adm-rank-player").value;
+  if (!id) { showAdmRankMsg("Selecione um jogador", "#FFD700"); return; }
+  const xp = Math.max(0, parseInt(document.getElementById("adm-rank-xp").value) || 0);
+  const totalPresences = Math.max(0, parseInt(document.getElementById("adm-rank-total").value) || 0);
+  const streak = Math.max(0, parseInt(document.getElementById("adm-rank-streak").value) || 0);
+  const lvl = computeLevel(xp);
+  playersRef.child(id).update({ xp, totalPresences, streak, level: lvl.name });
+  showAdmRankMsg("Ranking atualizado! ✅", "#009C3B");
+});
+
+function showAdmRankMsg(text, color) {
+  const el = document.getElementById("adm-rank-msg"); el.textContent = text; el.style.color = color;
   setTimeout(() => { el.textContent = ""; }, 3000);
 }
 
